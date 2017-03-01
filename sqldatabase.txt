@@ -1,0 +1,47 @@
+CREATE TABLE leagues(
+id SERIAL PRIMARY KEY,
+name VARCHAR (100),
+start_date DATE,
+end_date DATE
+);
+
+INSERT INTO leagues (name, start_date, end_date)
+VALUES ('D12_1', '2017-03-01', '2017-03-21');
+
+CREATE TABLE users(
+id SERIAL PRIMARY KEY,
+first_name VARCHAR (100),
+last_name VARCHAR (100),
+email VARCHAR (100),
+username VARCHAR (100),
+password VARCHAR (256),
+admin BOOLEAN,
+regular BOOLEAN,
+points integer,
+linkedin VARCHAR (100),
+bio TEXT,
+photourl VARCHAR(100),
+leagues_id integer References leagues
+);
+
+CREATE TABLE games(
+id SERIAL PRIMARY KEY,
+date DATE,
+editable BOOLEAN NOT NULL,
+time VARCHAR(50),
+leagues_id integer NOT NULL References leagues
+);
+
+CREATE TABLE reservations(
+id SERIAL PRIMARY KEY,
+userid integer,
+active BOOLEAN NOT NULL,
+games_id integer NOT NULL References games
+);
+
+CREATE TABLE digests(
+id SERIAL PRIMARY KEY,
+entry TEXT,
+date DATE,
+games_id integer NOT NULL References games
+);
