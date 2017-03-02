@@ -7,16 +7,11 @@ var passport = require('passport');
 var connection = require('./db/connection');
 var login = require('./routes/login');
 var register = require('./routes/register');
-var adminInterface = require('./routes/admin/admin.interface.js');
-var createLeague = require('./routes/admin/create.league.js');
-var currentGame = require('./routes/admin/current.game.js');
-var leaderBoard = require('./routes/admin/leader.board.js');
-var playerRoster = require('./routes/admin/player.roster.js');
-var scheduleNewGame = require('./routes/admin/schedule.new.game.js');
-// var createPlayerProfile = require('./routes/player/create.player.profile.js'); Already included in register route
-var editPlayerProfile = require('./routes/player/edit.player.profile.js');
-var otherPlayerProfile = require('./routes/player/other.player.profile.js');
-var playerInterface = require('./routes/player/player.interface.js');
+var digests = require('./routes/digests');
+var games = require('./routes/games');
+var reservations = require('./routes/reservations');
+var leagues = require('./routes/leagues');
+var users = require('./routes/users');
 
 require('./auth/setup');
 
@@ -47,16 +42,12 @@ app.use('/register', register);
 app.get('/loginStatus', function(req, res){
   res.send(req.isAuthenticated());
 });
-app.use('/adminHome' ,adminInterface);
-app.use('/league' ,createLeague);
-app.use('/game' ,currentGame);
-app.use('/leaderboard' ,leaderBoard);
-app.use('/roster' ,playerRoster);
-app.use('/newGame' ,scheduleNewGame);
-// app.use('/newprofile' ,createPlayerProfile); Already included in register route
-app.use('/editProfile' ,editPlayerProfile);
-app.use('/otherProfile' ,otherPlayerProfile);
-app.use('/playerHome' ,playerInterface);
+app.use('/leagues' ,leagues);
+app.use('/games' ,games);
+app.use('/reservations' ,reservations);
+app.use('/digests' ,digests);
+app.use('/users' ,users);
+
 
 
 
