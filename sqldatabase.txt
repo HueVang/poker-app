@@ -17,26 +17,28 @@ username VARCHAR (100),
 password VARCHAR (256),
 admin BOOLEAN,
 regular BOOLEAN,
-points integer,
 linkedin VARCHAR (100),
 bio TEXT,
 photourl VARCHAR(100),
+hashuserid VARCHAR (256),
 leagues_id integer References leagues
 );
 
 CREATE TABLE games(
 id SERIAL PRIMARY KEY,
+name VARCHAR(100),
 date DATE,
-editable BOOLEAN NOT NULL,
 time VARCHAR(50),
+hashgameid VARCHAR (256),
 leagues_id integer NOT NULL References leagues
 );
 
 CREATE TABLE reservations(
 id SERIAL PRIMARY KEY,
-userid integer,
-active BOOLEAN NOT NULL,
-games_id integer NOT NULL References games
+timestamp VARCHAR(100),
+points integer,
+games_id integer NOT NULL References games,
+users_id integer NOT NULL References users
 );
 
 CREATE TABLE digests(

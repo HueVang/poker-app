@@ -47,16 +47,16 @@ app.use('/register', register);
 app.get('/loginStatus', function(req, res){
   res.send(req.isAuthenticated());
 });
-app.use('/adminHome' ,adminInterface);
-app.use('/league' ,createLeague);
-app.use('/game' ,currentGame);
-app.use('/leaderboard' ,leaderBoard);
-app.use('/roster' ,playerRoster);
-app.use('/newGame' ,scheduleNewGame);
-// app.use('/newprofile' ,createPlayerProfile); Already included in register route
-app.use('/editProfile' ,editPlayerProfile);
-app.use('/otherProfile' ,otherPlayerProfile);
-app.use('/playerHome' ,playerInterface);
+// app.use('/adminHome' ,adminInterface);
+// app.use('/league' ,createLeague);
+// app.use('/game' ,currentGame);
+// app.use('/leaderboard' ,leaderBoard);
+// app.use('/roster' ,playerRoster);
+// app.use('/newGame' ,scheduleNewGame);
+// // app.use('/newprofile' ,createPlayerProfile); Already included in register route
+// app.use('/editProfile' ,editPlayerProfile);
+// app.use('/otherProfile' ,otherPlayerProfile);
+// app.use('/playerHome' ,playerInterface);
 
 
 
