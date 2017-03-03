@@ -17,6 +17,7 @@
     "bootstrap": "^3.3.7",
     "express": "^4.14.1",
     "express-session": "^1.15.1",
+    "hashids": "^1.1.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
