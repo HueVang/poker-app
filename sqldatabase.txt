@@ -20,7 +20,6 @@ regular BOOLEAN,
 linkedin VARCHAR (100),
 bio TEXT,
 photourl VARCHAR(100),
-hashuserid VARCHAR (256),
 leagues_id integer References leagues
 );
 
@@ -29,7 +28,6 @@ id SERIAL PRIMARY KEY,
 name VARCHAR(100),
 date DATE,
 time VARCHAR(50),
-hashgameid VARCHAR (256),
 leagues_id integer NOT NULL References leagues
 );
 
