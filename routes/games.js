@@ -3,17 +3,17 @@ var pg = require('pg');
 var config = {database: 'upsilon_aces'};
 var pool = new pg.Pool(config);
 var Hashids = require('hashids');
-var hashids = new Hashids();
+var hashids = new Hashids('', 10);
 
-router.post('/', function(req, res){
+router.post('/creategame', function(req, res){
   pool.connect(function(err, client, done){
     if(err){
       console.log('Error connecting to the DB', err);
       res.sendStatus(500);
       done();
     } else {
-      client.query('INSERT INTO games (date, name, time, league_id) VALUES ($1, $2, $3, $4) RETURNING *;',
-      [req.body.date, req.body.name, req.body.time, req.body.league_id],
+      client.query('INSERT INTO games (date, name, time, leagues_id) VALUES ($1, $2, $3, $4) RETURNING *;',
+      [req.body.date, req.body.name, req.body.time, req.body.leagues_id],
       function(err, result){
         done()
         if (err){
@@ -21,8 +21,11 @@ router.post('/', function(req, res){
           res.sendStatus(500);
           }else{
             console.log('result.rows', result.rows);
-            var gamehash = hashids.encode(result.rows.id);
+            var gameid = result.rows[0].id;
+            console.log('this is the game id: ', gameid);
+            var gamehash = hashids.encode(gameid);
             console.log('Got hashids', gamehash)
+            console.log(hashids.decode(gamehash)[0]);
             res.send(gamehash);
           }
         });
