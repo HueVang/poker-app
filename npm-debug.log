@@ -9,8 +9,13 @@
 6 silly lifecycle company_project@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle company_project@1.0.0~start: company_project@1.0.0
 8 verbose lifecycle company_project@1.0.0~start: unsafe-perm in lifecycle true
+<<<<<<< HEAD
 9 verbose lifecycle company_project@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/huevang/Upsilon/Poker-App/poker-app/node_modules/.bin:/Users/huevang/anaconda2/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 10 verbose lifecycle company_project@1.0.0~start: CWD: /Users/huevang/Upsilon/Poker-App/poker-app
+=======
+9 verbose lifecycle company_project@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/mathiasbalogh/Desktop/Poker-App/node_modules/.bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+10 verbose lifecycle company_project@1.0.0~start: CWD: /Users/mathiasbalogh/Desktop/Poker-App
+>>>>>>> 1e273d8f0513a4c0f1d51fee593c31088e51bb3a
 11 silly lifecycle company_project@1.0.0~start: Args: [ '-c', 'node server.js' ]
 12 silly lifecycle company_project@1.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle company_project@1.0.0~start: Failed to exec start script
@@ -25,8 +30,13 @@
 14 verbose stack     at maybeClose (internal/child_process.js:885:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid company_project@1.0.0
+<<<<<<< HEAD
 16 verbose cwd /Users/huevang/Upsilon/Poker-App/poker-app
 17 error Darwin 15.3.0
+=======
+16 verbose cwd /Users/mathiasbalogh/Desktop/Poker-App
+17 error Darwin 16.1.0
+>>>>>>> 1e273d8f0513a4c0f1d51fee593c31088e51bb3a
 18 error argv "/usr/local/Cellar/node/7.4.0/bin/node" "/usr/local/bin/npm" "start"
 19 error node v7.4.0
 20 error npm  v4.0.5
