@@ -52,6 +52,7 @@ app.use('/users' ,users);
 
 
 
+
 // the following routes require authentication
 app.use('/private', ensureAuthenticated);
 
