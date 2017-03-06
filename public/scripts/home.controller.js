@@ -7,4 +7,7 @@ angular.module('pokerApp').controller('HomeController', function($http, $locatio
       console.log('Error logging out');
     });
   };
+
+  var socket = io.connect();
+  socket;
 });

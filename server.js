@@ -3,6 +3,9 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var session = require('express-session');
 var passport = require('passport');
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 var connection = require('./db/connection');
 var login = require('./routes/login');
@@ -17,7 +20,7 @@ require('./auth/setup');
 
 connection.connect();
 
-var app = express();
+
 
 var sessionConfig = {
   secret: process.env.SECRET || 'sduuhjmoilyiujn',
@@ -70,10 +73,20 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
+
 app.get('/*', function(req, res){
   res.sendFile(path.join(__dirname, 'public/views/index.html'));
 });
 
-var server = app.listen(3000, function() {
-  console.log('Listening on port', server.address().port);
+io.on('connection', function(socket){
+  console.log('A user connected');
+
+  socket.on('disconnect', function () {
+    console.log('A user disconnected');
+  });
+
+});
+
+var server = http.listen(3000, function() {
+  console.log('Listening on port', 3000);
 });
