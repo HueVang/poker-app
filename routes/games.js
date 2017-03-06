@@ -5,6 +5,16 @@ var pool = new pg.Pool(config);
 var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
 
+router.get('/hashid', function(req, res) {
+  var val1 = req.param('val1');
+  var val2 = req.param('val2');
+
+  var hash1 = hashids.encode(val1);
+  var hash2 = hashids.encode(val2);
+
+  res.send('val 1: ' + hash1 + ' and val 2: ' + hash2);
+}); // end router.get hashid
+
 router.post('/creategame', function(req, res){
   pool.connect(function(err, client, done){
     if(err){
