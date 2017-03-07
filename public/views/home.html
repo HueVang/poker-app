@@ -7,7 +7,17 @@
   </head>
   <body>
     <h1>Home</h1>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/"> PLAYER HOME </a></li>
+          <li><a href="/adminLeague"> ADMIN HOME </a></li>
+          <li><a href="/adminPlayer"> ADMIN PLAYER </a></li>
+          <li><a href="/createLeague"> CREATE LEAGUE </a></li>
+        </ul>
+      </div>
+    </nav>
     <!-- <script src="/socket.io/socket.io.js"></script> -->
-    <button ng-click="home.logout()" >Logout</button>
+    <button ng-click="home.logout()" class="btn btn-primary">Logout</button>
   </body>
 </html>

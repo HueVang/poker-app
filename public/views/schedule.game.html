@@ -1,6 +1,16 @@
 <h1>Schedule New Game</h1>
 
 <!-- navbar -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="/"> PLAYER HOME </a></li>
+      <li><a href="/adminLeague"> ADMIN HOME </a></li>
+      <li><a href="/adminPlayer"> ADMIN PLAYER </a></li>
+      <li><a href="/createLeague"> CREATE LEAGUE </a></li>
+    </ul>
+  </div>
+</nav>
 
 <form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" ng-submit="">
   <div class="form-group row">
@@ -39,16 +49,19 @@
   </div>
 </form>
 
-<table id="">
-  <tr>
-    <th>Player Name</th>
-    <th>Delete</th>
-  </tr>
-  <tr>
-    <td>Name</td>
-    <td><button type="submit" class="btn btn-default" >Delete</button></td>
-  </tr>
-</table>
-<div class="col-xs-offset-3 col-xs-10">
-  <button type="submit" class="btn btn-primary" >Add Player</button>
+<div id="">
+  <table id="">
+    <tr>
+      <th>Player Name</th>
+      <th>Delete</th>
+    </tr>
+    <tr>
+      <!-- add functionality to populate table -->
+      <td>Name</td>
+      <td><button type="submit" class="btn btn-default" >Delete</button></td>
+    </tr>
+  </table>
+  <div class="col-xs-offset-3 col-xs-10">
+    <button type="submit" class="btn btn-primary" >Add Player</button>
+  </div>
 </div>

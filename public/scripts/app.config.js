@@ -14,6 +14,18 @@ angular
         templateUrl: "views/register.html",
         controller: "RegisterController as register"
       })
+      .when("/adminLeague", {
+        templateUrl: "views/admin.league.html",
+        controller: "RegisterController as register" // need Admin League Controller
+      })
+      .when("/adminPlayer", {
+        templateUrl: "views/admin.player.html",
+        controller: "RegisterController as register" // need Admin Player Controller
+      })
+      .when("/createLeague", {
+        templateUrl: "views/create.league.html",
+        controller: "RegisterController as register" // need Create League Controller
+      })
       .otherwise({
         templateUrl: "views/login.html",
         controller: "LoginController as login"
