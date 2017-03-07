@@ -8,6 +8,7 @@ angular.module('pokerApp').controller('HomeController', function($http, $locatio
     });
   };
 
+
   var socket = io.connect();
   socket;
 });
