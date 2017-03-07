@@ -89,7 +89,82 @@ router.get('/sortusers', function(req, res) {
 }); // end router.get /users
 
 
-router.post('/', function(req, res) {
+router.post('/regulars', function(req, res) {
+  console.log('This is the req.user: ', req.user);
+  // console.log('This is the req.body:', req.body);
+  var email = req.user.email;
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          user: email,
+          pass: 'PrimeDevsUpsilonAces'
+      }
+  });
+
+  var game = req.body.game;
+  var users = req.body.user;
+  // var keys = Object.keys(users);
+
+  console.log('these are the req.body.user: ', users);
+
+  users.forEach(function(person, i) {
+    var key = Object.keys(person)[0];
+    var user_id = Number(hashids.decode(key));
+    var game_id = Number(hashids.decode(game));
+    var date = new Date();
+    var name = person.name;
+    var useremail = person[key];
+
+    console.log('Unhashed user id: ' + user_id + ' Unhashed game id: ' + game_id);
+    pool.connect(function(err, client, done){
+      if (err) {
+        console.log('Error connecting to DB', err);
+        res.sendStatus(500);
+        done();
+      } else {
+        client.query('INSERT INTO reservations (timestamp, points, games_id, users_id) VALUES ($1, $2, $3, $4) RETURNING *',
+           [date, 0, game_id, user_id],
+           function(err, result){
+             done();
+           if (err) {
+             console.log('Error updating reservations', err);
+             res.sendStatus(500);
+           } else {
+            //  res.send(result.rows);
+           }
+         });
+      }
+    });
+
+    var text = '<p>Hello '+ name + '! You have been registered for the upcoming game!</p>'
+    // setup email data with unicode symbols
+    let mailOptions = {
+        from: '"Prime Devs" <' + email + '>', // sender address
+        to: useremail, // list of receivers
+        subject: 'Test!', // Subject line
+        text: 'This is the text text', // plain text body
+        html: text // html body
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+  }); // end for Each
+
+  res.send(req.user.email);
+  // res.sendStatus(200);
+}); // end router.post
+
+
+
+
+router.post('/players', function(req, res) {
   console.log('This is the req.user: ', req.user);
   // console.log('This is the req.body:', req.body);
 
@@ -115,9 +190,10 @@ router.post('/', function(req, res) {
     // console.log('These are the keys: ', key);
     // console.log('These are the values: ', person[key]);
     var key = Object.keys(person)[0];
+    var name = person.name;
     var useremail = person[key];
 
-    var text = '<p>Click this link to get an RSVP! http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '</p>' 
+    var text = '<p>Hello '+ name + '! Click this link to get an RSVP! http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '&name=' + name.replace(/\s/g, '') + '</p>'
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"Prime Devs" <' + email + '>', // sender address
@@ -135,25 +211,6 @@ router.post('/', function(req, res) {
         console.log('Message %s sent: %s', info.messageId, info.response);
     });
   }); // end for Each
-
-  // emails.forEach(function(useremail) {
-  //   // setup email data with unicode symbols
-  //   let mailOptions = {
-  //       from: '"Prime Devs" <' + email + '>', // sender address
-  //       to: useremail, // list of receivers
-  //       subject: 'Test!', // Subject line
-  //       text: 'This is the text text', // plain text body
-  //       html: '<p>This is the test html</p>' // html body
-  //   };
-  //
-  //   // send mail with defined transport object
-  //   transporter.sendMail(mailOptions, (error, info) => {
-  //       if (error) {
-  //           return console.log(error);
-  //       }
-  //       console.log('Message %s sent: %s', info.messageId, info.response);
-  //   });
-  // }); // end for each
 
 
   res.send(req.user.email);

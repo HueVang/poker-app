@@ -48,6 +48,8 @@ router.get('/allusers', function(req, res){
               var obj = {};
               var key = hashids.encode(object.id);
               obj[key] = object.email;
+              obj['name'] = object.first_name + ' ' + object.last_name;
+              obj['regular'] = object.regular;
               usersinfo.push(obj);
             });
             res.send(usersinfo);
