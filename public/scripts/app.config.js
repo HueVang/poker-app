@@ -30,6 +30,10 @@ angular
         controller: "RegisterController as register",
         authRequired: true
       })
+      .when("/newGame", {
+        templateUrl: "views/schedule.game.html",
+        controller: "GameController as game"
+      })
       .otherwise({
         templateUrl: "views/login.html",
         controller: "LoginController as login"

@@ -2,6 +2,8 @@ var router = require('express').Router();
 var pg = require('pg');
 var config = {database: 'upsilon_aces'};
 var pool = new pg.Pool(config);
+var Hashids = require('hashids');
+var hashids = new Hashids('', 10);
 
 
 router.get('/user', function(req, res){
@@ -20,6 +22,37 @@ router.get('/user', function(req, res){
           }else{
             console.log('Got info from DB', result.rows)
             res.send(result.rows);
+          }
+        });
+    }
+  });
+});
+
+router.get('/allusers', function(req, res){
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('SELECT * FROM users',
+       function(err, result){
+        done();
+        if (err){
+          console.log('Error querying DB', err);
+          res.sendStatus(500);
+          }else{
+            console.log('Got info from DB', result.rows)
+            var usersinfo = [];
+            result.rows.forEach(function(object) {
+              var obj = {};
+              var key = hashids.encode(object.id);
+              obj[key] = object.email;
+              obj['name'] = object.first_name + ' ' + object.last_name;
+              obj['regular'] = object.regular;
+              usersinfo.push(obj);
+            });
+            res.send(usersinfo);
           }
         });
     }
