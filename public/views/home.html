@@ -7,7 +7,16 @@
   </head>
   <body>
     <h1>Home</h1>
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
     <button ng-click="home.logout()" >Logout</button>
+    <div id="playerList">
+      <ol ng-repeat="player in home.playerList">
+        <li>{{player.name}}</li>
+      </ol>
+    </div>
+    <!-- <div id="alternateList">
+      <ol ng-repeat="alternate in home.alternateList">
+        <li>{{player.name}}></li>
+      </ol>
+    </div> -->
   </body>
 </html>

@@ -36,7 +36,8 @@ id SERIAL PRIMARY KEY,
 timestamp VARCHAR(100),
 points integer,
 games_id integer NOT NULL References games,
-users_id integer NOT NULL References users
+users_id integer NOT NULL References users,
+name VARCHAR(100)
 );
 
 CREATE TABLE digests(
