@@ -4,6 +4,7 @@ var config = {database: 'upsilon_aces'};
 var pool = new pg.Pool(config);
 var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
+const nodemailer = require('nodemailer');
 
 // http://localhost:3000/reservations/users?id=l4zbq2dprO&game=7LDdwRb1YK
 
@@ -88,6 +89,83 @@ router.get('/sortusers', function(req, res) {
 }); // end router.get /users
 
 
+router.post('/', function(req, res) {
+  console.log('This is the req.user: ', req.user);
+  // console.log('This is the req.body:', req.body);
+
+  var email = req.user.email;
+
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          user: email,
+          pass: 'PrimeDevsUpsilonAces'
+      }
+  });
+
+
+  var game = req.body.game;
+  var users = req.body.user;
+  // var keys = Object.keys(users);
+
+  console.log('these are the req.body.user: ', users);
+
+  users.forEach(function(person, i) {
+    // console.log('These are the keys: ', key);
+    // console.log('These are the values: ', person[key]);
+    var key = Object.keys(person)[0];
+    var useremail = person[key];
+
+    var text = '<p>Click this link to get an RSVP! http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '</p>' 
+    // setup email data with unicode symbols
+    let mailOptions = {
+        from: '"Prime Devs" <' + email + '>', // sender address
+        to: useremail, // list of receivers
+        subject: 'Test!', // Subject line
+        text: 'This is the text text', // plain text body
+        html: text // html body
+    };
+
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+  }); // end for Each
+
+  // emails.forEach(function(useremail) {
+  //   // setup email data with unicode symbols
+  //   let mailOptions = {
+  //       from: '"Prime Devs" <' + email + '>', // sender address
+  //       to: useremail, // list of receivers
+  //       subject: 'Test!', // Subject line
+  //       text: 'This is the text text', // plain text body
+  //       html: '<p>This is the test html</p>' // html body
+  //   };
+  //
+  //   // send mail with defined transport object
+  //   transporter.sendMail(mailOptions, (error, info) => {
+  //       if (error) {
+  //           return console.log(error);
+  //       }
+  //       console.log('Message %s sent: %s', info.messageId, info.response);
+  //   });
+  // }); // end for each
+
+
+  res.send(req.user.email);
+  // res.sendStatus(200);
+}); // end router.post
+
+
+
+
+
+
+// ==========================================================================================================
 
 
 

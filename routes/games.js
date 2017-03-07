@@ -51,7 +51,7 @@ router.get('/games', function(req, res){
       res.sendStatus(500);
       done();
     } else {
-      client.query('SELECT * FROM games WHERE league_id = $1',
+      client.query('SELECT * FROM games WHERE leagues_id = $1',
       [req.body.league_id], function(err, result){
         done();
         if (err){

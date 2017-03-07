@@ -6,35 +6,41 @@
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">Game Name</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="">
+      <input class="form-control" type="text" ng-model="game.game.name">
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">Player Count</label>
     <div class="col-xs-8">
-      <input class="form-control" type="number" ng-model="">
+      <input class="form-control" type="number">
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">Time</label>
     <div class="col-xs-8">
-      <input class="form-control" type="time" ng-model="">
+      <input class="form-control" type="time" ng-model="game.game.time">
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">Date</label>
     <div class="col-xs-8">
-      <input class="form-control" type="date" ng-model="date">
+      <input class="form-control" type="date" ng-model="game.game.date">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-xs-offset-1 col-xs-2">League</label>
+    <div class="col-xs-8">
+      <input class="form-control" type="number" ng-model="game.game.leagues_id">
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">Blog Update</label>
     <div class="col-xs-8">
-      <textarea class="form-control" rows="5" type="text" ng-model=""></textarea>
+      <textarea class="form-control" rows="5" type="text"></textarea>
     </div>
   </div>
   <div class="col-xs-offset-3 col-xs-10">
-    <button type="submit" class="btn btn-primary" >Create League</button>
+    <button type="submit" class="btn btn-primary" ng-click="game.create(game.game)">Create Game</button>
     <button type="submit" class="btn btn-default" >Cancel</button>
   </div>
 </form>
@@ -52,3 +58,5 @@
 <div class="col-xs-offset-3 col-xs-10">
   <button type="submit" class="btn btn-primary" >Add Player</button>
 </div>
+
+<a href="/home">Home</a>
