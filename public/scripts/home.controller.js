@@ -12,11 +12,11 @@ angular.module('pokerApp').controller('HomeController', function($http, $locatio
       console.log('Error logging out');
     });
   };
-
     socket.on('broadcast', function(data){
       console.log(data.description);
       home.playerList = data.description;
       $scope.$apply();
     });
+
 
 });

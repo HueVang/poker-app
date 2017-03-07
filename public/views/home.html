@@ -7,16 +7,21 @@
   </head>
   <body>
     <h1>Home</h1>
-    <button ng-click="home.logout()" >Logout</button>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/home"> Player Home </a></li>
+          <li><a href="/adminLeague"> Admin Home </a></li>
+          <li><a href="/adminPlayer"> Admin Player </a></li>
+          <li><a href="/createLeague"> Create League </a></li>
+        </ul>
+      </div>
+    </nav>
     <div id="playerList">
       <ol ng-repeat="player in home.playerList">
         <li>{{player.name}}</li>
       </ol>
     </div>
-    <!-- <div id="alternateList">
-      <ol ng-repeat="alternate in home.alternateList">
-        <li>{{player.name}}></li>
-      </ol>
-    </div> -->
+    <button ng-click="home.logout()" class="btn btn-primary">Logout</button>
   </body>
 </html>
