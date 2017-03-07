@@ -12,19 +12,23 @@ angular
       })
       .when("/newUser", {
         templateUrl: "views/register.html",
-        controller: "RegisterController as register"
+        controller: "RegisterController as register",
+        authRequired: true
       })
       .when("/adminLeague", {
         templateUrl: "views/admin.league.html",
-        controller: "RegisterController as register" // need Admin League Controller
+        controller: "RegisterController as register",
+        authRequired: true
       })
       .when("/adminPlayer", {
         templateUrl: "views/admin.player.html",
-        controller: "RegisterController as register" // need Admin Player Controller
+        controller: "RegisterController as register",
+        authRequired: true
       })
       .when("/createLeague", {
         templateUrl: "views/create.league.html",
-        controller: "RegisterController as register" // need Create League Controller
+        controller: "RegisterController as register",
+        authRequired: true
       })
       .otherwise({
         templateUrl: "views/login.html",
