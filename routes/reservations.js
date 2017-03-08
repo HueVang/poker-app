@@ -6,8 +6,11 @@ var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
 const nodemailer = require('nodemailer');
 
-// http://localhost:3000/reservations/users?id=l4zbq2dprO&game=7LDdwRb1YK
 
+// http://localhost:3000/reservations/users?id=l4zbq2dprO&game=7LDdwRb1YK
+var returnRouter=function(io){
+  var playerList= [];
+  var alternateList= [];
 // test path to add users into our reservations table with hased values
 router.get('/users', function(req, res) {
   console.log('Hashed user id: ' + req.param('id') + ' hashed game id: ' + req.param('game'));
@@ -30,7 +33,32 @@ router.get('/users', function(req, res) {
            console.log('Error updating reservations', err);
            res.sendStatus(500);
          } else {
-           res.send(result.rows);
+           pool.connect(function(err, client, done){
+             if (err) {
+               console.log('Error connecting to DB', err);
+               res.sendStatus(500);
+               done();
+             } else {
+               client.query('SELECT users_id FROM reservations WHERE games_id=$1 ORDER BY timestamp ASC',
+               [game_id],
+                  function(err, result){
+                    done();
+                  if (err) {
+                    console.log('Error updating reservations', err);
+                    res.sendStatus(500);
+                  }else {
+                    result.rows.forEach(function(i){
+                      if(playerList.length < 30){
+                        playerList.push(i);
+                      }else{
+                          alternateList.push(i);
+                        }
+                      });
+                    }
+                  }
+                });
+             }
+           });
          }
        });
     }
@@ -56,7 +84,25 @@ router.get('/usersnohash', function(req, res) {
            console.log('Error updating reservations', err);
            res.sendStatus(500);
          } else {
-           res.send(result.rows);
+           pool.connect(function(err, client, done){
+             if (err) {
+               console.log('Error connecting to DB', err);
+               res.sendStatus(500);
+               done();
+             } else {
+               client.query('SELECT users_id FROM reservations WHERE games_id=$1 ORDER BY timestamp ASC',
+                [game_id],
+                  function(err, result){
+                    done();
+                  if (err) {
+                    console.log('Error updating reservations', err);
+                    res.sendStatus(500);
+                  } else {
+                    res.send(result.rows);
+                  }
+                });
+             }
+           });
          }
        });
     }
@@ -64,29 +110,29 @@ router.get('/usersnohash', function(req, res) {
 }); // end router.get /users
 
 //test path to sort list of users in specified game by earliest rsvp
-router.get('/sortusers', function(req, res) {
-  var user_id = req.param('id');
-  var game_id = req.param('game');
-  var date = new Date();
-  pool.connect(function(err, client, done){
-    if (err) {
-      console.log('Error connecting to DB', err);
-      res.sendStatus(500);
-      done();
-    } else {
-      client.query('SELECT users_id FROM reservations WHERE games_id=10 ORDER BY timestamp ASC',
-         function(err, result){
-           done();
-         if (err) {
-           console.log('Error updating reservations', err);
-           res.sendStatus(500);
-         } else {
-           res.send(result.rows);
-         }
-       });
-    }
-  });
-}); // end router.get /users
+// router.get('/sortusers', function(req, res) {
+//   var user_id = req.param('id');
+//   var game_id = req.param('game');
+//   var date = new Date();
+//   pool.connect(function(err, client, done){
+//     if (err) {
+//       console.log('Error connecting to DB', err);
+//       res.sendStatus(500);
+//       done();
+//     } else {
+//       client.query('SELECT users_id FROM reservations WHERE games_id=10 ORDER BY timestamp ASC',
+//          function(err, result){
+//            done();
+//          if (err) {
+//            console.log('Error updating reservations', err);
+//            res.sendStatus(500);
+//          } else {
+//            res.send(result.rows);
+//          }
+//        });
+//     }
+//   });
+// }); // end router.get /users
 
 
 router.post('/regulars', function(req, res) {
@@ -270,5 +316,9 @@ router.delete('/:id:games_id', function(req, res){
  });
 });
 
+return router;
 
-module.exports = router;
+}
+
+
+module.exports = returnRouter;
