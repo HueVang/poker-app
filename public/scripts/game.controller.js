@@ -21,8 +21,10 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   ctrl.create = function(game) {
     console.log('This is the game attributes: ', game);
     GameService.createGame(game).then(function(res) {
-      gamehash = res.data;
+      gamehash = res.data.gamehash;
       console.log('This is the game hash: ', gamehash);
+      gameinfo = res.data;
+      console.log('This is the gameinfo: ', gameinfo);
 
     }).then(function() {
       UserService.getUsers().then(function(res) {
@@ -40,9 +42,10 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
           }
         }); // end users.forEach
 
-        regulardata = {game : gamehash, user : regulars};
-        playerdata = {game : gamehash, user : players};
         digest = {'gameid' : gamehash, 'entry' : game.digest};
+        regulardata = {'gameid' : gamehash, 'gamename' : gameinfo.name, 'gamedate' : gameinfo.date, 'gamecount' : gameinfo.count, 'gametime' : gameinfo.time, 'user' : regulars, 'digest' : game.digest};
+        playerdata = {'gameid' : gamehash, 'gamename' : gameinfo.name, 'gamedate' : gameinfo.date, 'gamecount' : gameinfo.count, 'gametime' : gameinfo.time, 'user' : players, 'digest' : game.digest};
+
 
         DigestService.postDigest(digest).then(function(res) {
 

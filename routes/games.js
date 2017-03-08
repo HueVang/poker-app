@@ -36,7 +36,7 @@ router.post('/creategame', function(req, res){
             var gamehash = hashids.encode(gameid);
             console.log('Got hashids', gamehash)
             console.log(hashids.decode(gamehash)[0]);
-            res.send(gamehash);
+            res.send({'name' : req.body.name, 'time' : req.body.time, 'date' : req.body.date, 'count' : req.body.count, 'gamehash' : gamehash});
           }
         });
     }
