@@ -12,8 +12,7 @@ angular
       })
       .when("/newUser", {
         templateUrl: "views/register.html",
-        controller: "RegisterController as register",
-        authRequired: true
+        controller: "RegisterController as register"
       })
       .when("/adminLeague", {
         templateUrl: "views/admin.league.html",

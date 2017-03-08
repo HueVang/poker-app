@@ -1,6 +1,8 @@
 angular.module('pokerApp').controller('RegisterController', function($http, $location){
   var ctrl = this;
 
+  console.log('RegisterController loaded');
+
   ctrl.register = function() {
     console.log('creating a new user');
 

@@ -1,15 +1,13 @@
-angular.module('pokerApp').controller('GameController', function(GameService, MailService, UserService){
+angular.module('pokerApp').controller('GameController', function(GameService, MailService, UserService, DigestService){
   var ctrl = this;
-  ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'leagues_id' : ''};
+  ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'digest' : '', 'leagues_id' : ''};
   var gamehash = 'this isn\'t right...';
   var users = 'neither is this...';
   var data = 'okay...';
 
-
   GameService.log();
   MailService.log();
   UserService.log();
-
 
   ctrl.create = function(game) {
     console.log('This is the game attributes: ', game);
@@ -31,27 +29,27 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
             console.log('This person is a player: ', person.name);
             players.push(person);
           }
-        });
-
+        }); // end users.forEach
 
         regulardata = {game : gamehash, user : regulars};
         playerdata = {game : gamehash, user : players};
+        digest = {'gameid' : gamehash, 'entry' : game.digest};
+
+        DigestService.postDigest(digest).then(function(res) {
+
+        }); // end DigestService.postDigest
 
         MailService.sendEmailRegulars(regulardata).then(function(res) {
 
-        });
+        }); // end MailService sendEmailRegulars
 
         MailService.sendEmailPlayers(playerdata).then(function(res) {
 
-        });
+        }); // end MailService sendEmailPlayers
 
-
-
-      });
+      }); // end UserService.getUsers
     });
-
-
-
   }; // end ctrl.create
 
-});
+
+}); // end angular.module
