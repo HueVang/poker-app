@@ -56,15 +56,14 @@ router.get('/users', function(req, res) {
                         }
                       });
                     }
-                  }
-                });
-             }
-           });
-         }
-       });
-    }
-  });
-}); // end router.get /users
+                  })
+                };
+             })
+           };
+         })
+       };
+    })
+  }); // end router.get /users
 
 //test path to add users to reservation table with unhashed values
 router.get('/usersnohash', function(req, res) {
@@ -250,7 +249,7 @@ router.post('/players', function(req, res) {
     var name = person.name;
     var useremail = person[key];
 
-    var text = '<p>Hello '+ name + '!<br /> Click on the link to get an RSVP for ' + gamename + ' on ' + gamedate.toISOString().slice(0,10) + '!<br />' + gamedigest + '<br /> http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '&count=' + gamecount + '&name=' + name.replace(/\s/g, '') + '</p>'
+    var text = '<p>Hello '+ name + '!<br /> Click on the link to RSVP for ' + gamename + ' on ' + gamedate.toISOString().slice(0,10) + '!<br />' + gamedigest + '<br /> http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '&count=' + gamecount + '&name=' + name.replace(/\s/g, '') + '</p>'
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"Prime Devs" <' + email + '>', // sender address
