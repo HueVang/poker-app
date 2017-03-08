@@ -34,6 +34,16 @@ angular
         templateUrl: "views/schedule.game.html",
         controller: "GameController as game"
       })
+      .when("/edit.profile", {
+        templateUrl: "views/edit.profile.html",
+        controller: "ProfileController as profile",
+        authRequired: true
+      })
+      .when("/other.profile" , {
+        templateUrl: "views/other.profile.html",
+        controller: "OtherPlayerProfileController as otherPlayerProfile",
+        authRequired: true
+      })
       .otherwise({
         templateUrl: "views/login.html",
         controller: "LoginController as login"
