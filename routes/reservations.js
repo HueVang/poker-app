@@ -6,13 +6,17 @@ var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
 const nodemailer = require('nodemailer');
 
-// http://localhost:3000/reservations/users?id=l4zbq2dprO&game=7LDdwRb1YK
 
+// http://localhost:3000/reservations/users?id=l4zbq2dprO&game=7LDdwRb1YK
+var returnRouter=function(io){
+  var playerList= [];
+  var alternateList= [];
 // test path to add users into our reservations table with hased values
 router.get('/users', function(req, res) {
   console.log('Hashed user id: ' + req.param('id') + ' hashed game id: ' + req.param('game'));
   var user_id = Number(hashids.decode(req.param('id')));
   var game_id = Number(hashids.decode(req.param('game')));
+  var game_count = Number(req.param('count'));
   var date = new Date();
   console.log('Unhashed user id: ' + user_id + ' Unhashed game id: ' + game_id);
   // res.send('User id: ' + user_id + ' and game id: ' + game_id);
@@ -30,7 +34,32 @@ router.get('/users', function(req, res) {
            console.log('Error updating reservations', err);
            res.sendStatus(500);
          } else {
-           res.send(result.rows);
+           pool.connect(function(err, client, done){
+             if (err) {
+               console.log('Error connecting to DB', err);
+               res.sendStatus(500);
+               done();
+             } else {
+               client.query('SELECT users_id FROM reservations WHERE games_id=$1 ORDER BY timestamp ASC',
+               [game_id],
+                  function(err, result){
+                    done();
+                  if (err) {
+                    console.log('Error updating reservations', err);
+                    res.sendStatus(500);
+                  }else {
+                    result.rows.forEach(function(i){
+                      if(playerList.length < 30){
+                        playerList.push(i);
+                      }else{
+                          alternateList.push(i);
+                        }
+                      });
+                    }
+                  }
+                });
+             }
+           });
          }
        });
     }
@@ -56,7 +85,25 @@ router.get('/usersnohash', function(req, res) {
            console.log('Error updating reservations', err);
            res.sendStatus(500);
          } else {
-           res.send(result.rows);
+           pool.connect(function(err, client, done){
+             if (err) {
+               console.log('Error connecting to DB', err);
+               res.sendStatus(500);
+               done();
+             } else {
+               client.query('SELECT users_id FROM reservations WHERE games_id=$1 ORDER BY timestamp ASC',
+                [game_id],
+                  function(err, result){
+                    done();
+                  if (err) {
+                    console.log('Error updating reservations', err);
+                    res.sendStatus(500);
+                  } else {
+                    res.send(result.rows);
+                  }
+                });
+             }
+           });
          }
        });
     }
@@ -64,29 +111,29 @@ router.get('/usersnohash', function(req, res) {
 }); // end router.get /users
 
 //test path to sort list of users in specified game by earliest rsvp
-router.get('/sortusers', function(req, res) {
-  var user_id = req.param('id');
-  var game_id = req.param('game');
-  var date = new Date();
-  pool.connect(function(err, client, done){
-    if (err) {
-      console.log('Error connecting to DB', err);
-      res.sendStatus(500);
-      done();
-    } else {
-      client.query('SELECT users_id FROM reservations WHERE games_id=10 ORDER BY timestamp ASC',
-         function(err, result){
-           done();
-         if (err) {
-           console.log('Error updating reservations', err);
-           res.sendStatus(500);
-         } else {
-           res.send(result.rows);
-         }
-       });
-    }
-  });
-}); // end router.get /users
+// router.get('/sortusers', function(req, res) {
+//   var user_id = req.param('id');
+//   var game_id = req.param('game');
+//   var date = new Date();
+//   pool.connect(function(err, client, done){
+//     if (err) {
+//       console.log('Error connecting to DB', err);
+//       res.sendStatus(500);
+//       done();
+//     } else {
+//       client.query('SELECT users_id FROM reservations WHERE games_id=10 ORDER BY timestamp ASC',
+//          function(err, result){
+//            done();
+//          if (err) {
+//            console.log('Error updating reservations', err);
+//            res.sendStatus(500);
+//          } else {
+//            res.send(result.rows);
+//          }
+//        });
+//     }
+//   });
+// }); // end router.get /users
 
 
 router.post('/regulars', function(req, res) {
@@ -103,8 +150,13 @@ router.post('/regulars', function(req, res) {
       }
   });
 
-  var game = req.body.game;
+  var game = req.body.gameid;
   var users = req.body.user;
+  var gamedigest = req.body.digest;
+  var gamecount = req.body.gamecount;
+  var gamename = req.body.gamename;
+  var gamedate = new Date(req.body.gamedate);
+  var gametime = req.body.gametime;
   // var keys = Object.keys(users);
 
   console.log('these are the req.body.user: ', users);
@@ -138,7 +190,7 @@ router.post('/regulars', function(req, res) {
       }
     });
 
-    var text = '<p>Hello '+ name + '! You have been registered for the upcoming game!</p>'
+    var text = '<p>Hello '+ name + '!<br /> You have been registered for the upcoming game "' + gamename + '" at ' + gamedate.toISOString().slice(0,10) + '!<br/>' + gamedigest + '</p>'
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"Prime Devs" <' + email + '>', // sender address
@@ -180,8 +232,13 @@ router.post('/players', function(req, res) {
   });
 
 
-  var game = req.body.game;
+  var game = req.body.gameid;
   var users = req.body.user;
+  var gamedigest = req.body.digest;
+  var gamecount = req.body.gamecount;
+  var gamename = req.body.gamename;
+  var gamedate = new Date(req.body.gamedate);
+  var gametime = req.body.gametime;
   // var keys = Object.keys(users);
 
   console.log('these are the req.body.user: ', users);
@@ -193,7 +250,7 @@ router.post('/players', function(req, res) {
     var name = person.name;
     var useremail = person[key];
 
-    var text = '<p>Hello '+ name + '! Click this link to get an RSVP! http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '&name=' + name.replace(/\s/g, '') + '</p>'
+    var text = '<p>Hello '+ name + '!<br /> Click on the link to get an RSVP for ' + gamename + ' on ' + gamedate.toISOString().slice(0,10) + '!<br />' + gamedigest + '<br /> http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '&count=' + gamecount + '&name=' + name.replace(/\s/g, '') + '</p>'
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"Prime Devs" <' + email + '>', // sender address
@@ -270,5 +327,9 @@ router.delete('/:id:games_id', function(req, res){
  });
 });
 
+return router;
 
-module.exports = router;
+}
+
+
+module.exports = returnRouter;

@@ -16,22 +16,32 @@ angular
       })
       .when("/adminLeague", {
         templateUrl: "views/admin.league.html",
-        controller: "RegisterController as register",
+        controller: "AdminController as admin",
         authRequired: true
       })
       .when("/playerRoster", {
         templateUrl: "views/player.roster.html",
-        controller: "RegisterController as register",
+        controller: "AdminController as admin",
         authRequired: true
       })
       .when("/createLeague", {
         templateUrl: "views/create.league.html",
-        controller: "RegisterController as register",
+        controller: "AdminController as admin",
         authRequired: true
       })
       .when("/newGame", {
         templateUrl: "views/schedule.game.html",
         controller: "GameController as game",
+        authRequired: true
+      })
+      .when("/edit.profile", {
+        templateUrl: "views/edit.profile.html",
+        controller: "ProfileController as profile",
+        authRequired: true
+      })
+      .when("/other.profile" , {
+        templateUrl: "views/other.profile.html",
+        controller: "OtherPlayerProfileController as otherPlayerProfile",
         authRequired: true
       })
       .otherwise({

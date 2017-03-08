@@ -7,12 +7,14 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+
+
 var connection = require('./db/connection');
 var login = require('./routes/login');
 var register = require('./routes/register');
 var digests = require('./routes/digests');
 var games = require('./routes/games');
-var reservations = require('./routes/reservations');
+var reservations = require('./routes/reservations')(io);
 var leagues = require('./routes/leagues');
 var users = require('./routes/users');
 

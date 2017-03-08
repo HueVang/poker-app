@@ -2,7 +2,8 @@ var router = require('express').Router();
 var pg = require('pg');
 var config = {database: 'upsilon_aces'};
 var pool = new pg.Pool(config);
-
+var Hashids = require('hashids');
+var hashids = new Hashids('', 10);
 
 router.get('/', function(req, res){
   pool.connect(function(err, client, done){
@@ -23,10 +24,14 @@ router.get('/', function(req, res){
         });
       }
     });
-  });
+  }); // end router.get
 
 
 router.post('/', function(req, res){
+  var date = new Date();
+  var games_id = Number(hashids.decode(req.body.gameid));
+  console.log('this is the games_id: ', games_id);
+
   pool.connect(function(err, client, done){
     if(err){
       console.log('Error connecting to the DB', err);
@@ -34,7 +39,7 @@ router.post('/', function(req, res){
       done();
     } else {
       client.query('INSERT INTO digests (entry, date, games_id) VALUES ($1, $2, $3) RETURNING *;',
-      [req.body.entry, req.body.date, req.body.games_id],
+      [req.body.entry, date, games_id],
       function(err, result){
         done();
         if (err){
@@ -47,7 +52,7 @@ router.post('/', function(req, res){
         });
       }
     });
-  });
+  }); // end router.post
 
 
   router.put('/:id', function(req, res){

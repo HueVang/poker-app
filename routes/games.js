@@ -22,8 +22,8 @@ router.post('/creategame', function(req, res){
       res.sendStatus(500);
       done();
     } else {
-      client.query('INSERT INTO games (date, name, time, leagues_id) VALUES ($1, $2, $3, $4) RETURNING *;',
-      [req.body.date, req.body.name, req.body.time, req.body.leagues_id],
+      client.query('INSERT INTO games (date, name, time, count, leagues_id) VALUES ($1, $2, $3, $4, $5) RETURNING *;',
+      [req.body.date, req.body.name, req.body.time, req.body.count, req.body.leagues_id],
       function(err, result){
         done()
         if (err){
@@ -36,7 +36,7 @@ router.post('/creategame', function(req, res){
             var gamehash = hashids.encode(gameid);
             console.log('Got hashids', gamehash)
             console.log(hashids.decode(gamehash)[0]);
-            res.send(gamehash);
+            res.send({'name' : req.body.name, 'time' : req.body.time, 'date' : req.body.date, 'count' : req.body.count, 'gamehash' : gamehash});
           }
         });
     }

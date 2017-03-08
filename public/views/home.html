@@ -22,6 +22,9 @@
         <li>{{player.name}}</li>
       </ol>
     </div>
+    <div ng-repeat="digest in home.digestList">
+      {{digest.entry}}
+    </div>
     <button ng-click="home.logout()" class="btn btn-primary">Logout</button>
 
   </body>
