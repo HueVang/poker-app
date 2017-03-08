@@ -16,12 +16,12 @@ angular
       })
       .when("/adminLeague", {
         templateUrl: "views/admin.league.html",
-        controller: "RegisterController as register",
+        controller: "AdminController as admin",
         authRequired: true
       })
       .when("/adminPlayer", {
         templateUrl: "views/admin.player.html",
-        controller: "RegisterController as register",
+        controller: "AdminController as admin",
         authRequired: true
       })
       .when("/createLeague", {
