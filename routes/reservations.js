@@ -16,6 +16,7 @@ router.get('/users', function(req, res) {
   console.log('Hashed user id: ' + req.param('id') + ' hashed game id: ' + req.param('game'));
   var user_id = Number(hashids.decode(req.param('id')));
   var game_id = Number(hashids.decode(req.param('game')));
+  var game_count = Number(req.param('count'));
   var date = new Date();
   console.log('Unhashed user id: ' + user_id + ' Unhashed game id: ' + game_id);
   // res.send('User id: ' + user_id + ' and game id: ' + game_id);
@@ -149,8 +150,13 @@ router.post('/regulars', function(req, res) {
       }
   });
 
-  var game = req.body.game;
+  var game = req.body.gameid;
   var users = req.body.user;
+  var gamedigest = req.body.digest;
+  var gamecount = req.body.gamecount;
+  var gamename = req.body.gamename;
+  var gamedate = new Date(req.body.gamedate);
+  var gametime = req.body.gametime;
   // var keys = Object.keys(users);
 
   console.log('these are the req.body.user: ', users);
@@ -184,7 +190,7 @@ router.post('/regulars', function(req, res) {
       }
     });
 
-    var text = '<p>Hello '+ name + '! You have been registered for the upcoming game!</p>'
+    var text = '<p>Hello '+ name + '!<br /> You have been registered for the upcoming game "' + gamename + '" at ' + gamedate.toISOString().slice(0,10) + '!<br/>' + gamedigest + '</p>'
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"Prime Devs" <' + email + '>', // sender address
@@ -226,8 +232,13 @@ router.post('/players', function(req, res) {
   });
 
 
-  var game = req.body.game;
+  var game = req.body.gameid;
   var users = req.body.user;
+  var gamedigest = req.body.digest;
+  var gamecount = req.body.gamecount;
+  var gamename = req.body.gamename;
+  var gamedate = new Date(req.body.gamedate);
+  var gametime = req.body.gametime;
   // var keys = Object.keys(users);
 
   console.log('these are the req.body.user: ', users);
@@ -239,7 +250,7 @@ router.post('/players', function(req, res) {
     var name = person.name;
     var useremail = person[key];
 
-    var text = '<p>Hello '+ name + '! Click this link to get an RSVP! http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '&name=' + name.replace(/\s/g, '') + '</p>'
+    var text = '<p>Hello '+ name + '!<br /> Click on the link to get an RSVP for ' + gamename + ' on ' + gamedate.toISOString().slice(0,10) + '!<br />' + gamedigest + '<br /> http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '&count=' + gamecount + '&name=' + name.replace(/\s/g, '') + '</p>'
     // setup email data with unicode symbols
     let mailOptions = {
         from: '"Prime Devs" <' + email + '>', // sender address

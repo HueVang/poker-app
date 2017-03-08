@@ -57,5 +57,11 @@
   </div>
 </form>
 
+
 <p><img class="" ng-src="" alt=""></p>
-<button type="button" class="btn btn-primary">Change Photo...</button>
+
+<form id="upload" action="/register/image" method="post" enctype="multipart/form-data">
+  <label class="btn btn-primary" for="profilePicture">Change Profile </label>
+  <input id="profilePicture" type="file" name="{{ profile.player_info[0].username }}"/>
+</form>
+<!-- <button type="button" class="btn btn-primary">Change Photo...</button> -->

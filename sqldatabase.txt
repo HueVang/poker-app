@@ -27,6 +27,7 @@ CREATE TABLE games(
 id SERIAL PRIMARY KEY,
 name VARCHAR(100),
 date DATE,
+count integer,
 time VARCHAR(50),
 leagues_id integer NOT NULL References leagues
 );

@@ -12,17 +12,16 @@ angular
       })
       .when("/newUser", {
         templateUrl: "views/register.html",
-        controller: "RegisterController as register",
-        authRequired: true
+        controller: "RegisterController as register"
       })
       .when("/adminLeague", {
         templateUrl: "views/admin.league.html",
-        controller: "RegisterController as register",
+        controller: "AdminController as admin",
         authRequired: true
       })
       .when("/adminPlayer", {
         templateUrl: "views/admin.player.html",
-        controller: "RegisterController as register",
+        controller: "AdminController as admin",
         authRequired: true
       })
       .when("/createLeague", {
@@ -33,6 +32,16 @@ angular
       .when("/newGame", {
         templateUrl: "views/schedule.game.html",
         controller: "GameController as game"
+      })
+      .when("/edit.profile", {
+        templateUrl: "views/edit.profile.html",
+        controller: "ProfileController as profile",
+        authRequired: true
+      })
+      .when("/other.profile" , {
+        templateUrl: "views/other.profile.html",
+        controller: "OtherPlayerProfileController as otherPlayerProfile",
+        authRequired: true
       })
       .otherwise({
         templateUrl: "views/login.html",
