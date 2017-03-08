@@ -1,6 +1,6 @@
 angular.module('pokerApp').controller('GameController', function(GameService, MailService, UserService, DigestService){
   var ctrl = this;
-  ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'digest' : '', 'leagues_id' : ''};
+  ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'count' : '', 'digest' : '', 'leagues_id' : ''};
   var gamehash = 'this isn\'t right...';
   var users = 'neither is this...';
   var data = 'okay...';
