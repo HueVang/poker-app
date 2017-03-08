@@ -4,10 +4,19 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   var gamehash = 'this isn\'t right...';
   var users = 'neither is this...';
   var data = 'okay...';
+  ctrl.userList = {'first_name' : 'No', 'last_name' : 'Yes'};
 
   GameService.log();
   MailService.log();
   UserService.log();
+
+  ctrl.getRegulars = function() {
+    UserService.getRegulars().then(function(res) {
+      ctrl.userList = res.data;
+    })
+  }; // end ctrl.getUsersNames
+
+  ctrl.getRegulars();
 
   ctrl.create = function(game) {
     console.log('This is the game attributes: ', game);
