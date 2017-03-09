@@ -5,15 +5,6 @@ var pool = new pg.Pool(config);
 var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
 
-router.get('/hashid', function(req, res) {
-  var val1 = req.param('val1');
-  var val2 = req.param('val2');
-
-  var hash1 = hashids.encode(val1);
-  var hash2 = hashids.encode(val2);
-
-  res.send('val 1: ' + hash1 + ' and val 2: ' + hash2);
-}); // end router.get hashid
 
 router.post('/creategame', function(req, res){
   pool.connect(function(err, client, done){
@@ -53,6 +44,27 @@ router.get('/games', function(req, res){
     } else {
       client.query('SELECT * FROM games WHERE leagues_id = $1',
       [req.body.league_id], function(err, result){
+        done();
+        if (err){
+          console.log('Error querying DB', err);
+          res.sendStatus(500);
+          }else{
+            console.log('Got info from DB', result.rows)
+            res.send(result.rows);
+          }
+        });
+    }
+  });
+});
+
+router.get('/getCurrentGames', function(req, res){
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('SELECT * FROM games ORDER BY id DESC limit 2', function(err, result){
         done();
         if (err){
           console.log('Error querying DB', err);
