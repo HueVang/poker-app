@@ -66,6 +66,29 @@ router.get('/games', function(req, res){
   });
 });
 
+router.get('/:leagueId', function(req, res){
+  var leagueId = req.params.leagueId;
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('SELECT * FROM games WHERE leagues_id = $1',
+      [leagueId], function(err, result){
+        done();
+        if (err){
+          console.log('Error querying DB', err);
+          res.sendStatus(500);
+          }else{
+            console.log('Got info from DB', result.rows)
+            res.send(result.rows);
+          }
+        });
+    }
+  });
+});
+
 router.put('/:id', function(req, res){
  pool.connect(function(err, client, done){
    if (err) {

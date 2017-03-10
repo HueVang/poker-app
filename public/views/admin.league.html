@@ -16,13 +16,14 @@
 <div id="">
   <h2>Leagues</h2>
   <a href="/createLeague">Create New League...</a>
-  <select class="form-control dropdown-toggle col-md-4" name="">
+  <select class="form-control dropdown-toggle col-md-4" ng-model="leagueId" ng-change="admin.getGames(leagueId)">
     <label for="">Select League</label>
-    <option value="">**League**</option>
+    <option ng-repeat="league in admin.leagues" value="{{league.id}}">{{league.name}}</option>
   </select>
 </div>
 
 <div id="">
+
   <h2>Games</h2>
   <button ng-click="admin.newGame()" class="btn btn-default" >Schedule Game</button>
   <table id="">
@@ -32,12 +33,12 @@
       <th>Alternate Count</th>
       <th>Edit?</th>
     </tr>
-    <tr>
+    <tr ng-repeat="game in admin.games">
       <!-- add functionality to populate table -->
-      <td>Game Name</td>
-      <td>0</td>
-      <td>0</td>
-      <td><button type="submit" class="btn btn-default" >Edit Player...</button></td>
+      <td>{{game.name}}</td>
+      <th>{{game.count}}</th>
+      <th>0</th>
+      <td><button ng-click="admin.editGame()" class="btn btn-default" >Edit Game...</button></td>
     </tr>
   </table>
 </div>
