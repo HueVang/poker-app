@@ -66,6 +66,30 @@ router.get('/users', function(req, res) {
     })
   }); // end router.get /users
 
+  router.get('/:leagueId', function(req, res){
+    var leagueId = req.params.leagueId;
+    console.log('This is the league id: ', leagueId);
+    pool.connect(function(err, client, done){
+      if (err) {
+        console.log('Error connecting to DB', err);
+        res.sendStatus(500);
+        done();
+      } else {
+        client.query('SELECT * FROM reservations WHERE leagues_id = $1;',
+           [leagueId],
+           function(err, result){
+             done();
+           if (err) {
+             console.log('Error updating users', err);
+             res.sendStatus(500);
+           } else {
+             res.send(result.rows);
+           }
+         });
+      }
+    });
+  })
+
 
 //test path to sort list of users in specified game by earliest rsvp
 // router.get('/sortusers', function(req, res) {

@@ -13,6 +13,12 @@ angular.module('pokerApp').service('LeagueService', function($http, $location) {
     })
   }; // end ctrl.getLeagues
 
+  ctrl.getLeaderboard = function(leagueId) {
+    return $http.get('/leagues/' + leagueId).then(function(res) {
+      return res;
+    })
+  }; // end ctrl.getLeaderboard
+
   ctrl.log = function() {
     console.log('This is the league service console log');
   };
