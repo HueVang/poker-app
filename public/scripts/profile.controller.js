@@ -1,6 +1,5 @@
 angular.module('pokerApp').controller('ProfileController', function($http, $location) {
   console.log('ProfileController loaded');
-//use the upsilon_passport sql branch
 
   var ctrl = this;
   ctrl.profile_info = [
@@ -46,7 +45,7 @@ angular.module('pokerApp').controller('ProfileController', function($http, $loca
   ctrl.linkedin = function() {
     if (ctrl.profile_info[0].linkedin == null) {
       console.log('No linkedin link');
-      $location.path('/profile');
+      $location.path('/edit.profile');
     } else {
       window.location.href = (ctrl.profile_info[0].linkedin);
     }
@@ -60,20 +59,16 @@ angular.module('pokerApp').controller('ProfileController', function($http, $loca
     $location.path('/edit.profile');
   }; //end edit function
 
-  // ctrl.cancel = function() {
-  //   $location.path('/register');
-  // }; // end cancel function
-
-
   ctrl.saveProfileChanges = function(playerInfo) {
     console.log('This is the player\'s info: ', playerInfo);
     return $http.post('/register/image', playerInfo).then(function(response) {
       $location.path('/edit.profile');
       // return response;
     }).catch(function(err) {
-      console.log('error getting response from register.js: ', err);
+      console.log('error getting response: ', err);
+      ctrl.getPlayerProfileInfo();
     });
-  }; // end saveChanges function
+  }; // end saveProfileChanges function
 
   ctrl.logout = function() {
     $http.delete('/login').then(function(){

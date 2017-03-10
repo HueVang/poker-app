@@ -11,7 +11,7 @@ const nodemailer = require('nodemailer');
 var returnRouter=function(io){
   var playerList= [];
   var alternateList= [];
-// test path to add users into our reservations table with hased values
+// test path to add users into our reservations table with hashed values
 router.get('/users', function(req, res) {
   console.log('Hashed user id: ' + req.param('id') + ' hashed game id: ' + req.param('game'));
   var user_id = Number(hashids.decode(req.param('id')));
@@ -56,13 +56,13 @@ router.get('/users', function(req, res) {
                         }
                       });
                     }
-                  })
-                };
-             })
-           };
-         })
-       };
-    })
+                  });
+                }
+             });
+           }
+         });
+       }
+    });
   }); // end router.get /users
 
 //test path to add users to reservation table with unhashed values

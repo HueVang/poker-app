@@ -8,7 +8,7 @@ angular.module('pokerApp').controller('HomeController', function(DigestService, 
     DigestService.getDigests().then(function(res) {
       console.log('This is the digests: ', res.data);
       ctrl.digestList = res.data;
-    })
+    });
   }; // end ctrl.getDigests
 
   ctrl.getDigests();

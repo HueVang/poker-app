@@ -1,24 +1,22 @@
 var router = require('express').Router();
 var User = require('../models/user');
-//things added for multer
+
 var pg = require('pg');
 var multer = require('multer');
-
 var pool = new pg.Pool({ database: "upsilon_aces" });
 
-
+var username = "";
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, '/Users/ahkillahdavis/company_project/public/uploads/');
-  },
+cb(null,  __dirname +'/../public/uploads/'+username);
+},
+
   filename: function (req, file, cb) {
-    cb(null, username + '.jpg');
+    cb(req.file, file.fieldname+'.jpg' , username+ '.jpg');
   }
 });
 
 var upload = multer({ storage: storage });
-
-
 
 
 router.post('/image', upload.any(), function(req, res, next) {
@@ -71,7 +69,8 @@ router.get("/playerinfo", function(req, res) {
       }
     });
   }); // end of get playerinfo
-//end of things added for multer
+
+
 
 
 router.post('/', function(req, res){

@@ -18,7 +18,7 @@ router.get('/', function(req, res){
           console.log('Error querying DB', err);
           res.sendStatus(500);
           }else{
-            console.log('Got info from DB', result.rows)
+            console.log('Got info from DB', result.rows);
             res.send(result.rows);
           }
         });
@@ -46,7 +46,7 @@ router.post('/', function(req, res){
           console.log('Error querying DB', err);
           res.sendStatus(500);
           }else{
-            console.log('Got info from DB', result.rows)
+            console.log('Got info from DB', result.rows);
             res.send(result.rows);
           }
         });

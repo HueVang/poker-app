@@ -10,3 +10,8 @@ table, th, td {
 .navbar {
   /*background-color: darkred;*/
 }
+
+img {
+  height: 150px;
+  width: 150px;
+}
