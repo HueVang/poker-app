@@ -7,7 +7,8 @@
       <li><a href="/home"> Player Home </a></li>
       <li><a href="/adminLeague"> Admin Home </a></li>
       <li><a href="/playerRoster"> Player Roster </a></li>
-      <!-- <li class="active"><a href="/createLeague"> Create League </a></li> -->
+      <!-- <li><a href="/createLeague"> Create League </a></li> -->
+      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="admin.logout()">Sign Out</button></li>
     </ul>
   </div>
 </nav>
@@ -17,7 +18,7 @@
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">League Name</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="">
+      <input class="form-control" type="text" ng-model="admin.league.name">
     </div>
   </div>
   <div class="form-group row">
@@ -25,17 +26,17 @@
     <div class="startDate form-group row">
       <label class="control-label col-xs-offset-1 col-xs-2">Start Date:</label>
       <div class="col-xs-8">
-        <input class="form-control" type="date" ng-model="date">
+        <input class="form-control" type="date" ng-model="admin.league.start_date">
       </div>
     </div>
     <div class="endDate form-group control">
       <label class="control-label col-xs-offset-1 col-xs-2">End Date:</label>
       <div class="col-xs-8">
-        <input class="form-control" type="date" ng-model="date">
+        <input class="form-control" type="date" ng-model="admin.league.end_date">
       </div>
     </div>
   </div>
   <div class="col-xs-offset-3 col-xs-10">
-    <button type="submit" class="btn btn-primary" >Create League</button>
+    <button ng-click="admin.createLeague(admin.league)" class="btn btn-primary" >Create League</button>
   </div>
 </form>

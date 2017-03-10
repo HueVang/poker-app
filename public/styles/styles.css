@@ -1,5 +1,7 @@
 body {
-  /*background-color: cornsilk;*/
+  background-color: #f4f4f4;
+  font-family: Helvetica, 'Trebuchet MS', sans-serif;
+  margin: auto;
 }
 
 table, th, td {
@@ -7,11 +9,53 @@ table, th, td {
   padding: 1em;
 }
 
+.form-horizontal {
+  background-color: #e1e1e1;
+  border-color: #d1d1d1;
+}
+
+.headCtr {
+  text-align: center;
+}
+
 .navbar {
   /*background-color: darkred;*/
 }
 
+
 img {
   height: 150px;
   width: 150px;
+}
+
+.pagination {
+  margin-top: 0px;
+}
+.gameNavbar {
+  margin-bottom: 0px;
+
+.btn-primary {
+  background-color: #068293;
+  border-color: #045762;
+}
+
+.btn-primary:hover {
+  background-color: #056571;
+}
+
+#logoutBtn {
+  background-color: #ff6a5c;
+  border-color: #ff2d1a;
+}
+
+#logoutBtn:hover {
+  background-color: #ff4433;
+}
+
+li a {
+  font-size: 1.25em;
+}
+
+label span {
+  font-size: 1.5em;
 }

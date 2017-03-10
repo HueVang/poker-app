@@ -81,11 +81,10 @@ app.get('/*', function(req, res){
   res.sendFile(path.join(__dirname, 'public/views/index.html'));
 });
 
-var playerList = [{name:'bob'}, {name:'joe'},{name:'jim'},{name:'zoe'},{name:'rob'}];
 
 io.on('connection', function(socket){
   console.log('A user connected');
-  io.sockets.emit('broadcast',{description: playerList});
+
   socket.on('disconnect', function () {
     console.log('A user disconnected');
   });
