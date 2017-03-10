@@ -10,3 +10,10 @@ table, th, td {
 .navbar {
   /*background-color: darkred;*/
 }
+
+.pagination {
+  margin-top: 0px;
+}
+.gameNavbar {
+  margin-bottom: 0px;
+}

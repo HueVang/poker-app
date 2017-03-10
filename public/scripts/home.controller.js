@@ -17,20 +17,21 @@ angular.module('pokerApp').controller('HomeController', function(DigestService, 
 
   ctrl.getDigests();
 
-  ctrl.getPlayerListGame1 = function(currentGame1){
-    GameService.getPlayerListGame1(currentGame1).then(function(res){
+  ctrl.getPlayerList = function(currentGame1){
+    GameService.getPlayerList(currentGame).then(function(res){
       console.log(res);
     });
   }
 
   ctrl.getGameList = function(){
     GameService.getGameList().then(function(res){
+      
       currentGame1 = {id:res.data[0].id, count:res.data[0].count};
       currentGame2 = {id:res.data[1].id, count:res.data[1].count};
       console.log(res.data);
     }).then(function(){
       console.log(currentGame1);
-      ctrl.getPlayerListGame1(currentGame1);
+      ctrl.getPlayerList(currentGame1);
     });
   }
 
