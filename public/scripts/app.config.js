@@ -34,6 +34,11 @@ angular
         controller: "GameController as game",
         authRequired: true
       })
+      .when("/editGame", {
+        templateUrl: "views/edit.game.html",
+        controller: "GameController as game",
+        authRequired: true
+      })
       .when("/edit.profile", {
         templateUrl: "views/edit.profile.html",
         controller: "ProfileController as profile",

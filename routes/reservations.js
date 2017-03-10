@@ -19,8 +19,6 @@ router.get('/users', function(req, res) {
   var game_count = Number(req.param('count'));
   var date = new Date();
   var name = req.param('name').replace(/#/g, ' ');
-  var playerList= [];
-  var alternateList= [];
   console.log('Unhashed user id: ' + user_id + ' Unhashed game id: ' + game_id);
   // res.send('User id: ' + user_id + ' and game id: ' + game_id);
   pool.connect(function(err, client, done){
@@ -72,8 +70,34 @@ router.get('/users', function(req, res) {
     })
   }); // end router.get /users
 
-//test path to add users to reservation table with unhashed values
-// router.get('/usersnohash', function(req, res) {
+
+  router.get('/:leagueId', function(req, res){
+    var leagueId = req.params.leagueId;
+    console.log('This is the league id: ', leagueId);
+    pool.connect(function(err, client, done){
+      if (err) {
+        console.log('Error connecting to DB', err);
+        res.sendStatus(500);
+        done();
+      } else {
+        client.query('SELECT * FROM reservations WHERE leagues_id = $1;',
+           [leagueId],
+           function(err, result){
+             done();
+           if (err) {
+             console.log('Error updating users', err);
+             res.sendStatus(500);
+           } else {
+             res.send(result.rows);
+           }
+         });
+      }
+    });
+  })
+
+
+//test path to sort list of users in specified game by earliest rsvp
+// router.get('/sortusers', function(req, res) {
 //   var user_id = req.param('id');
 //   var game_id = req.param('game');
 //   var date = new Date();
@@ -175,6 +199,7 @@ router.post('/regulars', function(req, res) {
           pass: 'PrimeDevsUpsilonAces'
       }
   });
+
 
   var game = req.body.gameid;
   var users = req.body.user;

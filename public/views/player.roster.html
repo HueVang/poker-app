@@ -8,6 +8,28 @@
       <li><a href="/adminLeague"> Admin Home </a></li>
       <li class="active"><a href="/playerRoster"> Player Roster </a></li>
       <!-- <li><a href="/createLeague"> Create League </a></li> -->
+      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="admin.logout()">Sign Out</button></li>
     </ul>
   </div>
 </nav>
+
+<div id="">
+  <h2>Players</h2>
+  <table id="">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Username</th>
+      <th>Email Address</th>
+      <th>Edit?</th>
+    </tr>
+    <tr ng-repeat="player in home.playerList">
+      <!-- add functionality to populate table -->
+      <td>{{player.name}}</td>
+      <td>Malkovich</td>
+      <td>johnmalkovich</td>
+      <td>john@email.com</td>
+      <td><button type="submit" class="btn btn-default" >Edit Game...</button></td>
+    </tr>
+  </table>
+</div>
