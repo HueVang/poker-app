@@ -1,10 +1,12 @@
-angular.module('pokerApp').controller('HomeController', function(DigestService, GameService, $http, $location, $scope){
+angular.module('pokerApp').controller('HomeController', function(UserService, DigestService, GameService, $http, $location, $scope){
 
   var ctrl = this;
   var currentGame1;
   var currentGame2;
-  var currentGameList1=[];
-  var currentGameList2=[];
+  var currentGame;
+  ctrl.showPlayers = true;
+  ctrl.showAlternates = false;
+
 
   var socket = io.connect();
 
@@ -12,12 +14,15 @@ angular.module('pokerApp').controller('HomeController', function(DigestService, 
     DigestService.getDigests().then(function(res) {
       console.log('This is the digests: ', res.data);
       ctrl.digestList = res.data;
+      ctrl.digestList.forEach(function(x){
+        x.date = new Date(x.date).toDateString();
+      });
     });
   }; // end ctrl.getDigests
 
   ctrl.getDigests();
 
-  ctrl.getPlayerList = function(currentGame1){
+  ctrl.getPlayerList = function(currentGame){
     GameService.getPlayerList(currentGame).then(function(res){
       console.log(res);
     });
@@ -25,7 +30,7 @@ angular.module('pokerApp').controller('HomeController', function(DigestService, 
 
   ctrl.getGameList = function(){
     GameService.getGameList().then(function(res){
-      
+
       currentGame1 = {id:res.data[0].id, count:res.data[0].count};
       currentGame2 = {id:res.data[1].id, count:res.data[1].count};
       console.log(res.data);
@@ -35,7 +40,9 @@ angular.module('pokerApp').controller('HomeController', function(DigestService, 
     });
   }
 
-
+  ctrl.getGame2List = function(){
+    ctrl.getPlayerList(currentGame2);
+  }
 
   ctrl.getGameList();
 
@@ -52,8 +59,29 @@ angular.module('pokerApp').controller('HomeController', function(DigestService, 
       var playerList = data.description.players;
       var alternates = data.description.alternates;
       ctrl.playerList = playerList;
+      ctrl.alternates = alternates;
       $scope.$apply();
     });
 
+    ctrl.showAlternateList = function(){
+      ctrl.showAlternates = true;
+      ctrl.showPlayers = false;
+    }
+    ctrl.showPlayerList = function(){
+      ctrl.showAlternates = false;
+      ctrl.showPlayers = true;
+    }
 
+    ctrl.checkAdminStatus = function() {
+      UserService.checkAdminStatus().then(function(res) {
+       console.log(res.data);
+       if(res.data == true){
+         ctrl.admin = true;
+       }else{
+         ctrl.admin = false;
+       }
+      });
+    };
+
+    ctrl.checkAdminStatus();
 });

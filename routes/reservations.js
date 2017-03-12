@@ -19,6 +19,8 @@ router.get('/users', function(req, res) {
   var game_count = Number(req.param('count'));
   var date = new Date();
   var name = req.param('name').replace(/#/g, ' ');
+  var playerList= [];
+  var alternateList= [];
   console.log('Unhashed user id: ' + user_id + ' Unhashed game id: ' + game_id);
   // res.send('User id: ' + user_id + ' and game id: ' + game_id);
   pool.connect(function(err, client, done){
