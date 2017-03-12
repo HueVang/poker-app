@@ -123,10 +123,9 @@ router.put('/:id', function(req, res){
      done();
    } else {
      client.query('UPDATE users SET first_name=$2, last_name=$3, email=$4, username=$5, password=$6, admin=$7,'+
-                  'regular=$8, linkedin=$9, bio=$10, photourl=$11, league_id=$12 WHERE id = $1 RETURNING *',
+                  'regular=$8, linkedin=$9, bio=$10, photourl=$11 WHERE id = $1 RETURNING *',
                   [req.params.id, req.body.first_name, req.body.last_name, req.body.email, req.body.username, req.body.password,
-                  req.body.admin, req.body.regular, req.body.linkedin, req.body.bio, req.body.photourl,
-                  req.body.league_id],
+                  req.body.admin, req.body.regular, req.body.linkedin, req.body.bio, req.body.photourl],
                   function(err, result){
                     done();
                     if (err) {

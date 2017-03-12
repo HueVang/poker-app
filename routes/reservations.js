@@ -9,17 +9,17 @@ const nodemailer = require('nodemailer');
 
 // http://localhost:3000/reservations/users?id=l4zbq2dprO&game=7LDdwRb1YK
 var returnRouter=function(io){
-  // var playerList= [];
-  // var alternateList= [];
+  var playerList= [];
+  var alternateList= [];
 // test path to add users into our reservations table with hased values
-router.get('/users', function(req, res) {
-  console.log('Hashed user id: ' + req.param('id') + ' hashed game id: ' + req.param('game'));
-  var user_id = Number(hashids.decode(req.param('id')));
-  var game_id = Number(hashids.decode(req.param('game')));
-  var game_count = Number(req.param('count'));
+router.get('/', function(req, res) {
+  // console.log('Hashed user id: ' + req.param('id') + ' hashed game id: ' + req.param('game'));
+  var reservationId = Number(hashids.decode(req.param('id')));
+  // var game_id = Number(hashids.decode(req.param('game')));
+  // var game_count = Number(req.param('count'));
   var date = new Date();
-  var name = req.param('name').replace(/#/g, ' ');
-  console.log('Unhashed user id: ' + user_id + ' Unhashed game id: ' + game_id);
+  // var name = req.param('name').replace(/#/g, ' ');
+  console.log('Unhashed reservationId id: ' + reservationId);
   // res.send('User id: ' + user_id + ' and game id: ' + game_id);
   pool.connect(function(err, client, done){
     if (err) {
@@ -27,43 +27,67 @@ router.get('/users', function(req, res) {
       res.sendStatus(500);
       done();
     } else {
-      client.query('INSERT INTO reservations (timestamp, points, games_id, users_id, name) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-         [date, 0, game_id, user_id, name],
+      client.query('UPDATE reservations SET status=$2, timestamp=$3 WHERE id = $1 RETURNING *',
+         [reservationId, 1, date],
          function(err, result){
            done();
          if (err) {
            console.log('Error updating reservations', err);
            res.sendStatus(500);
          } else {
+           var game_id = result.rows[0].games_id;
+          //  console.log('this is the game id from very top: ', game_id);
            pool.connect(function(err, client, done){
              if (err) {
                console.log('Error connecting to DB', err);
                res.sendStatus(500);
                done();
              } else {
-               client.query('SELECT * FROM reservations WHERE games_id=$1 ORDER BY timestamp ASC',
-               [game_id],
+               console.log('This is the game_id: ', game_id);
+               client.query('SELECT * FROM games WHERE id=$1',
+                  [game_id],
                   function(err, result){
                     done();
                   if (err) {
-                    console.log('Error updating reservations', err);
+                    console.log('Error updating users', err);
                     res.sendStatus(500);
-                  }else {
-                    result.rows.forEach(function(i){
-                      if(playerList.length < game_count){
-                        playerList.push(i);
-                      }else{
-                          alternateList.push(i);
-                        }
-                      });
-                    var lists = {players: playerList,
-                                 alternates: alternateList};
-                    io.sockets.emit('broadcast',{description: lists});
-                    res.sendStatus(200);
-                    }
-                  });
-                };
-             })
+                  } else {
+                    var game_count = result.rows[0].count;
+                    console.log('This is game count: ', game_count);
+                    pool.connect(function(err, client, done){
+                      if (err) {
+                        console.log('Error connecting to DB', err);
+                        res.sendStatus(500);
+                        done();
+                      } else {
+                        client.query('SELECT * FROM reservations WHERE games_id=$1 AND status=$2 ORDER BY timestamp ASC',
+                        [game_id, 1],
+                           function(err, result){
+                             done();
+                           if (err) {
+                             console.log('Error updating reservations', err);
+                             res.sendStatus(500);
+                           }else {
+                             console.log('This is the game_id from 3rd pool connect: ', game_id);
+                             result.rows.forEach(function(i){
+                               if(playerList.length < game_count){
+                                 playerList.push(i);
+                               }else{
+                                   alternateList.push(i);
+                                 }
+                               });
+                             var lists = {players: playerList,
+                                          alternates: alternateList};
+                             io.sockets.emit('broadcast',{description: lists});
+                             res.sendStatus(200);
+                             }
+                           });
+                         };
+                      })
+                  }
+                });
+             }
+           });
            };
          })
        };
@@ -85,7 +109,7 @@ router.get('/users', function(req, res) {
            function(err, result){
              done();
            if (err) {
-             console.log('Error updating users', err);
+             console.log('Error selecting from reservations', err);
              res.sendStatus(500);
            } else {
              res.send(result.rows);
@@ -229,8 +253,8 @@ router.post('/regulars', function(req, res) {
         res.sendStatus(500);
         done();
       } else {
-        client.query('INSERT INTO reservations (timestamp, points, games_id, users_id, name) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-           [date, 0, game_id, user_id, name],
+        client.query('INSERT INTO reservations (timestamp, points, games_id, users_id, name, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+           [date, 0, game_id, user_id, name, 1],
            function(err, result){
              done();
            if (err) {
@@ -308,7 +332,7 @@ router.post('/players', function(req, res) {
   });
 
 
-  var game = req.body.gameid;
+  var game = Number(hashids.decode(req.body.gameid));
   var users = req.body.user;
   var gamedigest = req.body.digest;
   var gamecount = req.body.gamecount;
@@ -320,29 +344,54 @@ router.post('/players', function(req, res) {
   console.log('these are the req.body.user: ', users);
 
   users.forEach(function(person, i) {
-    // console.log('These are the keys: ', key);
-    // console.log('These are the values: ', person[key]);
+    var date = new Date();
     var key = Object.keys(person)[0];
     var name = person.name;
     var useremail = person[key];
+    var userid = Number(hashids.decode(key));
+    var reservationId = 'It will update after pool.connect has been run';
+    pool.connect(function(err, client, done){
+      if (err) {
+        console.log('Error connecting to DB', err);
+        res.sendStatus(500);
+        done();
+      } else {
+        client.query('INSERT INTO reservations (timestamp, points, games_id, users_id, name, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
+           [date, 0, game, userid, name, 0],
+           function(err, result){
+             done();
+           if (err) {
+             console.log('Error posting to reservations: ', err);
+             res.sendStatus(500);
+           } else {
+             reservationId = result.rows[0].id;
+             console.log('This is the reservationId: ', reservationId);
+             // console.log('These are the keys: ', key);
+             // console.log('These are the values: ', person[key]);
+             var reshashid = hashids.encode(reservationId);
+             console.log('This is hash id of reservations: ', reshashid);
+             console.log('This is hash id type of reservations: ', typeof reshashid);
+             var text = '<p>Hello '+ name + '!<br /> Click on the link to RSVP for ' + gamename + ' on ' + gamedate.toISOString().slice(0,10) + '!<br />' + gamedigest + '<br /> http://localhost:3000/reservations/?id='+ reshashid +'</p>'
+             // setup email data with unicode symbols
+             let mailOptions = {
+                 from: '"Prime Devs" <' + email + '>', // sender address
+                 to: useremail, // list of receivers
+                 subject: 'Test!', // Subject line
+                 text: 'This is the text text', // plain text body
+                 html: text // html body
+             };
 
-    var text = '<p>Hello '+ name + '!<br /> Click on the link to RSVP for ' + gamename + ' on ' + gamedate.toISOString().slice(0,10) + '!<br />' + gamedigest + '<br /> http://localhost:3000/reservations/users?id='+ key +'&game='+ game + '&count=' + gamecount + '&name=' + name.replace(/\s/g, '#') + '</p>'
-    // setup email data with unicode symbols
-    let mailOptions = {
-        from: '"Prime Devs" <' + email + '>', // sender address
-        to: useremail, // list of receivers
-        subject: 'Test!', // Subject line
-        text: 'This is the text text', // plain text body
-        html: text // html body
-    };
-
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        console.log('Message %s sent: %s', info.messageId, info.response);
-    });
+             // send mail with defined transport object
+             transporter.sendMail(mailOptions, (error, info) => {
+                 if (error) {
+                     return console.log(error);
+                 }
+                 console.log('Message %s sent: %s', info.messageId, info.response);
+             });
+           }
+         });
+      }
+    }); // end pool.connect
   }); // end for Each
 
 
