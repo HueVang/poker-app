@@ -24,10 +24,10 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
     console.log('This is the user service console log');
   }; // end ctrl.log
 
-  ctrl.checkAdminStatus = function(){
-    return $http.get('/users/adminstatus').then(function(res){
+  ctrl.getCurrentUser = function(){
+    return $http.get('/users/currentUser').then(function(res){
       return res
-    })
+    });
   }
 
 });

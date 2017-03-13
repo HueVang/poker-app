@@ -68,9 +68,7 @@
     </tr>
   </table>
   <div class="col-xs-offset-3 col-xs-10">
-    <md-autocomplete md-selected-item="game.player" md-search-text="game.searchText" md-items="item in game.getMatches(game.searchText)" md-item-text="item.name">
-      <span md-highlight-text="searchText">{{item.name}}</span>
-    </md-autocomplete>
+    
     <button type="submit" class="btn btn-primary" ng-model="game.player">Add Player</button>
   </div>
 </div>

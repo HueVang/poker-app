@@ -27,7 +27,7 @@ angular.module('pokerApp').service('GameService', function($http, $location) {
     console.log(currentGame);
     var gameId1 = currentGame.id;
     var count = currentGame.count;
-    return $http.get('/reservations/sortusers/'+gameId1+count).then(function(res){
+    return $http.get('/reservations/sortusers/'+gameId1+'&'+count).then(function(res){
       return res;
     });
   }

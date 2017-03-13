@@ -189,16 +189,17 @@ router.post('/newuser', function(req, res){
   });
 });
 
-router.get('/adminstatus', function(req, res){
+router.get('/currentUser', function(req, res){
   var adminstatus;
   console.log(req.user);
-  var user = req.user;
-  if(user.admin == null || user.admin == false){
+  var currentUser = req.user;
+  if(currentUser.admin == null || currentUser.admin == false){
     adminstatus = false;
   }else{
     adminstatus = true;
   }
-  res.send(adminstatus);
+  var toSend = {user: currentUser,admin: adminstatus}
+  res.send(toSend);
 });
 
 

@@ -14,7 +14,7 @@
           <li ng-if="home.admin"><a href="/adminLeague"> Admin Home </a></li>
           <li ng-if="home.admin"><a href="/playerRoster"> Player Roster </a></li>
           <!-- <li><a href="/createLeague"> Create League </a></li> -->
-          <li class=""><button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="home.logout()">Sign Out</button></li>
+          <li><button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="home.logout()">Sign Out</button></li>
         </ul>
       </div>
     </nav>
@@ -41,14 +41,15 @@
           <ul  class="pagination">
             <li ng-click="home.showPlayerList()"><a href="/home"> Player List </a></li>
             <li ng-click="home.showAlternateList()"><a href="/home"> Alternatives </a></li>
+            <li><button ng-if="home.notAdmin" class="btn btn-danger" ng-click="home.removeFromGame()">Leave Game</button></li>
           </ul>
         </nav>
       </div>
       <ol  ng-if="home.showPlayers">
-        <li ng-repeat="player in home.playerList">{{player.name}}</li>
+        <li ng-repeat="player in home.playerList">{{player.name}}<button ng-if="home.admin" class="btn btn-danger" ng-click="home.adminRemoveFromGame(player.users_id)">Remove Player from Game</button></li>
       </ol>
       <ol ng-if="home.showAlternates">
-        <li ng-repeat="alternate in home.alternates">{{alternate.name}}</li>
+        <li ng-repeat="alternate in home.alternates">{{alternate.name}}<button ng-if="home.admin" class="btn btn-danger" ng-click="home.adminRemoveFromGame(alternate.users_id)">Remove Player from Game</button></li>
       </ol>
     </div>
 

@@ -1,1 +1,1 @@
-angular.module('pokerApp', ['ngRoute']);
+angular.module('pokerApp', ['ngRoute', 'autocomplete']);

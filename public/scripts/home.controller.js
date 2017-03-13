@@ -1,11 +1,13 @@
-angular.module('pokerApp').controller('HomeController', function(UserService, DigestService, GameService, $http, $location, $scope){
+angular.module('pokerApp').controller('HomeController', function(ReservationService, UserService, DigestService, GameService, $http, $location, $scope){
 
   var ctrl = this;
   var currentGame1;
   var currentGame2;
-  var currentGame;
+  ctrl.currentGame;
+  var user;
   ctrl.showPlayers = true;
   ctrl.showAlternates = false;
+  ctrl.hideInput = true;
 
 
   var socket = io.connect();
@@ -33,6 +35,7 @@ angular.module('pokerApp').controller('HomeController', function(UserService, Di
 
       currentGame1 = {id:res.data[0].id, count:res.data[0].count};
       currentGame2 = {id:res.data[1].id, count:res.data[1].count};
+      ctrl.currentGame = {id:res.data[0].id, count:res.data[0].count};
       console.log(res.data);
     }).then(function(){
       console.log(currentGame1);
@@ -41,6 +44,7 @@ angular.module('pokerApp').controller('HomeController', function(UserService, Di
   }
 
   ctrl.getGame2List = function(){
+    ctrl.currentGame = currentGame2;
     ctrl.getPlayerList(currentGame2);
   }
 
@@ -60,6 +64,26 @@ angular.module('pokerApp').controller('HomeController', function(UserService, Di
       var alternates = data.description.alternates;
       ctrl.playerList = playerList;
       ctrl.alternates = alternates;
+      ctrl.playerList.forEach(function(x){
+        if(x.users_id == user.id){
+          ctrl.notAdmin = true;
+          if(ctrl.admin == true){
+            ctrl.notAdmin = false;
+          }
+        }else{
+          ctrl.notAdmin = false;
+        }
+      });
+      ctrl.alternates.forEach(function(x){
+        if(x.users_id == user.id){
+          ctrl.notAdmin = true;
+          if(ctrl.admin == true){
+            ctrl.notAdmin = false;
+          }
+        }else{
+          ctrl.notAdmin = false;
+        }
+      });
       $scope.$apply();
     });
 
@@ -73,9 +97,9 @@ angular.module('pokerApp').controller('HomeController', function(UserService, Di
     }
 
     ctrl.checkAdminStatus = function() {
-      UserService.checkAdminStatus().then(function(res) {
-       console.log(res.data);
-       if(res.data == true){
+      UserService.getCurrentUser().then(function(res) {
+       user=res.data.user;
+       if(user.admin == true){
          ctrl.admin = true;
        }else{
          ctrl.admin = false;
@@ -84,4 +108,20 @@ angular.module('pokerApp').controller('HomeController', function(UserService, Di
     };
 
     ctrl.checkAdminStatus();
+
+    ctrl.removeFromGame = function(){
+      console.log(ctrl.currentGame);
+      ReservationService.removeFromGame(user.id, ctrl.currentGame).then(function(res){
+        console.log(res);
+        ctrl.getPlayerList(ctrl.currentGame);
+      });
+    }
+
+    ctrl.adminRemoveFromGame = function(player){
+      console.log(player);
+      ReservationService.removeFromGame(player, ctrl.currentGame).then(function(res){
+        console.log(res);
+        ctrl.getPlayerList(ctrl.currentGame);
+      });
+    }
 });

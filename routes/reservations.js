@@ -149,7 +149,7 @@ router.get('/users', function(req, res) {
 // }); // end router.get /users
 
 //test path to sort list of users in specified game by earliest rsvp
-router.get('/sortusers/:gameId1:count', function(req, res) {
+router.get('/sortusers/:gameId1&:count', function(req, res) {
   // var user_id = req.param('id');
   var game_id = req.params.gameId1;
   var game_count = req.params.count;
@@ -162,6 +162,7 @@ router.get('/sortusers/:gameId1:count', function(req, res) {
       res.sendStatus(500);
       done();
     } else {
+      console.log("Game id and count are: ", game_id, game_count);
       client.query('SELECT * FROM reservations WHERE games_id = $1 ORDER BY timestamp ASC',
       [game_id],
          function(err, result){
@@ -170,6 +171,7 @@ router.get('/sortusers/:gameId1:count', function(req, res) {
            console.log('Error updating reservations', err);
            res.sendStatus(500);
          } else {
+           console.log("these are the current players", result.rows);
            result.rows.forEach(function(i){
              if(playerList.length < game_count){
                playerList.push(i);
@@ -385,12 +387,13 @@ router.put('/:id', function(req, res){
 
 router.delete('/:id:games_id', function(req, res){
  pool.connect(function(err, client, done){
+   console.log(req.params.id, req.params.games_id);
    if (err) {
      console.log('Error connecting to DB', err);
      res.sendStatus(500);
      done();
    } else {
-     client.query('DELETE FROM reservations WHERE id = $1 AND games_id = $2 RETURNING *',
+     client.query('DELETE FROM reservations WHERE users_id = $1 AND games_id = $2 RETURNING *',
         [req.params.id, req.params.games_id],
         function(err, result){
           done();
