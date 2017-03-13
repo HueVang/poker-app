@@ -11,8 +11,8 @@
       <div class="container-fluid">
         <ul class="nav navbar-nav">
           <li class="active"><a href="/home"> Player Home </a></li>
-          <li><a href="/adminLeague"> Admin Home </a></li>
-          <li><a href="/playerRoster"> Player Roster </a></li>
+          <li ng-if="home.admin"><a href="/adminLeague"> Admin Home </a></li>
+          <li ng-if="home.admin"><a href="/playerRoster"> Player Roster </a></li>
           <!-- <li><a href="/createLeague"> Create League </a></li> -->
           <li class=""><button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="home.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
         </ul>
@@ -20,7 +20,8 @@
     </nav>
     <div class="col-md-7">
       <div ng-repeat="digest in home.digestList">
-        {{digest.entry}}
+        <h4>{{digest.date}}</h4>
+        <p>{{digest.entry}}</p>
       </div>
     </div>
 
@@ -28,8 +29,8 @@
       <nav class="navbar navbar-default gameNavbar">
         <div class="container-fluid">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/home"> Game 1 </a></li>
-            <li><a href="/home"> Game 2 </a></li>
+            <li class="active" ng-click="home.getGameList()"><a href="/home"> Game 1 </a></li>
+            <li ng-click="home.getGame2List()"><a href="/home"> Game 2 </a></li>
             <li><a href="/home"> Leaderboard </a></li>
             <!-- <li><a href="/createLeague"> Create League </a></li> -->
           </ul>
@@ -38,13 +39,17 @@
       <div>
         <nav>
           <ul  class="pagination">
-            <li ng-click=""><a href="/home"> Player List </a></li>
-            <li><a href="/home"> Alternatives </a></li>
+            <li ng-click="home.showPlayerList()"><a href="/home"> Player List </a></li>
+            <li ng-click="home.showAlternateList()"><a href="/home"> Alternatives </a></li>
+            <li><button ng-if="home.notAdmin" class="btn btn-danger" ng-click="home.removeFromGame()">Leave Game</button></li>
           </ul>
         </nav>
       </div>
-      <ol>
-        <li ng-repeat="player in home.playerList">{{player.name}}</li>
+      <ol  ng-if="home.showPlayers">
+        <li ng-repeat="player in home.playerList">{{player.name}}<button ng-if="home.admin" class="btn btn-danger" ng-click="home.adminRemoveFromGame(player.users_id)">Remove Player from Game</button></li>
+      </ol>
+      <ol ng-if="home.showAlternates">
+        <li ng-repeat="alternate in home.alternates">{{alternate.name}}<button ng-if="home.admin" class="btn btn-danger" ng-click="home.adminRemoveFromGame(alternate.users_id)">Remove Player from Game</button></li>
       </ol>
     </div>
 

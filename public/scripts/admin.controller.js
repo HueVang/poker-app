@@ -5,6 +5,7 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.leagues = [{},{},{}];
   ctrl.games = [{},{},{}];
   ctrl.leaderboard = [{},{},{}];
+  ctrl.winners = [{},{},{}];
 
   console.log('AdminController loaded');
 
@@ -30,13 +31,23 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     })
   }; // end ctrl.getGames
 
-  ctrl.getGames();
 
   ctrl.getLeaderboard = function(leagueId) {
     LeagueService.getLeaderboard(leagueId).then(function(res) {
       ctrl.leaderboard = res.data;
     })
   }; // end ctrl.leaderboard
+
+  ctrl.getWinners = function(leagueId) {
+    LeagueService.getWinners(leagueId).then(function(res) {
+      ctrl.winners = res.data;
+      ctrl.winners.forEach(function(winner) {
+        winner.date = new Date(winner.date).toDateString();
+        console.log('This is the new date: ', winner.date);
+      }) // end ctrl.winners.forEach
+    })
+  }; // end ctrl.getWinners
+
 
   ctrl.newGame = function() {
     $location.path('newGame');
