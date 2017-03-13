@@ -20,10 +20,8 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
         game.date = new Date(game.date).toDateString();
       })
       ctrl.gameEdit = res.data[0];
-      var gameTime = res.data[0].time;
-      var timeTime = new SimpleDateFormat(timeTime);
-      var timeTimeTime;
-      ctrl.gameTime = timeTimeTime.setTime(timeTime.getTime());
+      var gameTime = new Date(res.data[0].time);
+      ctrl.gameTime = timeTime;
       var gameDate = res.data[0].date;
       ctrl.gameDate = new Date(gameDate);
       console.log('This is the response from GameService: ', ctrl.gameEdit);
