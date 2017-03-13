@@ -4,17 +4,22 @@ angular.module('pokerApp').controller('PlayerProfileController', function($http,
 
   var ctrl = this;
   ctrl.otherProfile = [];
-
   ctrl.showPlayerProfile = function(id) {
     console.log('This is the user id: ', 'user_' + id);
-
     var profileId = document.getElementById(id);
+    return $http.get('/users/' + profileId).then(function(res) {
+    return res;
+      });
+    // }; //
+
+
 
   }; // end showPlayerProfile
 
-
+//changed from register to users
   ctrl.getPlayerInfo = function() {
-    $http.get('/register/playerinfo').then(function(response) {
+
+    $http.get('/users/playerinfo').then(function(response) {
       ctrl.player_info = response.data;
       console.log('This is the player info: ', response.data);
     }).catch(function(err) {
@@ -35,7 +40,7 @@ angular.module('pokerApp').controller('PlayerProfileController', function($http,
 
 
   ctrl.getPlayers = function() {
-     $http.get('/register/players').then(function(response) {
+     $http.get('/users/players').then(function(response) {
       ctrl.players = response.data;
       console.log('This is the players data: ',response.data);
     }).catch(function(err) {
@@ -46,7 +51,7 @@ angular.module('pokerApp').controller('PlayerProfileController', function($http,
   ctrl.getPlayers();
 
   ctrl.getPlayers = function() {
-     $http.get('/register/players').then(function(response) {
+     $http.get('/users/players').then(function(response) {
       ctrl.users = response.data;
       console.log('This is the players data: ',response.data);
     }).catch(function(err) {

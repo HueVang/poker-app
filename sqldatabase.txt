@@ -19,8 +19,8 @@ admin BOOLEAN,
 regular BOOLEAN,
 linkedin VARCHAR (100),
 bio TEXT,
-photourl VARCHAR(100),
-leagues_id integer References leagues
+photourl VARCHAR(100)
+
 );
 
 CREATE TABLE games(
@@ -38,7 +38,9 @@ timestamp VARCHAR(100),
 points integer,
 games_id integer NOT NULL References games,
 users_id integer NOT NULL References users,
-name VARCHAR(100)
+leagues_id integer NOT NULL References users,
+name VARCHAR(100),
+status integer
 );
 
 CREATE TABLE digests(

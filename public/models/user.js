@@ -1,4 +1,4 @@
-var pool = require("../db/connection");
+var pool = require("../../db/connection");
 var bcrypt = require("bcrypt");
 var SALT_ROUNDS = 10;
 

@@ -4,8 +4,20 @@ var config = {database: 'upsilon_aces'};
 var pool = new pg.Pool(config);
 var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
+//adding this from register.js
+var multer = require('multer');
+var username = "";
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+cb(null,  __dirname +'/../public/uploads/'+username);
+},
 
+  filename: function (req, file, cb) {
+    cb(req.file, file.fieldname+'.jpg' , username+ '.jpg');
+  }
+});
 
+var upload = multer({ storage: storage });
 router.get('/user', function(req, res){
   pool.connect(function(err, client, done){
     if(err){
@@ -20,13 +32,26 @@ router.get('/user', function(req, res){
           console.log('Error querying DB', err);
           res.sendStatus(500);
           }else{
-            console.log('Got info from DB', result.rows)
+            console.log('Got info from DB', result.rows);
             res.send(result.rows);
           }
         });
     }
   });
 });
+//
+router.get('/adminstatus', function(req, res){
+  var adminstatus;
+  console.log(req.user);
+  var user = req.user;
+  if(user.admin == null || user.admin == false){
+    adminstatus = false;
+  }else{
+    adminstatus = true;
+  }
+  res.send(adminstatus);
+});
+
 
 router.get('/regulars', function(req, res){
   pool.connect(function(err, client, done){
@@ -43,7 +68,7 @@ router.get('/regulars', function(req, res){
           console.log('Error querying DB', err);
           res.sendStatus(500);
           }else{
-            console.log('Got info from DB', result.rows)
+            console.log('Got info from DB', result.rows);
             res.send(result.rows);
           }
         });
@@ -65,7 +90,7 @@ router.get('/allusers', function(req, res){
           console.log('Error querying DB', err);
           res.sendStatus(500);
           }else{
-            console.log('Got info from DB', result.rows)
+            console.log('Got info from DB', result.rows);
             var usersinfo = [];
             result.rows.forEach(function(object) {
               var obj = {};
@@ -97,7 +122,7 @@ router.get('/userhash', function(req, res){
           console.log('Error querying DB', err);
           res.sendStatus(500);
           }else{
-            console.log('Got info from DB', result.rows)
+            console.log('Got info from DB', result.rows);
             var regulars= [];
             var players= [];
             result.rows.forEach(function(user){
@@ -155,15 +180,213 @@ router.post('/newuser', function(req, res){
           console.log('Error querying DB', err);
           res.sendStatus(500);
           }else{
-            console.log('Got info from DB', result.rows)
+            console.log('Got info from DB', result.rows);
             res.send(result.rows);
           }
         });
     }
   });
 });
+//adding from the other.player.js
+router.get('/otherplayer',function(req,res){
+  console.log('user id?::',req.user.id);
+  username = req.user.username;
+  pool.connect(function(err,client,done){
+    if(err){
+      console.log('error connecting to DB',err);
+      res.sendStatus(500);
+      done();
+    } else {
+     client.query(
+       'SELECT * from users;',
+      function(err,result){
+        done();
+        if(err){
+          console.log('error querying db',err);
+          res.sendStatus(500);
+        } else {
+          console.log('get info from db',result.rows);
+          res.send(result.rows);
+        }
+      });
+    }
+  });
+});//end of get otherplayer
 
+// router.get('/:id',function(req,res){
+//   console.log('users id?::',req.users.id);
+//   username = req.users.username;
+//   console.log('Params?', req.params);
+//   console.log('Params?2', req.params.id);
+//   pool.connect(function(err,client,done){
+//     if(err){
+//       console.log('error connecting to DB',err);
+//       res.sendStatus(500);
+//       done();
+//     } else {
+//      client.query(
+//        'SELECT * from users WHERE id=$1;',[req.params.id],
+//       function(err,result){
+//         done();
+//         if(err){
+//           console.log('error querying db',err);
+//           res.sendStatus(500);
+//         } else {
+//           console.log('get info from db',result.rows);
+//           res.send(result.rows);
+//         }
+//       });
+//     }
+//   });
+// });//end of get otherplayer
 
+router.get('/players', function(req, res){
+  console.log('username?::', req.user.username);
+  pool.connect(function(err,client,done){
+    if(err){
+      console.log('error connecting to DB',err);
+      res.sendStatus(500);
+      done();
+    } else {
+     client.query(
+       'SELECT * from users;',
+      function(err,result){
+        done();
+        if(err){
+          console.log('error querying db',err);
+          res.sendStatus(500);
+        } else {
+          console.log('get info from db',result.rows);
+          res.send(result.rows);
+        }
+      });
+    }
+  });
+}); // end of get playerinfo
 
+router.post('/image', upload.any(), function(req, res, next) {
+  console.log('This is username: ', typeof username);
+  console.log('This is the req.file: ', req.files);
+  console.log(req.body);
+  res.redirect('back');
+});
+router.get("/players", function(req, res) {
+  pool.connect(function(err, client, done) {
+    try {
+      if (err) {
+        console.log("Error connecting to DB", err);
+        res.status(500).send(err);
+      } else {
+        client.query("SELECT * FROM users ", function(err, results) {
+          if (err) {
+            console.log("Error getting users", err);
+            res.status(500).send(err);
+          } else {
+            res.send(results.rows);
+          }
+        });
+      }
+    } finally {
+      done();
+    }
+  });
+});
+router.get("/playerinfo", function(req, res) {
+  console.log('player id from user table', req.user.id);
+    pool.connect(function(err,client,done){
+      if(err){
+        console.log('error connecting to DB',err);
+        res.sendStatus(500);
+        done();
+      } else {
+       client.query(
+         'SELECT * from users WHERE id=$1;',[req.user.id],
+        function(err,result){
+          done();
+          if(err){
+            console.log('error querying db',err);
+            res.sendStatus(500);
+          } else {
+            console.log('get info from db',result.rows);
+            res.send(result.rows);
+          }
+        });
+      }
+    });
+  }); // end of get playerinfo
 
+  router.get('/users', function(req, res){
+    console.log('in users get route');
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('SELECT * FROM users',
+       function(err, result){
+        done();
+        if (err){
+          console.log('Error querying DB', err);
+          res.sendStatus(500);
+          }else{
+            var users = [];
+            result.rows.forEach(function(x){
+              x.password = '';
+              users.push(x);
+            });
+            console.log('Got info from DB', result.rows);
+            res.send(result.rows);
+          }
+        });
+    }
+  });
+});
+router.post("/users", function(req, res) {
+  console.log('in users post route');
+  pool.connect(function(err, client, done) {
+    if (err) {
+      console.log("Error connecting to DB", err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query(
+        "INSERT INTO users (first_name, last_name, username, email) VALUES ($1,$2,$3,$4) RETURNING *;",
+        [req.body.first_name, req.body.last_name, req.body.username, req.body.email],
+        function(err, result) {
+          done();
+          if (err) {
+            console.log("Error querying DB", err);
+            res.sendStatus(500);
+          } else {
+            console.log("Got info from DB", result.rows);
+            res.send(result.rows);
+          }
+        }
+      );
+    }
+  });
+});
+router.get('/other.profile/:id', function(req, res){
+  var id = hashids.decode(req.params.id);
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('SELECT * FROM users WHERE id = $1',
+      [req.params.id], function(err, result){
+        done();
+        if (err){
+          console.log('Error querying DB', err);
+          res.sendStatus(500);
+          }else{
+            console.log('Got info from DB', result.rows);
+            res.send(result.rows);
+          }
+        });
+    }
+  });
+});
 module.exports = router;

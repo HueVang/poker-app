@@ -6,60 +6,60 @@
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Username:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="register.username">
+      <input class="form-control" type="text" ng-model="profile.register.username">
       {{profile.player_info[0].username}}
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Enter Password:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="password" ng-model="register.password">
+      <input class="form-control" type="password" ng-model="profile.register.password">
       {{profile.player_info[0].pasword}}
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Confirm Password:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="password" ng-model="register.password">
+      <input class="form-control" type="password" ng-model="profile.register.password">
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Email:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="register.email">
+      <input class="form-control" type="text" ng-model="profile.register.email">
       {{profile.player_info[0].email}}
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">First Name:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="register.first_name">
+      <input class="form-control" type="text" ng-model="profile.register.first_name">
       {{profile.player_info[0].first_name}}
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Last Name:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="register.last_name">
+      <input class="form-control" type="text" ng-model="profile.register.last_name">
       {{profile.player_info[0].last_name}}
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">LinkedIn:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="register.linkedin">
+      <input class="form-control" type="text"  ng-model="profile.register.linkedin">
       {{profile.player_info[0].linkedin}}
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Personal Bio:</label>
     <div class="col-xs-8">
-      <textarea class="form-control" rows="3" type="text" ng-model="register.bio"></textarea>
+      <textarea class="form-control" rows="3" type="text" ng-model="profile.register.bio"></textarea>
       {{profile.player_info[0].bio}}
     </div>
   </div>
   <div class="col-xs-offset-4 col-xs-8">
-    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <button type="submit" class="btn btn-primary"ng-click= "profile.saveProfileChanges(profile.register)">Save Changes</button>
     <button type="submit" class="btn btn-primary">Cancel</button>
   </div>
 </form>
@@ -67,7 +67,7 @@
 
 <img class="" ng-src="/../uploads/{{profile.player_info[0].username}}.jpg" alt=""/>
 
-<form id="upload" action="/register/image" method="post" enctype="multipart/form-data">
+<form id="upload" action="/users/image" method="post" enctype="multipart/form-data">
   <div class="form-group row">
   <!-- <label class="btn btn-primary" for="profilePicture">Change Profile </label> -->
   <input id="profilePicture" type="file" name="{{ profile.player_info[0].username }}"/>

@@ -20,7 +20,7 @@ angular.module('pokerApp').controller('ProfileController', function($http, $loca
   }
 
   ctrl.getProfiles = function() {
-     $http.get('/register/players').then(function(response) {
+     $http.get('/users/players').then(function(response) {
       ctrl.profiles = response.data;
       console.log('This is the profile data: ',response.data);
     }).catch(function(err) {
@@ -31,7 +31,7 @@ angular.module('pokerApp').controller('ProfileController', function($http, $loca
   ctrl.getProfiles();
 
   ctrl.getPlayerProfileInfo = function() {
-    $http.get('/register/playerinfo').then(function(response) {
+    $http.get('/users/playerinfo').then(function(response) {
       ctrl.player_info = response.data;
       console.log('This is the player info: ', response.data);
       console.log('This is ctrl.profile_info:', ctrl.profile_info);
@@ -61,7 +61,7 @@ angular.module('pokerApp').controller('ProfileController', function($http, $loca
 
   ctrl.saveProfileChanges = function(playerInfo) {
     console.log('This is the player\'s info: ', playerInfo);
-    return $http.post('/register/image', playerInfo).then(function(response) {
+    return $http.post('/users/image', playerInfo).then(function(response) {
       $location.path('/edit.profile');
       // return response;
     }).catch(function(err) {

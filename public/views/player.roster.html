@@ -23,13 +23,20 @@
       <th>Email Address</th>
       <th>Edit?</th>
     </tr>
-    <tr ng-repeat="player in home.playerList">
+    <!-- <tr ng-repeat="player in home.playerList"> -->
       <!-- add functionality to populate table -->
-      <td>{{player.name}}</td>
+      <tr ng-repeat="onePlayer in admin.playerRosterList">
+      <!-- <td>{{player.name}}</td>
       <td>Malkovich</td>
       <td>johnmalkovich</td>
-      <td>john@email.com</td>
-      <td><button type="submit" class="btn btn-default" >Edit Game...</button></td>
+      <td>john@email.com</td> -->
+      <td>{{onePlayer.first_name}}</td>
+      <td>{{onePlayer.last_name}}</td>
+      <!-- <td>{{onePlayer.last_name}}{{onePlayer.id}}</td> -->
+      <td><a href="/other.profile">{{onePlayer.username}}</a></td>
+      <td>{{onePlayer.email}}</td>
+<!-- Put edit button as ng-if based on admin status-->
+      <td ng-model="admin" ng-init="admin=true"><button type="submit" class="btn btn-default" ng-if="admin">Edit</button></td>
     </tr>
   </table>
 </div>

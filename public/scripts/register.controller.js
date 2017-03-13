@@ -14,7 +14,8 @@ angular.module('pokerApp').controller('RegisterController', function($http, $loc
       email: ctrl.email,
       linkedin: ctrl.linkedin,
       bio: ctrl.bio,
-      photourl: null
+      // photourl: null
+      photourl: ctrl.photourl
     }).then(function(response){
       console.log(response);
       $location.path('/home');
