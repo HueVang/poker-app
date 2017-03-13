@@ -8,7 +8,7 @@
       <li class="active"><a href="/adminLeague"> Admin Home </a></li>
       <li><a href="/playerRoster"> Player Roster </a></li>
       <!-- <li><a href="/createLeague"> Create League </a></li> -->
-      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="admin.logout()">Sign Out</button></li>
+      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn" ng-click="admin.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
     </ul>
   </div>
 </nav>
@@ -17,8 +17,8 @@
   <h2>Leagues</h2>
   <a href="/createLeague">Create New League...</a><br>
   <div class="form-group row">
-    <label class="col-xs-2">Select League</label>
-    <div class="col-xs-10">
+    <label class="col-xs-2 pull-left">Select League</label>
+    <div class="col-xs-8 pull-left">
       <select class="form-control dropdown-toggle col-md-4" ng-model="leagueId" ng-change="admin.getGames(leagueId)">
         <option ng-repeat="league in admin.leagues" value="{{league.id}}">{{league.name}}</option>
       </select><br>
@@ -28,7 +28,7 @@
 
 <div class="adminSection">
   <h2>Games</h2>
-  <button ng-click="admin.newGame()" class="btn btn-primary" >Schedule Game</button>
+  <button ng-click="admin.newGame()" id="scheduleGame" class="btn btn-primary" >Schedule Game</button>
   <table id="">
     <tr>
       <th>Game Name</th>
@@ -78,5 +78,5 @@
       <td>Date</td>
     </tr>
   </table>
-  <td><button type="submit" class="btn btn-primary" >Add Winner...</button></td>
+  <td><button type="submit" id="addWinner" class="btn btn-primary" >Add Winner...</button></td>
 </div>

@@ -8,7 +8,7 @@
       <li><a href="/adminLeague"> Admin Home </a></li>
       <li class="active"><a href="/playerRoster"> Player Roster </a></li>
       <!-- <li><a href="/createLeague"> Create League </a></li> -->
-      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="admin.logout()">Sign Out</button></li>
+      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="admin.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
     </ul>
   </div>
 </nav>
@@ -23,7 +23,7 @@
       <th>Email Address</th>
       <th>Edit?</th>
     </tr>
-    <tr ng-repeat="player in home.playerList">
+    <tr ng-repeat="player in admin.playerList">
       <!-- add functionality to populate table -->
       <td></td>
       <td></td>

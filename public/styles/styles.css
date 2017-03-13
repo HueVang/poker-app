@@ -67,6 +67,14 @@ img {
   padding: 1em;
 }
 
+#scheduleGame {
+  margin-bottom: 1em;
+}
+
+#addWinner {
+  margin-top: 1em;
+}
+
 .navbar-default {
   background-color: #000103;
 }
@@ -80,7 +88,7 @@ img {
   color: white;
 }
 
-.navbar-default .navbar-nav .active a, .navbar-default .navbar-nav .active a:hover {
+.navbar-default .navbar-nav .active a, .navbar-default .navbar-nav .active a:hover, .navbar-default .navbar-nav .active a:active {
   color: white;
   background-color: #f4b225;
 }
