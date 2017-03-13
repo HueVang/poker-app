@@ -95,7 +95,7 @@ router.get('/', function(req, res) {
   }); // end router.get /users
 
 
-  router.get('/:leagueId', function(req, res){
+  router.get('/leaderboard/:leagueId', function(req, res){
     var leagueId = req.params.leagueId;
     console.log('This is the league id: ', leagueId);
     pool.connect(function(err, client, done){
@@ -107,6 +107,32 @@ router.get('/', function(req, res) {
         client.query('SELECT reservations.name, rank() over (order by SUM(points) DESC) as place ,SUM(points) as points, COUNT(points) ' +
         'FROM reservations JOIN games ON reservations.games_id=games.id ' +
         'WHERE points > 0 AND games.leagues_id=$1 GROUP BY reservations.name, reservations.users_id ORDER BY points DESC;',
+            [leagueId],
+           function(err, result){
+             done();
+           if (err) {
+             console.log('Error selecting from reservations', err);
+             res.sendStatus(500);
+           } else {
+             res.send(result.rows);
+           }
+         });
+      }
+    });
+  })
+
+  router.get('/winners/:leagueId', function(req, res){
+    var leagueId = req.params.leagueId;
+    console.log('This is the league id: ', leagueId);
+    pool.connect(function(err, client, done){
+      if (err) {
+        console.log('Error connecting to DB', err);
+        res.sendStatus(500);
+        done();
+      } else {
+        client.query('SELECT reservations.name, games.date FROM reservations JOIN games ' +
+        'ON reservations.games_id=games.id WHERE (points=10 OR points=20) AND games.leagues_id=$1 ' +
+        'ORDER BY games.date ASC;',
             [leagueId],
            function(err, result){
              done();

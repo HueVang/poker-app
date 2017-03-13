@@ -14,10 +14,16 @@ angular.module('pokerApp').service('LeagueService', function($http, $location) {
   }; // end ctrl.getLeagues
 
   ctrl.getLeaderboard = function(leagueId) {
-    return $http.get('/reservations/' + leagueId).then(function(res) {
+    return $http.get('/reservations/leaderboard/' + leagueId).then(function(res) {
       return res;
     })
   }; // end ctrl.getLeaderboard
+
+  ctrl.getWinners = function(leagueId) {
+    return $http.get('/reservations/winners/' + leagueId).then(function(res) {
+      return res;
+    })
+  }; // end ctrl.getWinners
 
   ctrl.log = function() {
     console.log('This is the league service console log');
