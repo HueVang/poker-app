@@ -1,20 +1,22 @@
 <h1 class="headCtr">Sign In</h1>
-<form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" ng-submit="login.login()">
-  <div class="form-group row">
-    <label class="control-label col-xs-1"><span class="glyphicon glyphicon-user"></span></label>
-    <div class="col-xs-11">
-      <input class="form-control" type="text" ng-model="login.username" placeholder="Username">
+<div id="loginSection">
+  <form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" ng-submit="login.login()">
+    <div class="form-group row">
+      <label class="control-label col-xs-1"><span class="glyphicon glyphicon-user"></span></label>
+      <div class="col-xs-11">
+        <input class="form-control" type="text" ng-model="login.username" placeholder="Username">
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label class="control-label col-xs-1"><span class="glyphicon glyphicon-lock"></span></label>
-    <div class="col-xs-11">
-      <input class="form-control" type="password" ng-model="login.password" placeholder="Password">
+    <div class="form-group row">
+      <label class="control-label col-xs-1"><span class="glyphicon glyphicon-lock"></span></label>
+      <div class="col-xs-11">
+        <input class="form-control" type="password" ng-model="login.password" placeholder="Password">
+      </div>
     </div>
-  </div>
-  <div class="col-xs-offset-5 col-xs-10">
-    <button type="submit" class="btn btn-primary">Sign In</button>
-  </div>
-</form>
+    <div class="col-xs-offset-5 col-xs-10">
+      <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span> Sign In</button>
+    </div>
+  </form>
+</div>
 
 <a href="/newUser">Register</a>
