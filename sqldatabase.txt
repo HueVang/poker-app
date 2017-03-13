@@ -37,7 +37,8 @@ timestamp VARCHAR(100),
 points integer,
 games_id integer NOT NULL References games,
 users_id integer NOT NULL References users,
-name VARCHAR(100)
+name VARCHAR(100),
+status integer
 );
 
 CREATE TABLE digests(
