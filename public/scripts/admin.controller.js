@@ -30,13 +30,13 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     })
   }; // end ctrl.getGames
 
-  ctrl.getGames();
 
   ctrl.getLeaderboard = function(leagueId) {
     LeagueService.getLeaderboard(leagueId).then(function(res) {
       ctrl.leaderboard = res.data;
     })
   }; // end ctrl.leaderboard
+
 
   ctrl.newGame = function() {
     $location.path('newGame');

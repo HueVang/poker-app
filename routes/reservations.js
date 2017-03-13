@@ -104,8 +104,10 @@ router.get('/', function(req, res) {
         res.sendStatus(500);
         done();
       } else {
-        client.query('SELECT * FROM reservations WHERE leagues_id = $1;',
-           [leagueId],
+        client.query('SELECT reservations.name, rank() over (order by SUM(points) DESC) as place ,SUM(points) as points, COUNT(points) ' +
+        'FROM reservations JOIN games ON reservations.games_id=games.id ' +
+        'WHERE points > 0 AND games.leagues_id=$1 GROUP BY reservations.name, reservations.users_id ORDER BY points DESC;',
+            [leagueId],
            function(err, result){
              done();
            if (err) {

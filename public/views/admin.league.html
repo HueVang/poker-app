@@ -16,7 +16,7 @@
 <div id="">
   <h2>Leagues</h2>
   <a href="/createLeague">Create New League...</a>
-  <select class="form-control dropdown-toggle col-md-4" ng-model="leagueId" ng-change="admin.getGames(leagueId)">
+  <select class="form-control dropdown-toggle col-md-4" ng-model="leagueId" ng-change="admin.getGames(leagueId); admin.getLeaderboard(leagueId)">
     <label for="">Select League</label>
     <option ng-repeat="league in admin.leagues" value="{{league.id}}">{{league.name}}</option>
   </select>
@@ -52,12 +52,12 @@
       <th>Points</th>
       <th>Final Tables</th>
     </tr>
-    <tr>
+    <tr ng-repeat="person in admin.leaderboard">
       <!-- add functionality to populate table -->
-      <td>Player Name</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>{{ person.name }}</td>
+      <td>{{ person.place }}</td>
+      <td>{{ person.points }}</td>
+      <td>{{ person.count }}</td>
     </tr>
   </table>
 </div>
