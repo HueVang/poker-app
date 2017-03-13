@@ -1,31 +1,35 @@
 body {
-  background-color: #f4f4f4;
+  background-color: #fffffa;
   font-family: Helvetica, 'Trebuchet MS', sans-serif;
-  margin: auto;
+  margin: 2em auto 2em auto;
 }
 
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid gray;
+  background-color: #fffffa;
   padding: 1em;
 }
 
 .form-horizontal {
-  background-color: #e1e1e1;
-  border-color: #d1d1d1;
+  background-color: #f1f1f1;
+  border-color: #e1e1e1;
 }
 
 .headCtr {
   text-align: center;
 }
 
-.navbar {
-  /*background-color: darkred;*/
+h1 {
+  font-size: 3em;
 }
 
+h2 {
+  margin-top: 0;
+}
 
 img {
   height: 150px;
-  width: 150px;
+  /*width: 150px;*/
 }
 
 .pagination {
@@ -33,23 +37,52 @@ img {
 }
 .gameNavbar {
   margin-bottom: 0px;
+}
 
 .btn-primary {
-  background-color: #068293;
-  border-color: #045762;
+  /*color: black;*/
+  background-color: #f4b225;
+  border-color: #c2880a;
 }
 
 .btn-primary:hover {
-  background-color: #056571;
+  background-color: #da990b;
 }
 
 #logoutBtn {
-  background-color: #ff6a5c;
-  border-color: #ff2d1a;
+  background-color: #ff1d1a;
+  border-color: #cc0300;
+  float: right;
 }
 
 #logoutBtn:hover {
-  background-color: #ff4433;
+  background-color: #e60400;
+}
+
+.adminSection {
+  background-color: #f1f1f1;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.navbar-default {
+  background-color: #000103;
+}
+
+.navbar-default .navbar-nav li a {
+  color: white;
+  background-color: #000103;
+}
+
+.navbar-default .navbar-nav li a:hover {
+  color: white;
+}
+
+.navbar-default .navbar-nav .active a, .navbar-default .navbar-nav .active a:hover {
+  color: white;
+  background-color: #f4b225;
 }
 
 li a {
@@ -58,4 +91,5 @@ li a {
 
 label span {
   font-size: 1.5em;
+  font-weight: normal;
 }
