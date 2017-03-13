@@ -63,7 +63,8 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     });
   };
 
-  ctrl.editGame = function() {
+  ctrl.editGame = function(game) {
+    GameService.getGameEdit(game);
     $location.path('editGame');
   }; // end ctrl.endGame
 

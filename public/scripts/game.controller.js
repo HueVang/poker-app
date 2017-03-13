@@ -1,14 +1,40 @@
-angular.module('pokerApp').controller('GameController', function(GameService, MailService, UserService, DigestService){
+angular.module('pokerApp').controller('GameController', function(GameService, MailService, UserService, DigestService, $location){
   var ctrl = this;
   ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'count' : '', 'digest' : '', 'leagues_id' : ''};
   var gamehash = 'this isn\'t right...';
   var users = 'neither is this...';
   var data = 'okay...';
   ctrl.userList = {'first_name' : 'No', 'last_name' : 'Yes'};
+  ctrl.gameEdit = {};
+  ctrl.gameTime;
+  ctrl.gameDate;
 
   GameService.log();
   MailService.log();
   UserService.log();
+
+  ctrl.loadGameEdit = function() {
+    console.log('This works');
+    GameService.displayGameEdit().then(function(res) {
+      res.data.forEach(function(game){
+        game.date = new Date(game.date).toDateString();
+      })
+      ctrl.gameEdit = res.data[0];
+      var gameTime = res.data[0].time;
+      var timeTime = new SimpleDateFormat(timeTime);
+      var timeTimeTime;
+      ctrl.gameTime = timeTimeTime.setTime(timeTime.getTime());
+      var gameDate = res.data[0].date;
+      ctrl.gameDate = new Date(gameDate);
+      console.log('This is the response from GameService: ', ctrl.gameEdit);
+    })
+  }; // end ctrl.loadGameEdit
+
+  ctrl.loadGameEdit();
+
+  ctrl.gameEditCancel = function() {
+    $location.path('adminLeague');
+  }; // end ctrl.gameEditCancel
 
   ctrl.getRegulars = function() {
     UserService.getRegulars().then(function(res) {
@@ -71,8 +97,11 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
         }); // end MailService sendEmailPlayers
 
+
       }); // end UserService.getUsers
     });
+
+    $location.path('home');
   }; // end ctrl.create
 
 
