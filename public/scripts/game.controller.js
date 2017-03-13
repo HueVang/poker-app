@@ -18,6 +18,18 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
   ctrl.getRegulars();
 
+  ctrl.getPlayers = function(){
+    UserService.getUsers().then(function(res){
+      var users = res.data;
+      users.forEach(function(user){
+        user.name = user.first_name + ' ' + user.last_name;
+      });
+      console.log(users);
+    });
+  }
+
+  ctrl.getPlayers();
+
   ctrl.create = function(game) {
     console.log('This is the game attributes: ', game);
     GameService.createGame(game).then(function(res) {
@@ -27,7 +39,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       console.log('This is the gameinfo: ', gameinfo);
 
     }).then(function() {
-      UserService.getUsers().then(function(res) {
+      UserService.getAllUsers().then(function(res) {
         users = res.data;
         regulars = [];
         players = [];

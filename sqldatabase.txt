@@ -20,7 +20,6 @@ regular BOOLEAN,
 linkedin VARCHAR (100),
 bio TEXT,
 photourl VARCHAR(100)
-
 );
 
 CREATE TABLE games(
@@ -38,7 +37,6 @@ timestamp VARCHAR(100),
 points integer,
 games_id integer NOT NULL References games,
 users_id integer NOT NULL References users,
-leagues_id integer NOT NULL References users,
 name VARCHAR(100),
 status integer
 );
