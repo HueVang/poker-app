@@ -118,7 +118,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
     }
 
     ctrl.adminRemoveFromGame = function(player){
-      console.log(player);
+      console.log(player, ctrl.currentGame);
       ReservationService.removeFromGame(player, ctrl.currentGame).then(function(res){
         console.log(res);
         ctrl.getPlayerList(ctrl.currentGame);
