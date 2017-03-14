@@ -1,65 +1,72 @@
 <h1>Edit Player Profile</h1>
 
 <!-- navbar -->
-
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="/home"> Home </a></li>
+      </ul>
+    </div>
+  </nav>
 <form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" ng-submit="register.register()">
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Username:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="profile.register.username">
-      {{profile.player_info[0].username}}
+      <!-- <input class="form-control" type="text" ng-model="profile.register.username"> -->
+            <input class="form-control" type="text" ng-model="profile.username">
+      <!-- {{profile.username}} -->
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Enter Password:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="password" ng-model="profile.register.password">
-      {{profile.player_info[0].pasword}}
+      <input class="form-control" type="password" ng-model="profile.password">
+      <!-- {{profile.player_info[0].password}} -->
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Confirm Password:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="password" ng-model="profile.register.password">
+      <input class="form-control" type="password" ng-model="profile.password">
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Email:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="profile.register.email">
-      {{profile.player_info[0].email}}
+      <input class="form-control" type="text" ng-model="profile.email">
+      <!-- {{profile.player_info[0].email}} -->
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">First Name:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="profile.register.first_name">
-      {{profile.player_info[0].first_name}}
+      <input class="form-control" type="text" ng-model="profile.first_name">
+      <!-- {{profile.player_info[0].first_name}} -->
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Last Name:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text" ng-model="profile.register.last_name">
-      {{profile.player_info[0].last_name}}
+      <input class="form-control" type="text" ng-model="profile.last_name">
+      <!-- {{profile.player_info[0].last_name}} -->
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">LinkedIn:</label>
     <div class="col-xs-8">
-      <input class="form-control" type="text"  ng-model="profile.register.linkedin">
-      {{profile.player_info[0].linkedin}}
+      <input class="form-control" type="text"  ng-model="profile.linkedin">
+      <!-- {{profile.player_info[0].linkedin}} -->
     </div>
   </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Personal Bio:</label>
     <div class="col-xs-8">
-      <textarea class="form-control" rows="3" type="text" ng-model="profile.register.bio"></textarea>
-      {{profile.player_info[0].bio}}
+      <textarea class="form-control" rows="3" type="text" ng-model="profile.bio"></textarea>
+      <!-- {{profile.player_info[0].bio}} -->
     </div>
   </div>
   <div class="col-xs-offset-4 col-xs-8">
-    <button type="submit" class="btn btn-primary"ng-click= "profile.saveProfileChanges(profile.register)">Save Changes</button>
+    <button type="submit" class="btn btn-primary"ng-click= "profile.saveProfileChanges(profile)">Save Changes</button>
     <button type="submit" class="btn btn-primary">Cancel</button>
   </div>
 </form>

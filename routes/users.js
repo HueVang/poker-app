@@ -18,22 +18,45 @@ cb(null,  __dirname +'/../public/uploads/'+username);
 });
 
 var upload = multer({ storage: storage });
-router.get('/user', function(req, res){
+
+router.post('/user/addToGame/:username', function(req, res){
   pool.connect(function(err, client, done){
     if(err){
       console.log('Error connecting to the DB', err);
       res.sendStatus(500);
       done();
     } else {
-      client.query('SELECT * FROM users WHERE username = $1',
-      [req.body.username], function(err, result){
+      client.query('UPDATE users SET regular=$2 WHERE username=$1 RETURNING *',
+      [req.params.username, true], function(err, result){
         done();
         if (err){
-          console.log('Error querying DB', err);
+          console.log('Error updating user as regular', err);
           res.sendStatus(500);
           }else{
             console.log('Got info from DB', result.rows);
-            res.send(users);
+            res.send(result.rows);
+          }
+        });
+    }
+  });
+});
+
+router.post('/user/revertStatus/:username', function(req, res){
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('UPDATE users SET regular=$2 WHERE username=$1 RETURNING *',
+      [req.params.username, false], function(err, result){
+        done();
+        if (err){
+          console.log('Error reverting user\'s regular status', err);
+          res.sendStatus(500);
+          }else{
+            console.log('Got info from DB', result.rows);
+            res.send(result.rows);
           }
         });
     }
@@ -239,33 +262,52 @@ router.get('/otherplayer',function(req,res){
   });
 });//end of get otherplayer
 
-// router.get('/:id',function(req,res){
-//   console.log('users id?::',req.users.id);
-//   username = req.users.username;
-//   console.log('Params?', req.params);
-//   console.log('Params?2', req.params.id);
-//   pool.connect(function(err,client,done){
-//     if(err){
-//       console.log('error connecting to DB',err);
-//       res.sendStatus(500);
-//       done();
-//     } else {
-//      client.query(
-//        'SELECT * from users WHERE id=$1;',[req.params.id],
-//       function(err,result){
-//         done();
-//         if(err){
-//           console.log('error querying db',err);
-//           res.sendStatus(500);
-//         } else {
-//           console.log('get info from db',result.rows);
-//           res.send(result.rows);
-//         }
-//       });
-//     }
-//   });
-// });//end of get otherplayer
+router.get('/playerToShow/:id',function(req,res){
+  pool.connect(function(err,client,done){
+    if(err){
+      console.log('error connecting to DB',err);
+      res.sendStatus(500);
+      done();
+    } else {
+     client.query(
+       'SELECT * from users WHERE id=$1;',[req.params.id],
+      function(err,result){
+        done();
+        if(err){
+          console.log('error querying db',err);
+          res.sendStatus(500);
+        } else {
+          console.log('get info from db',result.rows);
+          res.send(result.rows);
+        }
+      });
+    }
+  });
+});//end of get otherplayer
 
+//adding
+router.get('/editPlayerProfile/:id',function(req,res){
+  pool.connect(function(err,client,done){
+    if(err){
+      console.log('error connecting to DB',err);
+      res.sendStatus(500);
+      done();
+    } else {
+     client.query(
+       'SELECT * from users WHERE id=$1;',[req.params.id],
+      function(err,result){
+        done();
+        if(err){
+          console.log('error querying db',err);
+          res.sendStatus(500);
+        } else {
+          console.log('get info from db',result.rows);
+          res.send(result.rows);
+        }
+      });
+    }
+  });
+});
 router.get('/players', function(req, res){
   console.log('username?::', req.user.username);
   pool.connect(function(err,client,done){

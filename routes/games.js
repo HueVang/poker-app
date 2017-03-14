@@ -34,7 +34,6 @@ router.post('/creategame', function(req, res){
   });
 });
 
-
 router.get('/games', function(req, res){
   pool.connect(function(err, client, done){
     if(err){
@@ -71,6 +70,30 @@ router.get('/getCurrentGames', function(req, res){
           res.sendStatus(500);
           }else{
             console.log('Got info from DB', result.rows)
+            res.send(result.rows);
+          }
+        });
+    }
+  });
+});
+
+router.get('/editGame/:id', function(req, res){
+  var gameId = req.params.id;
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('SELECT games.name, games.count, games.time, games.date, digests.entry FROM games JOIN digests ON games.id=digests.games_id WHERE games.id=$1;',
+      [gameId],
+      function(err, result){
+        done();
+        if (err){
+          console.log('Error querying DB', err);
+          res.sendStatus(500);
+          }else{
+            console.log('Got info from DB', result.rows);
             res.send(result.rows);
           }
         });
