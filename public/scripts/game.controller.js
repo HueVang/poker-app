@@ -1,4 +1,4 @@
-angular.module('pokerApp').controller('GameController', function(GameService, MailService, UserService, DigestService){
+angular.module('pokerApp').controller('GameController', function(GameService, MailService, UserService, DigestService, $location){
   var ctrl = this;
   ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'count' : '', 'digest' : '', 'leagues_id' : ''};
   var gamehash = 'this isn\'t right...';
@@ -73,6 +73,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
       }); // end UserService.getUsers
     });
+    $location.path('home');
   }; // end ctrl.create
 
 

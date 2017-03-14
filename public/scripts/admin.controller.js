@@ -1,6 +1,7 @@
 angular.module('pokerApp').controller('AdminController', function(LeagueService, GameService, UserService, $http, $location){
   var ctrl = this;
-
+  var user;
+  
   ctrl.league = {'name' : '', 'start_date' : '', 'end_date' : ''};
   ctrl.leagues = [{},{},{}];
   ctrl.games = [{},{},{}];
@@ -93,14 +94,14 @@ ctrl.playerRosterList = response;
     });
   };
   ctrl.checkAdminStatus = function() {
-        UserService.checkAdminStatus().then(function(res) {
-         console.log(res.data);
-         if(res.data == true){
-           ctrl.admin = true;
-         }else{
-           ctrl.admin = false;
-         }
-        });
-      };
+    UserService.getCurrentUser().then(function(res) {
+     user=res.data.user;
+     if(user.admin == true){
+       ctrl.admin = true;
+     }else{
+       ctrl.admin = false;
+     }
+    });
+  };
 
 });
