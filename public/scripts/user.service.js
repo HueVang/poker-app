@@ -1,6 +1,6 @@
 angular.module('pokerApp').service('UserService', function($http, $location) {
   var ctrl = this;
-
+  var viewPlayer;
   ctrl.getRegulars = function() {
     return $http.get('/users/regulars').then(function(res) {
       console.log('This is user.service.js res: ', res);
@@ -43,8 +43,24 @@ return $http.post('/users/users', playerRoster).then(function(response){
 
   ctrl.getCurrentUser = function(){
     return $http.get('/users/currentUser').then(function(res){
-      return res
+      return res;
     });
-  }
-
+  };
+ctrl.savePlayerProfile = function(playerId){
+  viewPlayer = playerId;
+  console.log('viewPlayer:', viewPlayer);
+  $location.path('other.profile');
+};
+ctrl.getPlayerToShow = function(){
+  return $http.get('/users/playerToShow/'+ viewPlayer).then(function(res){
+  return res;
+});
+};
+//adding this
+ctrl.getEditProfile = function(){
+  console.log("in getEditProfile");
+  return $http.get('/users/editPlayerProfile/'+ viewPlayer).then(function(res){
+    return res;
+  });
+};
 });

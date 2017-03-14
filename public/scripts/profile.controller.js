@@ -1,19 +1,32 @@
-angular.module('pokerApp').controller('ProfileController', function($http, $location) {
+angular.module('pokerApp').controller('ProfileController', function($http, UserService, $location) {
   console.log('ProfileController loaded');
 
   var ctrl = this;
-  ctrl.profile_info = [
-  {"username" : "",
-  "password" : "",
-  "email" : "",
-  "first_name" : "",
-  "last_name" : "",
-  "linkedin" : "",
-  "bio" : ""
-}];
+//   ctrl.profile_info = [
+//   {"username" : "",
+//   "password" : "",
+//   "email" : "",
+//   "first_name" : "",
+//   "last_name" : "",
+//   "linkedin" : "",
+//   "bio" : ""
+// }];
+//added
+ctrl.showEditProfile = function() {
+  UserService.getEditProfile().then(function(res){
+    var user = res.data[0];
+    console.log(user);
+    ctrl.username = user.username;
+    ctrl.email = user.email;
+    ctrl.first_name = user.first_name;
+    ctrl.last_name = user.last_name;
+    ctrl.linkedin = user.linkedin;
+    ctrl.bio = user.bio;
+  });
+  };
+  ctrl.showEditProfile();
 
-
-  console.log('Profile Info Object: ', ctrl.profile_info);
+  // console.log('Profile Info Object: ', ctrl.profile_info);
 
   if (document.getElementById("profilePicture") !== null) {
     document.getElementById("profilePicture").onchange = function() { document.getElementById("upload").submit(); };
@@ -33,8 +46,7 @@ angular.module('pokerApp').controller('ProfileController', function($http, $loca
   ctrl.getPlayerProfileInfo = function() {
     $http.get('/users/playerinfo').then(function(response) {
       ctrl.player_info = response.data;
-      console.log('This is the player info: ', response.data);
-      console.log('This is ctrl.profile_info:', ctrl.profile_info);
+      console.log('This is the info of the logged in player: ', response.data);
     }).catch(function(err) {
       console.log('error getting response from the player :', err);
     });

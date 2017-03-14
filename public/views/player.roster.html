@@ -26,10 +26,10 @@
       <tr ng-repeat="onePlayer in admin.playerRosterList">
       <td>{{onePlayer.first_name}}</td>
       <td>{{onePlayer.last_name}}</td>
-
-      <td><a href="/other.profile">{{onePlayer.username}}</a></td>
+      <td><button class = "btn btn-link" ng-click="admin.showPlayerProfile(onePlayer.id)">{{onePlayer.username}}</button></td>
       <td>{{onePlayer.email}}</td>
-      <td ng-model="admin" ng-init="admin=true"><button type="submit" class="btn btn-default" ng-if="admin">Edit</button></td>
+      <td ng-if="admin.admin"><button ng-click="admin.showEditProfile(onePlayer.id)" type ="submit" class="btn btn-default"><a href="/edit.profile">Edit</a></button></td>
     </tr>
   </table>
 </div>
+<!-- <a href = "/edit.profile">Edit</a> -->

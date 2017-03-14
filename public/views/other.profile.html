@@ -10,13 +10,13 @@
   <form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well">
     <div class="form-group row">
   <!-- <div class="profileDisplay"> -->
-    <p>Username: {{ player.player_info[0].username }}</p>
-    <p>First Name: {{ player.player_info[0].first_name }}</p>
-    <p>Last Name: {{ player.player_info[0].last_name }}</p>
-    <p>LinkedIn URL: {{ player.player_info[0].linkedin }}</p>
-    <p>Personal Bio: {{ player.player_info[0].bio }}</p>
+    <p>Username: {{ player.username }}</p>
+    <p>First Name: {{ player.first_name }}</p>
+    <p>Last Name: {{ player.last_name }}</p>
+    <p>LinkedIn URL: {{ player.linkedin }}</p>
+    <p>Personal Bio: {{ player.bio }}</p>
     <div id="profileImage">
-    <img class="" ng-src="/../uploads/{{player.player_info[0].username}}.jpg" alt=""/>
+    <img class="" ng-src="/../uploads/{{player.username}}.jpg" alt=""/>
     <!-- </div> -->
   </div>
 </form>

@@ -1,5 +1,6 @@
 angular.module('pokerApp').controller('AdminController', function(LeagueService, GameService, UserService, $http, $location){
   var ctrl = this;
+  var user;
 
   ctrl.league = {'name' : '', 'start_date' : '', 'end_date' : ''};
   ctrl.leagues = [{},{},{}];
@@ -12,7 +13,7 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.createLeague = function(league) {
     LeagueService.createLeague(league).then(function(res) {
       console.log('This is the league response: ', res.data);
-    })
+    });
   }; // end ctrl.createLeague
 
   ctrl.getLeagues = function() {
@@ -28,14 +29,14 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     GameService.getGames(leagueId).then(function(res) {
       ctrl.games = res.data;
       console.log('This is the games array: ', ctrl.games);
-    })
+    });
   }; // end ctrl.getGames
 
 
   ctrl.getLeaderboard = function(leagueId) {
     LeagueService.getLeaderboard(leagueId).then(function(res) {
       ctrl.leaderboard = res.data;
-    })
+    });
   }; // end ctrl.leaderboard
 
   ctrl.getWinners = function(leagueId) {
@@ -44,8 +45,8 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
       ctrl.winners.forEach(function(winner) {
         winner.date = new Date(winner.date).toDateString();
         console.log('This is the new date: ', winner.date);
-      }) // end ctrl.winners.forEach
-    })
+      }); // end ctrl.winners.forEach
+    });
   }; // end ctrl.getWinners
 
 
@@ -93,14 +94,25 @@ ctrl.playerRosterList = response;
     });
   };
   ctrl.checkAdminStatus = function() {
-        UserService.checkAdminStatus().then(function(res) {
+        UserService.getCurrentUser().then(function(res) {
          console.log(res.data);
-         if(res.data == true){
+         user = res.data.user;
+         if(user.admin == true){
            ctrl.admin = true;
          }else{
            ctrl.admin = false;
          }
         });
       };
+ctrl.checkAdminStatus();
+ctrl.showPlayerProfile = function(player){
+  UserService.savePlayerProfile(player);
+  };
+
+
+//added
+ctrl.showEditProfile = function(player){
+  UserService.savePlayerProfile(player);
+};
 
 });
