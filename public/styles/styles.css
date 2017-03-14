@@ -28,8 +28,11 @@ h2 {
 }
 
 img {
-  height: 150px;
-  /*width: 150px;*/
+  width: 15em;
+  margin-left: 1em;
+  box-shadow: 0.25em 0.25em lightgray;
+  border: 1px solid gray;
+  border-radius: 4px;
 }
 
 .pagination {
@@ -98,6 +101,15 @@ img {
 .navbar-default .navbar-nav .active a, .navbar-default .navbar-nav .active a:hover, .navbar-default .navbar-nav .active a:active {
   color: white;
   background-color: #f4b225;
+}
+
+#playerInfo {
+  float: left;
+  padding-left: 1em;
+}
+
+#profileImage {
+  float: right;
 }
 
 li a {

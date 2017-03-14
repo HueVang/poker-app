@@ -1,22 +1,30 @@
-<h1> Other Player Profile </h1>
+<h1> Player Profile: {{ player.first_name }} {{ player.last_name }} </h1>
+
+<!-- navbar -->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li><a href="/home"> Home </a></li>
-      <li><a href="/edit.profile">Edit Profile</a><li>
-      </ul>
-    </div>
-  </nav>
-  <form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well">
-    <div class="form-group row">
-  <!-- <div class="profileDisplay"> -->
-    <p>Username: {{ player.username }}</p>
+      <li><a href="/home"> Player Home </a></li>
+      <li ng-if="player.admin"><a href="/adminLeague"> Admin Home </a></li>
+      <li><a href="/playerRoster"> Player Roster </a></li>
+      <!-- <li><a href="/createLeague"> Create League </a></li> -->
+      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="player.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="adminSection col-xs-8 col-xs-offset-2">
+  <div id="playerInfo" class="form-group row">
     <p>First Name: {{ player.first_name }}</p>
     <p>Last Name: {{ player.last_name }}</p>
+    <p>Username: {{ player.username }}</p>
     <p>LinkedIn URL: {{ player.linkedin }}</p>
     <p>Personal Bio: {{ player.bio }}</p>
-    <div id="profileImage">
-    <img class="" ng-src="/../uploads/{{player.username}}.jpg" alt=""/>
-    <!-- </div> -->
+    <div class="">
+      <a href="/edit.profile">Edit Profile...</a>
+    </div>
   </div>
-</form>
+  <div id="profileImage">
+    <img class="" ng-src="/../uploads/{{player.username}}.jpg" alt=""/>
+  </div>
+</div>

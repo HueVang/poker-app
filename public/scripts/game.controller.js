@@ -110,7 +110,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
       }); // end UserService.getUsers
     });
-    
+
     $location.path('home');
   }; // end ctrl.create
 
@@ -159,6 +159,16 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       console.log('Successfully reverted regular status: ', res.data[0]);
     });
   }; // end ctrl.removeFromGame
+
+  ctrl.logout = function() {
+    $http.delete('/login').then(function(){
+      console.log('Successfully logged out!');
+      alertify.warning('You are now signed out.');
+      $location.path('/');
+    }).catch(function(err){
+      console.log('Error logging out');
+    });
+  };
 
   ctrl.cancel = function() {
     $location.path('adminLeague');
