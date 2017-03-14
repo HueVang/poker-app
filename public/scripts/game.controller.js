@@ -117,7 +117,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   ctrl.getautoCompleteArray = function() {
     UserService.getUsers().then(function(res){
       res.data.forEach(function(person){
-        var playerName = person.first_name + ' ' + person.last_name + '(' + person.username + ')';
+        var playerName = person.first_name + ' ' + person.last_name + ' (' + person.username + ')';
         ctrl.autoCompleteArray.push(playerName);
         // console.log('This is the autoCompleteArray: ', ctrl.autoCompleteArray);
         // console.log('This is the length of autoCompleteArray: ', ctrl.autoCompleteArray.length);
@@ -133,11 +133,12 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
     var newUsername = usernameArray[1].substr(0, usernameArray[1].length-1)
     console.log(newUsername);
     UserService.addUserToGame(newUsername).then(function(res){
-      var firstAndLastNameArray = usernameArray[0].split(' ')
-      var obj = {}
-      obj['first_name'] = firstAndLastNameArray[0];
-      obj['last_name'] = firstAndLastNameArray[1];
-      ctrl.userList.push(obj);
+      // var firstAndLastNameArray = usernameArray[0].split(' ')
+      // var obj = {}
+      // obj['first_name'] = firstAndLastNameArray[0];
+      // obj['last_name'] = firstAndLastNameArray[1];
+      ctrl.userList.push(res.data[0]);
+      console.log('This is the thing pushed to the userList: ', res.data[0]);
       ctrl.addedToGame.push(newUsername);
       console.log('This is the user to be added: ', res.data[0]);
     });
