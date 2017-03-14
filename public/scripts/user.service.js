@@ -47,4 +47,16 @@ return $http.post('/users/users', playerRoster).then(function(response){
     });
   }
 
+  ctrl.addUserToGame = function(username) {
+    return $http.post('/users/user/addToGame/'+username).then(function(res) {
+      return res;
+    })
+  }; // end ctrl.getUser
+
+  ctrl.revertRegularStatus = function(username) {
+    return $http.post('/users/user/revertStatus/'+username).then(function(res) {
+      return res;
+    })
+  }; // end ctrl.revertRegularStatus
+
 });

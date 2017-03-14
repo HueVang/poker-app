@@ -18,22 +18,45 @@ cb(null,  __dirname +'/../public/uploads/'+username);
 });
 
 var upload = multer({ storage: storage });
-router.get('/user', function(req, res){
+
+router.post('/user/addToGame/:username', function(req, res){
   pool.connect(function(err, client, done){
     if(err){
       console.log('Error connecting to the DB', err);
       res.sendStatus(500);
       done();
     } else {
-      client.query('SELECT * FROM users WHERE username = $1',
-      [req.body.username], function(err, result){
+      client.query('UPDATE users SET regular=$2 WHERE username=$1 RETURNING *',
+      [req.params.username, true], function(err, result){
         done();
         if (err){
-          console.log('Error querying DB', err);
+          console.log('Error updating user as regular', err);
           res.sendStatus(500);
           }else{
             console.log('Got info from DB', result.rows);
-            res.send(users);
+            res.send(result.rows);
+          }
+        });
+    }
+  });
+});
+
+router.post('/user/revertStatus/:username', function(req, res){
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('UPDATE users SET regular=$2 WHERE username=$1 RETURNING *',
+      [req.params.username, false], function(err, result){
+        done();
+        if (err){
+          console.log('Error reverting user\'s regular status', err);
+          res.sendStatus(500);
+          }else{
+            console.log('Got info from DB', result.rows);
+            res.send(result.rows);
           }
         });
     }
