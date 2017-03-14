@@ -64,21 +64,23 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     });
   };
 
-  ctrl.editGame = function() {
+  ctrl.editGame = function(game) {
+    GameService.getGameEdit(game);
     $location.path('editGame');
   }; // end ctrl.endGame
 
   //added
-//
-ctrl.getPlayerRosterData = function(){
-  ctrl.playerRosterList =[];
+  //
+  ctrl.getPlayerRosterData = function(){
+    ctrl.playerRosterList =[];
     console.log('in getPlayerRosterData');
-  UserService.getPlayerRoster().then(function (response) {
+    UserService.getPlayerRoster().then(function (response) {
       console.log('OK');
       console.log('response', response);
-ctrl.playerRosterList = response;
+      ctrl.playerRosterList = response;
     });
   };
+
   ctrl.getPlayerRosterData();
 
   ctrl.savePlayerRoster = function(){
@@ -90,29 +92,32 @@ ctrl.playerRosterList = response;
     };
     console.log('in savePlayerRoster');
     UserService.savePlayerRoster(ctrl.playerRosterObject).then(function(){
-    ctrl.getPlayerRosterData();
+      ctrl.getPlayerRosterData();
     });
   };
+
   ctrl.checkAdminStatus = function() {
-        UserService.getCurrentUser().then(function(res) {
-         console.log(res.data);
-         user = res.data.user;
-         if(user.admin == true){
-           ctrl.admin = true;
-         }else{
-           ctrl.admin = false;
-         }
-        });
-      };
-ctrl.checkAdminStatus();
-ctrl.showPlayerProfile = function(player){
-  UserService.savePlayerProfile(player);
+    UserService.getCurrentUser().then(function(res) {
+      console.log(res.data);
+      user = res.data.user;
+      if(user.admin == true){
+        ctrl.admin = true;
+      }else{
+        ctrl.admin = false;
+      }
+    });
+  };
+
+  ctrl.checkAdminStatus();
+
+  ctrl.showPlayerProfile = function(player){
+    UserService.savePlayerProfile(player);
   };
 
 
-//added
-ctrl.showEditProfile = function(player){
-  UserService.savePlayerProfile(player);
-};
+  //added
+  ctrl.showEditProfile = function(player){
+    UserService.savePlayerProfile(player);
+  };
 
 });
