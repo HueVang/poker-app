@@ -147,9 +147,21 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   ctrl.revertRegularStatus = function(){
     ctrl.addedToGame.forEach(function(username){
       UserService.revertRegularStatus(username).then(function(res){
-        console.log('Successfully changed regular status: ', res.data[0]);
-      })
+        console.log('Successfully reverted regular status: ', res.data[0]);
+      });
     });
   }; // end ctrl.revertRegularStatus
+
+  ctrl.removeFromGame = function(userObject){
+    var index = ctrl.userList.indexOf(userObject);
+    ctrl.userList.splice(index, 1);
+    UserService.revertRegularStatus(userObject.username).then(function(res){
+      console.log('Successfully reverted regular status: ', res.data[0]);
+    });
+  }; // end ctrl.removeFromGame
+
+  ctrl.cancel = function() {
+    $location.path('adminLeague');
+  }; // end ctrl.cancel
 
 }); // end angular.module
