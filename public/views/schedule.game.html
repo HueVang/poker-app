@@ -56,6 +56,8 @@
   </div>
 </form>
 
+<p>{{game.username}}</p>
+
 <div id="">
   <table id="">
     <tr>
@@ -69,7 +71,12 @@
     </tr>
   </table>
   <div class="col-xs-offset-3 col-xs-10">
-    
-    <button type="submit" class="btn btn-primary" ng-model="game.player">Add Player</button>
+
+    <button class="btn btn-primary" ng-click="game.addPlayer()">Add Player</button>
+    <div ng-show="game.addPlayerInput">
+      <autocomplete ng-model="game.username" data="game.autoCompleteArray"></autocomplete>
+      <button class="btn btn-primary" ng-click="game.addToPlayersList(game.username)" >Add</button>
+    </div>
+
   </div>
 </div>
