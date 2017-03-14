@@ -40,12 +40,19 @@ img {
 }
 
 .btn-primary {
-  /*color: black;*/
   background-color: #f4b225;
   border-color: #c2880a;
 }
 
 .btn-primary:hover {
+  background-color: #da990b;
+}
+
+.btn-primary .active {
+  background-color: #da990b;
+}
+
+.btn-primary:focus {
   background-color: #da990b;
 }
 

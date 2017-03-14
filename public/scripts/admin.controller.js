@@ -12,6 +12,7 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.createLeague = function(league) {
     LeagueService.createLeague(league).then(function(res) {
       console.log('This is the league response: ', res.data);
+      alertify.success('New league successfully created.');
     })
   }; // end ctrl.createLeague
 
