@@ -15,13 +15,18 @@
 
 <div class="adminSection">
   <h2>Players</h2>
+  <div class="col-sm-4 col-sm-offset-8">
+    <!-- <autocomplete ng-change="admin.jumpToUser()" ng-model="admin.username" data="admin.autoCompleteArray"></autocomplete> -->
+    <input type="text" class="form-control" ng-change="admin.jumpToUser()" ng-model="admin.username" data="admin.autoCompleteArray"></input>
+
+  </div>
   <table id="">
     <tr>
       <th>First Name</th>
       <th>Last Name</th>
       <th>Username</th>
       <th>Email Address</th>
-      <th>Edit?</th>
+      <th ng-if="admin.admin">Edit?</th>
     </tr>
       <tr ng-repeat="onePlayer in admin.playerRosterList">
       <td>{{onePlayer.first_name}}</td>

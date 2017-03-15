@@ -7,6 +7,9 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.games = [{},{},{}];
   ctrl.leaderboard = [{},{},{}];
   ctrl.winners = [{},{},{}];
+  ctrl.autoCompleteArray = [];
+  ctrl.username;
+  ctrl.allPlayers = [];
 
   console.log('AdminController loaded');
 
@@ -76,26 +79,28 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     ctrl.playerRosterList =[];
     console.log('in getPlayerRosterData');
     UserService.getPlayerRoster().then(function (response) {
-      console.log('OK');
-      console.log('response', response);
+      response.forEach(function(person){
+        person.searchCriteria = person.first_name + ' ' + person.last_name + ' (' + person.username + ') '+person.email;
+      });
+      ctrl.allPlayers = response;
       ctrl.playerRosterList = response;
     });
   };
 
   ctrl.getPlayerRosterData();
 
-  ctrl.savePlayerRoster = function(){
-    ctrl.playerRosterObject = {
-      first_name:ctrl.first_name,
-      last_name:ctrl.last_name,
-      username:ctrl.username,
-      email:ctrl.email
-    };
-    console.log('in savePlayerRoster');
-    UserService.savePlayerRoster(ctrl.playerRosterObject).then(function(){
-      ctrl.getPlayerRosterData();
-    });
-  };
+  // ctrl.savePlayerRoster = function(){
+  //   ctrl.playerRosterObject = {
+  //     first_name:ctrl.first_name,
+  //     last_name:ctrl.last_name,
+  //     username:ctrl.username,
+  //     email:ctrl.email
+  //   };
+  //   console.log('in savePlayerRoster');
+  //   UserService.savePlayerRoster(ctrl.playerRosterObject).then(function(){
+  //     ctrl.getPlayerRosterData();
+  //   });
+  // };
 
   ctrl.checkAdminStatus = function() {
     UserService.getCurrentUser().then(function(res) {
@@ -120,5 +125,32 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.showEditProfile = function(player){
     UserService.savePlayerProfile(player);
   };
+
+  ctrl.getautoCompleteArray = function() {
+    UserService.getUsers().then(function(res){
+      res.data.forEach(function(person){
+        var playerName = person.first_name + ' ' + person.last_name + ' (' + person.username + ')';
+        ctrl.autoCompleteArray.push(playerName);
+      });
+      console.log('This is the autoCompleteArray:', ctrl.autoCompleteArray);
+    });
+  }; // end ctrl.getautoCompleteArray
+
+  ctrl.getautoCompleteArray();
+
+  ctrl.jumpToUser = function(){
+    console.log("changing");
+    if(ctrl.username == null){
+      ctrl.playerRosterList = ctrl.allPlayers;
+    }else{
+      ctrl.playerRosterList = [];
+      ctrl.allPlayers.forEach(function(person){
+        var caseInsensitive = person.searchCriteria.toUpperCase();
+        if(caseInsensitive.includes(ctrl.username.toUpperCase())){
+          ctrl.playerRosterList.push(person);
+        }
+      });
+    }
+  }
 
 });

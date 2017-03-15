@@ -13,7 +13,7 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
       return res;
     });
   }; // end ctrl.getAllUsers
-  
+
   ctrl.getUsers = function() {
     return $http.get('/users/users').then(function(res) {
       return res;
@@ -26,11 +26,11 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
       return response.data;
     });
   };
-  ctrl.savePlayerRoster= function(playerRoster){
-    return $http.post('/users/users', playerRoster).then(function(response){
-      return response;
-    });
-  };
+  // ctrl.savePlayerRoster= function(playerRoster){
+  //   return $http.post('/users/users', playerRoster).then(function(response){
+  //     return response;
+  //   });
+  // };
   ctrl.log = function() {
     console.log('This is the user service console log');
   }; // end ctrl.log
