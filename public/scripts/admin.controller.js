@@ -2,7 +2,6 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   var ctrl = this;
   var user;
 
-  ctrl.league = {'name' : '', 'start_date' : '', 'end_date' : ''};
   ctrl.leagues = [{},{},{}];
   ctrl.games = [{},{},{}];
   ctrl.leaderboard = [{},{},{}];
@@ -21,10 +20,24 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     LeagueService.getLeagues().then(function(res) {
       ctrl.leagues = res.data;
       console.log('This is the leagues array: ', ctrl.leagues);
+      console.log('This should be the last league\'s value: ', ctrl.leagues[ctrl.leagues.length - 1].id.toString());
+      ctrl.getGames(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.getLeaderboard(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.getWinners(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.league = ctrl.leagues[ctrl.leagues.length - 1];
+      // ctrl.getGames(ctrl.leagues[0].id);
+      // ctrl.getLeaderboard(ctrl.leagues[0].id);
+      // ctrl.getWinners(ctrl.leagues[0].id);
+      // ctrl.league = ctrl.leagues[0];
+      console.log('This is the last league in the array: ', ctrl.league);
     });
+
   }; // end ctrl.getLeagues
 
   ctrl.getLeagues();
+
+
+
 
   ctrl.getGames = function(leagueId) {
     GameService.getGames(leagueId).then(function(res) {
@@ -84,18 +97,18 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
 
   ctrl.getPlayerRosterData();
 
-  ctrl.savePlayerRoster = function(){
-    ctrl.playerRosterObject = {
-      first_name:ctrl.first_name,
-      last_name:ctrl.last_name,
-      username:ctrl.username,
-      email:ctrl.email
-    };
-    console.log('in savePlayerRoster');
-    UserService.savePlayerRoster(ctrl.playerRosterObject).then(function(){
-      ctrl.getPlayerRosterData();
-    });
-  };
+  // ctrl.savePlayerRoster = function(){
+  //   ctrl.playerRosterObject = {
+  //     first_name:ctrl.first_name,
+  //     last_name:ctrl.last_name,
+  //     username:ctrl.username,
+  //     email:ctrl.email
+  //   };
+  //   console.log('in savePlayerRoster');
+  //   UserService.savePlayerRoster(ctrl.playerRosterObject).then(function(){
+  //     ctrl.getPlayerRosterData();
+  //   });
+  // };
 
   ctrl.checkAdminStatus = function() {
     UserService.getCurrentUser().then(function(res) {
@@ -120,5 +133,8 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.showEditProfile = function(player){
     UserService.savePlayerProfile(player);
   };
+
+
+
 
 });

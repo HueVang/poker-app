@@ -110,7 +110,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
       }); // end UserService.getUsers
     });
-    
+
     $location.path('home');
   }; // end ctrl.create
 

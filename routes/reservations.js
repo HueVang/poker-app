@@ -309,9 +309,6 @@ router.post('/regulars', function(req, res) {
                       result.rows.forEach(function(i){
                           playerList.push(i);
                         });
-                      var lists = {players: playerList,
-                                   alternates: alternateList};
-                      io.sockets.emit('broadcast',{description: lists});
                       }
                   });
                }
@@ -340,6 +337,9 @@ router.post('/regulars', function(req, res) {
     });
   }); // end for Each
 
+  var lists = {players: playerList,
+               alternates: alternateList};
+  io.sockets.emit('broadcast',{description: lists});
   res.send(req.user.email);
   // res.sendStatus(200);
 }); // end router.post
@@ -427,6 +427,7 @@ router.post('/players', function(req, res) {
 
 
   res.send(req.user.email);
+  // res.redirect('/home');
   // res.sendStatus(200);
 }); // end router.post
 

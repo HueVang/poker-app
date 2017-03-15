@@ -37,7 +37,7 @@ angular.module('pokerApp').service('GameService', function($http, $location) {
   }
 
   ctrl.getPlayerList = function(currentGame){
-    console.log(currentGame);
+    console.log('This is currentGame in getPlayerList: ',currentGame);
     var gameId1 = currentGame.id;
     var count = currentGame.count;
     return $http.get('/reservations/sortusers/'+gameId1+'&'+count).then(function(res){

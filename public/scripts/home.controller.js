@@ -26,7 +26,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
 
   ctrl.getPlayerList = function(currentGame){
     GameService.getPlayerList(currentGame).then(function(res){
-      console.log(res);
+      console.log('This is the response from ctrl.getPlayerList: ' , res);
     });
   }
 
@@ -38,7 +38,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       ctrl.currentGame = {id:res.data[0].id, count:res.data[0].count};
       console.log(res.data);
     }).then(function(){
-      console.log(currentGame1);
+      console.log('This is currentGame1: ', currentGame1);
       ctrl.getPlayerList(currentGame1);
     });
   }

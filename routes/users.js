@@ -349,7 +349,8 @@ router.post('/image', upload.any(), function(req, res, next) {
   console.log('This is username: ', typeof username);
   console.log('This is the req.file: ', req.files);
   console.log(req.body);
-  res.redirect('back');
+  res.sendStatus(200);
+  // res.redirect('back');
 });
 router.get("/players", function(req, res) {
   pool.connect(function(err, client, done) {

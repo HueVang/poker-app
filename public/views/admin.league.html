@@ -19,9 +19,11 @@
   <div class="form-group row">
     <label class="col-xs-2 pull-left">Select League</label>
     <div class="col-xs-8 pull-left">
-      <select class="form-control dropdown-toggle col-md-4" ng-model="leagueId" ng-change="admin.getGames(leagueId); admin.getLeaderboard(leagueId); admin.getWinners(leagueId)">
-        <option ng-repeat="league in admin.leagues" value="{{league.id}}">{{league.name}}</option>
-      </select><br>
+      <!-- <select class="form-control dropdown-toggle col-md-4" ng-model="leagueId" ng-change="admin.getGames(leagueId); admin.getLeaderboard(leagueId); admin.getWinners(leagueId)">
+        <option ng-repeat="league in admin.leagues" value="{{league.id}}" ng-if="league.id == admin.leagues[admin.leagues.length - 1].id">{{league.name}}</option>
+        <option value="{{admin.leagues[admin.leagues.length - 1].id}}" selected>{{admin.leagues[admin.leagues.length - 1].name}}</option>
+      </select><br> -->
+      <select class="form-control dropdown-toggle col-md-4" ng-options="league.name for league in admin.leagues" ng-model="admin.league" ng-change="admin.getGames(admin.league.id); admin.getLeaderboard(admin.league.id); admin.getWinners(admin.league.id)"></select>
     </div>
   </div>
 </div>
