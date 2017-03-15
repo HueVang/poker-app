@@ -1,4 +1,4 @@
-angular.module('pokerApp').controller('RegisterController', function($http, $location){
+angular.module('pokerApp').controller('RegisterController', function($http,$location){
   var ctrl = this;
 
   console.log('RegisterController loaded');

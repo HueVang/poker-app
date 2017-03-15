@@ -13,7 +13,7 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
       return res;
     });
   }; // end ctrl.getAllUsers
-  
+
   ctrl.getUsers = function() {
     return $http.get('/users/users').then(function(res) {
       return res;
@@ -59,13 +59,12 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
     });
   };
 
-  ctrl.getEditProfile = function(){
-    console.log("in getEditProfile");
-    return $http.get('/users/editPlayerProfile/'+ viewPlayer).then(function(res){
-      return res;
-    });
-  };
-
+  // ctrl.getEditProfile = function(){
+  //   console.log("in getEditProfile");
+  //   return $http.get('/users/editPlayerProfile/'+ viewPlayer).then(function(res){
+  //     return res;
+  //   });
+  // };
 
   ctrl.addUserToGame = function(username) {
     return $http.post('/users/user/addToGame/'+username).then(function(res) {
@@ -76,7 +75,13 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
   ctrl.revertRegularStatus = function(username) {
     return $http.post('/users/user/revertStatus/'+username).then(function(res) {
       return res;
-    })
-  }; // end ctrl.revertRegularStatus
+    });
+}; // end ctrl.revertRegularStatus
 
+  ctrl.updateProfile = function(changeProfile){
+    return $http.put('/users/'+changeProfile.id, changeProfile ).then(function(res){
+    console.log('res in updateProfile', res);
+    return res;
+    });
+  };
 });

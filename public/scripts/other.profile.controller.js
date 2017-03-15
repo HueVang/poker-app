@@ -1,11 +1,11 @@
-//EDIT
-angular.module('pokerApp').controller('PlayerProfileController', function($http, UserService, $location) {
-  console.log('PlayerProfileController loaded');
+angular.module('pokerApp').controller('ProfileController', function($http, UserService, $location) {
+  console.log('ProfileController loaded');
 
   var ctrl = this;
   ctrl.showPlayerProfile = function() {
     UserService.getPlayerToShow().then(function(res){
-      var user = res.data[0];
+      // var user = res.data[0];
+      
       console.log(user);
       ctrl.username = user.username;
       ctrl.first_name = user.first_name;
@@ -29,7 +29,7 @@ angular.module('pokerApp').controller('PlayerProfileController', function($http,
   ctrl.getPlayerInfo();
 
 
-  ctrl.linkedin = function(link) {
+  ctrl.getLinkedIn = function(link) {
     if (link == null) {
       console.log('No linkedin link');
     } else {
@@ -62,4 +62,4 @@ angular.module('pokerApp').controller('PlayerProfileController', function($http,
       console.log('Error logging out');
     });
   };
-}); // end PlayerProfileController
+}); // end ProfileController

@@ -66,18 +66,22 @@
     </div>
   </div>
   <div class="col-xs-offset-4 col-xs-8">
-    <button type="submit" class="btn btn-primary"ng-click= "profile.saveProfileChanges(profile)">Save Changes</button>
-    <button type="submit" class="btn btn-primary">Cancel</button>
+
+    <!-- <button type="submit" class="btn btn-primary"ng-click= "profile.saveProfileChanges(profile)">Save Changes</button> -->
+    <button type="submit" class="btn btn-primary"ng-click= "profile.updateProfile(profile.user)">Update Changes</button>
+
+    <button class="btn btn-primary"><a href="/home">Cancel</a></button>
   </div>
 </form>
 
-
-<img class="" ng-src="/../uploads/{{profile.player_info[0].username}}.jpg" alt=""/>
-
 <form id="upload" action="/users/image" method="post" enctype="multipart/form-data">
+
   <div class="form-group row">
+    <!-- <img class="" ng-src="/../uploads/{{profile.username}}.jpg" alt=""/> -->
+      <img class="" ng-src="/uploads/{{profile.username}}.jpg" alt=""/>
   <!-- <label class="btn btn-primary" for="profilePicture">Change Profile </label> -->
-  <input id="profilePicture" type="file" name="{{ profile.player_info[0].username }}"/>
+  <!-- <input id="profilePicture" type="file" name="{{ profile.player_info[0].username }}"/> -->
+  <input id="profilePicture" type="file" name="{{profile.username}} "/>
 </div>
 </form>
 <!-- <button type="button" class="btn btn-primary">Change Photo...</button> -->

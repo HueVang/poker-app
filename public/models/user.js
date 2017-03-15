@@ -57,6 +57,23 @@ exports.create = function(username, password , first_name, last_name, email, lin
     });
 };
 
+exports.update = function(id,username, password , first_name, last_name, email, linkedin, bio, photourl) {
+  return bcrypt
+    .hash(password, SALT_ROUNDS)
+    .then(function(hash) {
+      console.log('in exports.update user:', id);
+      return query(
+        "UPDATE users set username = $2, password =$3, first_name=$4, last_name=$5, email=$6, linkedin=$7, bio=$8, photourl=$9 where id=$1 RETURNING *",
+        [ id, username, hash, first_name, last_name, email, linkedin, bio, photourl ]
+      ).then(function(users) {
+        return users[0];
+      });
+    })
+    .catch(function(err) {
+      console.log("Error updating user", err);
+    });
+};
+
 function query(sqlString, data) {
   return new Promise(function(resolve, reject) {
     pool.connect(function(err, client, done) {
