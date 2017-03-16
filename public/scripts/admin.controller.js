@@ -1,4 +1,4 @@
-angular.module('pokerApp').controller('AdminController', function(LeagueService, GameService, UserService, $http, $location){
+angular.module('pokerApp').controller('AdminController', function(MailService, LeagueService, GameService, UserService, $http, $location){
   var ctrl = this;
   var user;
 
@@ -10,6 +10,7 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.autoCompleteArray = [];
   ctrl.username;
   ctrl.allPlayers = [];
+  ctrl.emailInput = false;
 
   console.log('AdminController loaded');
 
@@ -151,6 +152,18 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
         }
       });
     }
+  }
+
+  ctrl.showEmailInput = function(){
+    ctrl.emailInput = true;
+  }
+
+  ctrl.inviteNewPlayer = function(newPlayerEmail){
+    console.log(typeof newPlayerEmail);
+    var invitedPlayer = {email : newPlayerEmail};
+    MailService.inviteNewPlayer(invitedPlayer).then(function(res){
+      console.log(res);
+    });
   }
 
 });

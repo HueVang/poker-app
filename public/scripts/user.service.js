@@ -79,4 +79,18 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
     })
   }; // end ctrl.revertRegularStatus
 
+  ctrl.getNewPlayer = function(hashId) {
+    return $http.get('/users/newPlayer/'+ hashId).then(function(res){
+      return res.data;
+    });
+  }
+
+  ctrl.saveNewPlayer = function(player) {
+    var data = player;
+    var id = player.id;
+    return $http.put('/users/'+ id, data).then(function(res){
+      return res.data;
+    });
+  }
+
 });

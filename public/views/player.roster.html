@@ -15,6 +15,12 @@
 
 <div class="adminSection">
   <h2>Players</h2>
+  <div class="col-sm-12">
+    <button class="btn btn-primary" ng-click="admin.showEmailInput()">Invite New Player</button>
+    <form ng-show="admin.emailInput">
+      <input type="text" placeholder="New Player Email" ng-model="admin.newPlayerEmail"/><button ng-click="admin.inviteNewPlayer(admin.newPlayerEmail)" class="btn btn-primary">Send Invite Email</button>
+    </form>
+  </div>
   <div class="col-sm-4 col-sm-offset-8">
     <!-- <autocomplete ng-change="admin.jumpToUser()" ng-model="admin.username" data="admin.autoCompleteArray"></autocomplete> -->
     <input type="text" class="form-control" ng-change="admin.jumpToUser()" ng-model="admin.username" data="admin.autoCompleteArray"></input>

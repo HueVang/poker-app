@@ -110,8 +110,8 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
       }); // end UserService.getUsers
     });
-    
-    $location.path('home');
+
+    $location.path('adminLeague');
   }; // end ctrl.create
 
   ctrl.getautoCompleteArray = function() {
