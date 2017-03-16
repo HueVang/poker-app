@@ -82,6 +82,10 @@ ctrl.showEditProfile = function() {
     });
   }; // end saveProfileChanges function
 
+  ctrl.cancelEdit = function(){
+    $location.path('/home')
+  }
+
   ctrl.logout = function() {
     $http.delete('/login').then(function(){
       console.log('Successfully logged out!');

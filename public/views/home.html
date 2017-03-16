@@ -41,18 +41,33 @@
           <ul  class="pagination">
             <li ng-click="home.showPlayerList()"><a href="/home"> Registered Players </a></li>
             <li ng-click="home.showAlternateList()"><a href="/home"> Alternates </a></li>
-            <li><button ng-if="home.notAdmin" class="btn btn-danger" ng-click="home.removeFromGame()">Leave Game</button></li>
+            <li><button ng-if="home.notAdmin" class="btn btn-danger removeButton" ng-click="home.removeFromGame()">Leave Game</button></li>
           </ul>
         </nav>
       </div>
       <ol  ng-if="home.showPlayers">
-        <li ng-repeat="player in home.playerList">{{player.name}}<button ng-if="home.admin" class="btn btn-danger" ng-click="home.adminRemoveFromGame(player.users_id)">Remove Player from Game</button></li>
+        <li ng-repeat="player in home.playerList">{{player.name}}<button ng-if="home.admin" class="btn btn-danger btn-xs noMarginPadding removeButton" ng-click="home.adminRemoveFromGame(player.users_id)">Remove from Game</button></li>
       </ol>
       <ol ng-if="home.showAlternates">
-        <li ng-repeat="alternate in home.alternates">{{alternate.name}}<button ng-if="home.admin" class="btn btn-danger" ng-click="home.adminRemoveFromGame(alternate.users_id)">Remove Player from Game</button></li>
+        <li ng-repeat="alternate in home.alternates">{{alternate.name}}<button ng-if="home.admin" class="btn btn-danger btn-xs noMarginPadding removeButton" ng-click="home.adminRemoveFromGame(alternate.users_id)">Remove from Game</button></li>
       </ol>
     </div>
 
+    <nav aria-label="Page navigation" class="col-sm-10">
+      <ul class="pagination">
+        <li ng-click="home.prevPage()">
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li ng-repeat="array in home.digestArray" ng-click="home.jumpToPage(array, home.digestArray.indexOf(array))"><a href="#">{{home.digestArray.indexOf(array)+1}}</a></li>
+        <li ng-click="home.nextPage()">
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </body>
 </html>
 
