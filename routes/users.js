@@ -533,53 +533,7 @@ router.post("/users", function(req, res) {
     }
   });
 });
-<<<<<<< HEAD
-// router.get('/other.profile/:id', function(req, res){
-//   var id = hashids.decode(req.params.id);
-//   pool.connect(function(err, client, done){
-//     if(err){
-//       console.log('Error connecting to the DB', err);
-//       res.sendStatus(500);
-//       done();
-//     } else {
-//       client.query('SELECT * FROM users WHERE id = $1',
-//       [req.params.id], function(err, result){
-//         done();
-//         if (err){
-//           console.log('Error querying DB', err);
-//           res.sendStatus(500);
-//           }else{
-//             console.log('Got info from DB', result.rows);
-//             res.send(result.rows);
-//           }
-//         });
-//     }
-//   });
 
-  //adding
-//   router.put('/images/:id', function(req, res){
-//   pool.connect(function(err, client, done){
-//     if (err) {
-//       console.log('Error connecting to DB', err);
-//       res.sendStatus(500);
-//       done();
-//     } else {
-//       client.query('UPDATE users SET username=$2, first_name=$3, last_name=$4 , password =$5, linkedin =$6, bio= $7  WHERE id = $1 RETURNING *',
-//                    [req.params.id, req.body.username, req.body.first_name, req.body.last_name, req.body.password, req.body.linkedin,req.body.bio],
-//                    function(err, result){
-//                      done();
-//                      if (err) {
-//                        console.log('Error updating profile', err);
-//                        res.sendStatus(500);
-//                      } else {
-//                        res.send(result.rows);
-//                      }
-//                    });
-//     }
-//   });
-// });
-// });
-=======
 router.get('/newPlayer/:id', function(req, res){
   var id = hashids.decode(req.params.id);
   id = Number(id);
@@ -672,5 +626,4 @@ router.get('/', function(req, res) {
   res.redirect('/newUser?hashId='+hashId);
 });
 
->>>>>>> views
 module.exports = router;
