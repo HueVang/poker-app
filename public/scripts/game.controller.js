@@ -1,4 +1,4 @@
-angular.module('pokerApp').controller('GameController', function(GameService, MailService, UserService, DigestService, $location){
+angular.module('pokerApp').controller('GameController', function(GameService, MailService, ReservationService, UserService, DigestService, $location){
   var ctrl = this;
   ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'count' : '', 'digest' : '', 'leagues_id' : ''};
   var gamehash = 'this isn\'t right...';
@@ -12,14 +12,35 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   ctrl.gameDate;
   ctrl.addPlayerInput = false;
   ctrl.autoCompleteArray = [];
+  ctrl.autoCompleteArrayForPoints = [];
   ctrl.username;
+  ctrl.userPointsArray;
+  // ctrl.points = 0;
+  ctrl.person;
+
 
   GameService.log();
   MailService.log();
   UserService.log();
 
+  ctrl.removePoints = function(reservation) {
+    ReservationService.removePoints(reservation.id).then(function(res){
+      console.log('Removed points on: ', res.data[0]);
+      var index = ctrl.userPointsArray.indexOf(reservation);
+      ctrl.userPointsArray.splice(index, 1);
+      ctrl.autoCompleteArrayForPoints = [];
+      console.log('Reset autoCompleteArray: ', ctrl.autoCompleteArrayForPoints);
+      ctrl.getautoCompleteArrayForPoints(ctrl.gameToEdit.id);
+      console.log('This is the autoCompleteArrayForPoints:', ctrl.autoCompleteArrayForPoints);
+    });
+  }; // end ctrl.removePoints
 
-
+  ctrl.getPlayerPoints = function(gameId) {
+    ReservationService.getPlayerPoints(gameId).then(function(res){
+      ctrl.userPointsArray = res.data;
+      console.log('This is the userPointsArray: ', ctrl.userPointsArray);
+    });
+  }; // end ctrl.getPlayerPoints
 
   ctrl.addPlayer = function() {
     ctrl.addPlayerInput = true;
@@ -31,20 +52,31 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       res.data.forEach(function(game){
         game.date = new Date(game.date).toDateString();
       })
-      ctrl.gameEdit = res.data[0];
+      ctrl.gameToEdit = res.data[0];
       var gameTime = new Date(res.data[0].time);
       ctrl.gameTime = gameTime;
       var gameDate = res.data[0].date;
       ctrl.gameDate = new Date(gameDate);
-      console.log('This is the response from GameService: ', ctrl.gameEdit);
+      console.log('This is the response from GameService: ', ctrl.gameToEdit);
+      ctrl.gameToEdit.time = ctrl.gameTime;
+      ctrl.gameToEdit.date = ctrl.gameDate;
+      ctrl.getPlayerPoints(ctrl.gameToEdit.id);
+      ctrl.getautoCompleteArrayForPoints(ctrl.gameToEdit.id);
     })
   }; // end ctrl.loadGameEdit
 
   ctrl.loadGameEdit();
 
-  ctrl.gameEditCancel = function() {
-    $location.path('adminLeague');
-  }; // end ctrl.gameEditCancel
+  ctrl.gameEditSave = function(game) {
+    console.log('This is the game edit to save: ', game);
+    GameService.editGame(game).then(function(res){
+      console.log('This is the updated game: ', res.data[0]);
+    });
+    GameService.editGameDigest(game).then(function(res){
+      console.log('This is the updated digest: ', res.data[0]);
+    });
+  }; // end ctrl.gameEditSave
+
 
   ctrl.getRegulars = function() {
     UserService.getRegulars().then(function(res) {
@@ -128,10 +160,22 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
   ctrl.getautoCompleteArray();
 
+  ctrl.getautoCompleteArrayForPoints = function(gameId) {
+    ReservationService.getUsersInGame(gameId).then(function(res){
+      res.data.forEach(function(person){
+        var playerName = person.first_name + ' ' + person.last_name + ' (' + person.username + ')';
+        ctrl.autoCompleteArrayForPoints.push(playerName);
+        // console.log('This is the autoCompleteArray: ', ctrl.autoCompleteArray);
+        // console.log('This is the length of autoCompleteArray: ', ctrl.autoCompleteArray.length);
+      });
+      console.log('This is the autoCompleteArrayForPoints:', ctrl.autoCompleteArrayForPoints);
+    });
+  }; // end ctrl.getautoCompleteArrayForPoints
+
   ctrl.addToPlayersList = function(username){
     var usernameArray = username.split('(');
     var newUsername = usernameArray[1].substr(0, usernameArray[1].length-1)
-    console.log(newUsername);
+    console.log('Add to players list username: ', newUsername);
     UserService.addUserToGame(newUsername).then(function(res){
       // var firstAndLastNameArray = usernameArray[0].split(' ')
       // var obj = {}
@@ -143,6 +187,32 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       console.log('This is the user to be added: ', res.data[0]);
     });
   } // end ctrl.addToPlayersList
+
+  ctrl.addToUserPointsArray = function(person){
+    var usernameArray = person.username.split('(');
+    var username = usernameArray[1].substr(0, usernameArray[1].length-1)
+    console.log('Add to user points array username: ', username);
+    UserService.getUserByUsername(username).then(function(res){
+      person.user_info = res.data[0];
+      person.games_id = ctrl.gameToEdit.id;
+      ReservationService.givePlayerPoints(person).then(function(res){
+        if (ctrl.userPointsArray.length > 0) {
+          for (var i=0; ctrl.userPointsArray.length > i; i++){
+            if(res.data[0].points >= ctrl.userPointsArray[i].points) {
+              ctrl.userPointsArray.splice(i, 0, res.data[0]);
+              break;
+            }
+          }; // end for loop
+        } else {
+          ctrl.userPointsArray.push(res.data[0]);
+        }
+        console.log('This is the thing pushed to the userPointsArray: ', res.data[0]);
+        ctrl.autoCompleteArrayForPoints = [];
+        ctrl.getautoCompleteArrayForPoints(ctrl.gameToEdit.id);
+        console.log('This is the autoCompleteArrayForPoints:', ctrl.autoCompleteArrayForPoints);
+      }); // end ReservationService.givePlayerPoints
+    }); // end UserService.getUserByUsername
+  }; // end ctrl.addToUserPointsArray
 
   ctrl.revertRegularStatus = function(){
     ctrl.addedToGame.forEach(function(username){
@@ -157,10 +227,12 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
     ctrl.userList.splice(index, 1);
     UserService.revertRegularStatus(userObject.username).then(function(res){
       console.log('Successfully reverted regular status: ', res.data[0]);
+
     });
   }; // end ctrl.removeFromGame
 
   ctrl.cancel = function() {
+    ctrl.revertRegularStatus();
     $location.path('adminLeague');
   }; // end ctrl.cancel
 
