@@ -13,7 +13,7 @@ cb(null,  __dirname +'/../public/uploads/'+username);
 },
 
   filename: function (req, file, cb) {
-    cb(req.file, file.fieldname+'.jpg' , username+'.jpg');
+    cb(req.file, file.fieldname.trim()+'.jpg' , username.trim()+'.jpg');
     // cb(null, file.fieldname+'.jpg');
   }
 });
@@ -377,7 +377,8 @@ router.post('/image', upload.any(), function(req, res, next) {
   console.log('req.files: ', req.files);
   console.log(req.body);
   res.redirect('/edit.profile');
-  // res.end();
+  // res.redirect('back');
+
 
 });
 //trying

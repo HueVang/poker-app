@@ -17,7 +17,7 @@ ctrl.showEditProfile = function() {
     ctrl.linkedin = res.data[0].linkedin;
     ctrl.bio = res.data[0].bio;
     ctrl.password = res.data[0].password;
-
+    // ctrl.photourl = res.data[0].photourl;
   console.log('loaded the user clicked on:',ctrl.first_name);
 
   });
@@ -26,7 +26,17 @@ ctrl.showEditProfile = function() {
 
   if (document.getElementById("profilePicture") !== null) {
     document.getElementById("profilePicture").onchange = function() { document.getElementById("upload").submit(); };
-  }
+  // }
+// if (document.getElementById("profilePicture") !== null) {
+//   document.getElementById("profilePicture").onchange = function(){
+//     submitForm();
+//   };
+//   function submitForm(){
+//         document.getElementById("upload").submit();
+//
+//     }
+//
+
 
   ctrl.getProfiles = function() {
      $http.get('/users/players').then(function(response) {
@@ -58,14 +68,6 @@ ctrl.getLinkedIn = function() {
     window.location.href = (ctrl.linkedin);
   }
 };
-  // ctrl.linkedin = function() {
-  //   if (ctrl.profile_info[0].linkedin == null) {
-  //     console.log('No linkedin link');
-  //     $location.path('/edit.profile');
-  //   } else {
-  //     window.location.href = (ctrl.profile_info[0].linkedin);
-  //   }
-  // }; // end linkedin function
 
   ctrl.profilePage = function() {
     $location.path('/edit.profile');
@@ -89,7 +91,6 @@ ctrl.getLinkedIn = function() {
 ctrl.updateProfile = function(playerInfo) {
   console.log('This is the player\'s info: ', playerInfo);
   return $http.put('/users/'+playerInfo.id, playerInfo).then(function(response) {
-    // $location.path('/edit.profile');
     console.log('in put request of updateProfile');
     return response;
   }).catch(function(err) {
@@ -192,5 +193,5 @@ ctrl.cancelProfileChanges = function() {
   //     console.log('Error logging out');
   //   });
   // };
-
+}
 }); // end ProfileController
