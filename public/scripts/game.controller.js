@@ -23,6 +23,15 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   MailService.log();
   UserService.log();
 
+  ctrl.getLeagueId = function() {
+    GameService.getLeagueId().then(function(res){
+      ctrl.newGame.leagues_id = res.data[0].id;
+      console.log('This is the leagues_id for newGame: ', ctrl.newGame.leagues_id);
+    });
+  }; // end ctrl.getLeagueId
+
+  ctrl.getLeagueId();
+
   ctrl.removePoints = function(reservation) {
     ReservationService.removePoints(reservation.id).then(function(res){
       console.log('Removed points on: ', res.data[0]);

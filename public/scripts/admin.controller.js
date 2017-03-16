@@ -68,7 +68,8 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
   }; // end ctrl.getWinners
 
 
-  ctrl.newGame = function() {
+  ctrl.newGame = function(leagueId) {
+    GameService.saveLeagueId(leagueId);
     $location.path('newGame');
   }; // end ctrl.newGame
 
