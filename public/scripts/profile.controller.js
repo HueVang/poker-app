@@ -2,21 +2,22 @@ angular.module('pokerApp').controller('ProfileController', function($http, UserS
   console.log('ProfileController loaded');
 
   var ctrl = this;
-
+  ctrl.thisPlayer = false;
 
 
 ctrl.showEditProfile = function() {
   UserService.getPlayerToShow().then(function(res){
+    var user = res.data[0];
 
-
-    ctrl.id = res.data[0].id;
-    ctrl.username = res.data[0].username;
-    ctrl.email = res.data[0].email;
-    ctrl.first_name = res.data[0].first_name;
-    ctrl.last_name = res.data[0].last_name;
-    ctrl.linkedin = res.data[0].linkedin;
-    ctrl.bio = res.data[0].bio;
-    ctrl.password = res.data[0].password;
+    ctrl.id = user.id;
+    ctrl.username = user.username;
+    ctrl.email = user.email;
+    ctrl.first_name = user.first_name;
+    ctrl.last_name = user.last_name;
+    ctrl.linkedin = user.linkedin;
+    ctrl.bio = user.bio;
+    ctrl.administrator = user.admin;
+    ctrl.regular = user.regular;
 
   console.log('loaded the user clicked on:',ctrl.first_name);
 
@@ -86,12 +87,24 @@ ctrl.getLinkedIn = function() {
     });
   }; // end saveProfileChanges function
 //adding
-ctrl.updateProfile = function(playerInfo) {
-  console.log('This is the player\'s info: ', playerInfo);
+ctrl.updateProfile = function() {
+  playerInfo = {};
+  playerInfo.id = ctrl.id;
+  playerInfo.username = ctrl.username;
+  playerInfo.first_name = ctrl.first_name;
+  playerInfo.last_name = ctrl.last_name;
+  playerInfo.admin = ctrl.administrator;
+  playerInfo.regular = ctrl.regular;
+  console.log('this is admin status', playerInfo.admin);
+  console.log('this is regular status', playerInfo.regular);
+  playerInfo.bio = ctrl.bio;
+  playerInfo.linkedin = ctrl.linkedin;
+  playerInfo.email = ctrl.email;
   return $http.put('/users/'+playerInfo.id, playerInfo).then(function(response) {
-    // $location.path('/edit.profile');
+
     console.log('in put request of updateProfile');
-    return response;
+    $location.path('/playerRoster');
+    // return response;
   }).catch(function(err) {
     console.log('error getting response: ', err);
     ctrl.getPlayerProfileInfo();
@@ -100,7 +113,7 @@ ctrl.updateProfile = function(playerInfo) {
 
 
   ctrl.cancelEdit = function(){
-    $location.path('/home')
+    $location.path('/playerRoster')
   }
 
   ctrl.logout = function() {
@@ -111,6 +124,23 @@ ctrl.updateProfile = function(playerInfo) {
       console.log('Error logging out');
     });
   };
+
+  ctrl.checkAdminStatus = function() {
+    UserService.getCurrentUser().then(function(res) {
+      console.log(res.data);
+      user = res.data.user;
+      if(user.admin == true){
+        ctrl.admin = true;
+      }else{
+        ctrl.admin = false;
+      }
+      if(ctrl.id == user.id || user.admin == true){
+        ctrl.thisPlayer = true;
+      }
+    });
+  };
+
+  ctrl.checkAdminStatus();
 
 // ctrl.register = function() {
 //   console.log('creating a new user');

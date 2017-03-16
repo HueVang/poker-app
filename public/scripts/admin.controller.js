@@ -138,7 +138,7 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
 
   //added
   ctrl.showEditProfile = function(player){
-    UserService.savePlayerProfile(player);
+    UserService.saveEditProfile(player);
   };
 
   ctrl.getautoCompleteArray = function() {
@@ -169,7 +169,11 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
   }
 
   ctrl.showEmailInput = function(){
-    ctrl.emailInput = true;
+    if(ctrl.emailInput == false){
+      ctrl.emailInput = true;
+    }else{
+      ctrl.emailInput = false;
+    }
   }
 
   ctrl.inviteNewPlayer = function(newPlayerEmail){
