@@ -50,15 +50,43 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
   ctrl.savePlayerProfile = function(playerId){
     viewPlayer = playerId;
     console.log('viewPlayer:', viewPlayer);
-    $location.path('other.profile');
+    // $location.path('other.profile');
   };
-
+//working on taking out getPlayerToShow this is the original:
   ctrl.getPlayerToShow = function(){
+    console.log('in getPlayerToShow this is viewPlayer', viewPlayer);
     return $http.get('/users/playerToShow/'+ viewPlayer).then(function(res){
+      // console.log('res', res);
       return res;
     });
   };
+  //trying this
+  // ctrl.getPlayerToShow = function(playerId){
+  //     console.log('in getPlayerToShow in UserService');
+  //   viwePlayer = playerId;
+  //    return $http.put('/users/playerToShow/'+ viewPlayer,playerId).then(function(res){
+  //   // return $http.get('/users/playerToShow/'+ viewPlayer).then(function(res){
+  //     // console.log('res in getPlayerToShow', res);
+  //     console.log(res.data[0]);
+  //     viewPlayer = res.data[0].id;
+  //     console.log(viewPlayer);
+  //     return res;
+  //   });
+  // };
 
+  // trying this too
+  // ctrl.getPlayerToShow = function(){
+  //   return $http.get('/users/players').then(function(res){
+  //       console.log('res', res);
+  //
+  //       return res;
+  //     });
+  //   };
+  // ctrl.updatePlayerToShow = function(playerId){
+  //   viwePlayer = playerId;
+  //      return $http.put('/users/'+ viewPlayer,playerId).then(function(res){
+  //        ctrl.getPlayerToShow();
+  // }
   // ctrl.getEditProfile = function(){
   //   console.log("in getEditProfile");
   //   return $http.get('/users/editPlayerProfile/'+ viewPlayer).then(function(res){
@@ -69,7 +97,7 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
   ctrl.addUserToGame = function(username) {
     return $http.post('/users/user/addToGame/'+username).then(function(res) {
       return res;
-    })
+    });
   }; // end ctrl.getUser
 
   ctrl.revertRegularStatus = function(username) {

@@ -4,8 +4,8 @@ angular.module('pokerApp').controller('ProfileController', function($http, UserS
   var ctrl = this;
   ctrl.showPlayerProfile = function() {
     UserService.getPlayerToShow().then(function(res){
-      // var user = res.data[0];
-      
+      var user = res.data[0];
+
       console.log(user);
       ctrl.username = user.username;
       ctrl.first_name = user.first_name;

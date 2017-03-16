@@ -3,44 +3,26 @@ angular.module('pokerApp').controller('ProfileController', function($http, UserS
 
   var ctrl = this;
 
-  // ctrl.user = {
-  // username: ctrl.username;
-  // email: ctrl.email;
-  // first_name: ctrl.first_name;
-  // last_name: ctrl.last_name;
-  // linkedin: ctrl.linkedin;
-  // bio: ctrl.bio;
-  //  ctrl.userid = user.id;
-  // }
-//   {"username" : "",
-//   "password" : "",
-//   "email" : "",
-//   "first_name" : "",
-//   "last_name" : "",
-//   "linkedin" : "",
-//   "bio" : ""
-// }];
+
 
 ctrl.showEditProfile = function() {
   UserService.getPlayerToShow().then(function(res){
-    // var user = res.data[0];
-    //
-    //    console.log('user', user);
-    // console.log('loaded the user clicked on:',user);
-    //
-    // ctrl.username = user.username;
-    // ctrl.email = user.email;
-    // ctrl.first_name = user.first_name;
-    // ctrl.last_name = user.last_name;
-    // ctrl.linkedin = user.linkedin;
-    // ctrl.bio = user.bio;
-    // ctrl.userid = user.id;
+
+
+    ctrl.id = res.data[0].id;
+    ctrl.username = res.data[0].username;
+    ctrl.email = res.data[0].email;
+    ctrl.first_name = res.data[0].first_name;
+    ctrl.last_name = res.data[0].last_name;
+    ctrl.linkedin = res.data[0].linkedin;
+    ctrl.bio = res.data[0].bio;
+    ctrl.password = res.data[0].password;
+
+  console.log('loaded the user clicked on:',ctrl.first_name);
 
   });
   };
   ctrl.showEditProfile();
-
-  // console.log('Profile Info Object: ', ctrl.profile_info);
 
   if (document.getElementById("profilePicture") !== null) {
     document.getElementById("profilePicture").onchange = function() { document.getElementById("upload").submit(); };
@@ -106,7 +88,7 @@ ctrl.getLinkedIn = function() {
 //adding
 ctrl.updateProfile = function(playerInfo) {
   console.log('This is the player\'s info: ', playerInfo);
-  return $http.put('/users/'+playerInfo, playerInfo).then(function(response) {
+  return $http.put('/users/'+playerInfo.id, playerInfo).then(function(response) {
     // $location.path('/edit.profile');
     console.log('in put request of updateProfile');
     return response;
@@ -115,7 +97,33 @@ ctrl.updateProfile = function(playerInfo) {
     ctrl.getPlayerProfileInfo();
   });
 };
+
+ctrl.cancelProfileChanges = function() {
+    $location.path('/home');
+  };
+
+// ctrl.register = function() {
+//   console.log('creating a new user');
 //
+//   $http.post('/users', {
+//     username: ctrl.username,
+//     password: ctrl.password,
+//     first_name: ctrl.first_name,
+//     last_name: ctrl.last_name,
+//     email: ctrl.email,
+//     linkedin: ctrl.linkedin,
+//     bio: ctrl.bio,
+//     // photourl: null
+//     photourl: ctrl.photourl
+//   }).then(function(response){
+//     console.log(response);
+//     $location.path('/home');
+//   }, function(error) {
+//     console.log('error registering new user', error);
+//   });
+// };
+// });
+
 //   ctrl.logout = function() {
 //     $http.delete('/login').then(function(){
 //       console.log('Successfully logged out!');

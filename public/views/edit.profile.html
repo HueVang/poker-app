@@ -8,7 +8,8 @@
       </ul>
     </div>
   </nav>
-<form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" ng-submit="register.register()">
+<!-- <form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" ng-submit="register.register()"> -->
+  <form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" ng-submit="register.register()">
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Username:</label>
     <div class="col-xs-8">
@@ -68,20 +69,21 @@
   <div class="col-xs-offset-4 col-xs-8">
 
     <!-- <button type="submit" class="btn btn-primary"ng-click= "profile.saveProfileChanges(profile)">Save Changes</button> -->
-    <button type="submit" class="btn btn-primary"ng-click= "profile.updateProfile(profile.user)">Update Changes</button>
+    <button type="submit" class="btn btn-primary"ng-click= "profile.updateProfile(profile)">Update Changes</button>
 
-    <button class="btn btn-primary"><a href="/home">Cancel</a></button>
+    <!-- <button class="btn btn-primary"><a href="/home">Cancel</a></button> -->
+    <button ng-click = "profile.cancelProfileChanges()" class="btn btn-primary">Cancel</button>
   </div>
 </form>
 
 <form id="upload" action="/users/image" method="post" enctype="multipart/form-data">
-
+  
   <div class="form-group row">
-    <!-- <img class="" ng-src="/../uploads/{{profile.username}}.jpg" alt=""/> -->
       <img class="" ng-src="/uploads/{{profile.username}}.jpg" alt=""/>
-  <!-- <label class="btn btn-primary" for="profilePicture">Change Profile </label> -->
-  <!-- <input id="profilePicture" type="file" name="{{ profile.player_info[0].username }}"/> -->
-  <input id="profilePicture" type="file" name="{{profile.username}} "/>
+  <label class="btn btn-primary" for="profilePicture">Change Profile </label>
+   <!-- <input id="profilePicture" type="file" name="{{ profile.player_info[0].username }}"/ -->
+   <input id="profilePicture" type="file" name="{{profile.username}} "/>
 </div>
+
 </form>
 <!-- <button type="button" class="btn btn-primary">Change Photo...</button> -->

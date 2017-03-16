@@ -19,6 +19,7 @@
     "express-session": "^1.15.1",
     "hashids": "^1.1.1",
     "multer": "^1.3.0",
+    "ng-file-upload": "^12.2.13",
     "nodemailer": "^3.1.4",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
