@@ -73,6 +73,12 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
     })
   }; // end ctrl.getUser
 
+  ctrl.getUserByUsername = function(username) {
+    return $http.get('/users/user/getUserByUsername/'+username).then(function(res){
+      return res;
+    });
+  }; // end ctrl.getUserByUsername
+
   ctrl.revertRegularStatus = function(username) {
     return $http.post('/users/user/revertStatus/'+username).then(function(res) {
       return res;

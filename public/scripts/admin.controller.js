@@ -2,7 +2,6 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
   var ctrl = this;
   var user;
 
-  ctrl.league = {'name' : '', 'start_date' : '', 'end_date' : ''};
   ctrl.leagues = [{},{},{}];
   ctrl.games = [{},{},{}];
   ctrl.leaderboard = [{},{},{}];
@@ -25,10 +24,24 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
     LeagueService.getLeagues().then(function(res) {
       ctrl.leagues = res.data;
       console.log('This is the leagues array: ', ctrl.leagues);
+      console.log('This should be the last league\'s value: ', ctrl.leagues[ctrl.leagues.length - 1].id.toString());
+      ctrl.getGames(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.getLeaderboard(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.getWinners(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.league = ctrl.leagues[ctrl.leagues.length - 1];
+      // ctrl.getGames(ctrl.leagues[0].id);
+      // ctrl.getLeaderboard(ctrl.leagues[0].id);
+      // ctrl.getWinners(ctrl.leagues[0].id);
+      // ctrl.league = ctrl.leagues[0];
+      console.log('This is the last league in the array: ', ctrl.league);
     });
+
   }; // end ctrl.getLeagues
 
   ctrl.getLeagues();
+
+
+
 
   ctrl.getGames = function(leagueId) {
     GameService.getGames(leagueId).then(function(res) {
@@ -165,5 +178,6 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
       console.log(res);
     });
   }
+
 
 });

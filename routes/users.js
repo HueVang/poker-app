@@ -351,7 +351,8 @@ router.post('/image', upload.any(), function(req, res, next) {
   console.log('This is username: ', typeof username);
   console.log('This is the req.file: ', req.files);
   console.log(req.body);
-  res.redirect('back');
+  res.sendStatus(200);
+  // res.redirect('back');
 });
 router.get("/players", function(req, res) {
   pool.connect(function(err, client, done) {
@@ -425,6 +426,32 @@ router.get("/playerinfo", function(req, res) {
     }
   });
 });
+
+router.get('/user/getUserByUsername/:username', function(req, res){
+  console.log('in users get route');
+pool.connect(function(err, client, done){
+  if(err){
+    console.log('Error connecting to the DB', err);
+    res.sendStatus(500);
+    done();
+  } else {
+    client.query('SELECT * FROM users WHERE username=$1',
+    [req.params.username],
+     function(err, result){
+      done();
+      if (err){
+        console.log('Error getting user by username', err);
+        res.sendStatus(500);
+        }else{
+          console.log('Got info from DB', result.rows);
+          res.send(result.rows);
+        }
+      });
+  }
+});
+}); // end router.get getUserByUsername
+
+
 router.post("/users", function(req, res) {
   console.log('in users post route');
   pool.connect(function(err, client, done) {

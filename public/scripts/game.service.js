@@ -26,6 +26,20 @@ angular.module('pokerApp').service('GameService', function($http, $location) {
     })
   }; // end vtrl.getGames
 
+  ctrl.editGame = function(game) {
+    var id = game.id;
+    return $http.put('/games/' + id, game).then(function(res) {
+      return res;
+    });
+  }; // end ctrl.editGame
+
+  ctrl.editGameDigest = function(game) {
+    var id = game.id;
+    return $http.put('/games/digests/' + id, game).then(function(res) {
+      return res;
+    });
+  }; // end ctrl.editGameDigest
+
   ctrl.log = function() {
     console.log('This is the game service console log');
   };
@@ -37,7 +51,7 @@ angular.module('pokerApp').service('GameService', function($http, $location) {
   }
 
   ctrl.getPlayerList = function(currentGame){
-    console.log(currentGame);
+    console.log('This is currentGame in getPlayerList: ',currentGame);
     var gameId1 = currentGame.id;
     var count = currentGame.count;
     return $http.get('/reservations/sortusers/'+gameId1+'&'+count).then(function(res){

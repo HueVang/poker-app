@@ -85,7 +85,7 @@ router.get('/editGame/:id', function(req, res){
       res.sendStatus(500);
       done();
     } else {
-      client.query('SELECT games.name, games.count, games.time, games.date, digests.entry FROM games JOIN digests ON games.id=digests.games_id WHERE games.id=$1;',
+      client.query('SELECT games.id, games.name, games.count, games.time, games.date, digests.entry FROM games JOIN digests ON games.id=digests.games_id WHERE games.id=$1;',
       [gameId],
       function(err, result){
         done();
@@ -128,16 +128,16 @@ router.get('/:leagueId', function(req, res){
 router.put('/:id', function(req, res){
  pool.connect(function(err, client, done){
    if (err) {
-     console.log('Error connecting to DB', err);
+     console.log('Error connecting to DB on games put request', err);
      res.sendStatus(500);
      done();
    } else {
-     client.query('UPDATE games SET name=$2, date=$3, time=$4 WHERE id = $1 RETURNING *',
-        [req.params.id, req.body.name, req.body.date, req.body.time],
+     client.query('UPDATE games SET name=$2, date=$3, count=$4, time=$5 WHERE id = $1 RETURNING *',
+        [req.params.id, req.body.name, req.body.date, req.body.count, req.body.time],
         function(err, result){
           done();
         if (err) {
-          console.log('Error updating users', err);
+          console.log('Error updating game on edit game', err);
           res.sendStatus(500);
         } else {
           res.send(result.rows);
@@ -146,6 +146,28 @@ router.put('/:id', function(req, res){
    }
  });
 });
+
+router.put('/digests/:gameId', function(req, res){
+  pool.connect(function(err, client, done){
+    if (err) {
+      console.log('Error connecting to DB on games/digests put request', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('UPDATE digests SET entry=$2 WHERE games_id = $1 RETURNING *',
+         [req.params.gameId, req.body.entry],
+         function(err, result){
+           done();
+         if (err) {
+           console.log('Error updating digest on edit game', err);
+           res.sendStatus(500);
+         } else {
+           res.send(result.rows);
+         }
+       });
+    }
+  });
+}); // end router.put
 
 
 module.exports = router;
