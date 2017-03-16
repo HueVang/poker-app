@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <ul class="nav navbar-nav">
       <li><a href="/home"> Player Home </a></li>
-      <li><a href="/adminLeague"> Admin Home </a></li>
+      <li ng-if="admin.admin"><a href="/adminLeague"> Admin Home </a></li>
       <li><a href="/playerRoster"> Player Roster </a></li>
       <!-- <li><a href="/createLeague"> Create League </a></li> -->
       <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="admin.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
@@ -21,7 +21,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <h2>Date Range</h2>
+    <p>Date Range</p>
     <div class="startDate form-group row">
       <label class="control-label col-xs-offset-1 col-xs-2">Start Date:</label>
       <div class="col-xs-8">

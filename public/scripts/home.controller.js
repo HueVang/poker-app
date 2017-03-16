@@ -8,25 +8,45 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
   ctrl.showPlayers = true;
   ctrl.showAlternates = false;
   ctrl.hideInput = true;
-
+  ctrl.digestArray;
+  ctrl.indexNumber = 0;
 
   var socket = io.connect();
 
   ctrl.getDigests = function() {
     DigestService.getDigests().then(function(res) {
-      console.log('This is the digests: ', res.data);
-      ctrl.digestList = res.data;
-      ctrl.digestList.forEach(function(x){
-        x.date = new Date(x.date).toDateString();
-      });
+      ctrl.digestArray = res;
+      ctrl.digestList = ctrl.digestArray[0];
     });
   }; // end ctrl.getDigests
 
   ctrl.getDigests();
 
+  ctrl.jumpToPage = function(array, index){
+    ctrl.indexNumber = index;
+    ctrl.digestList = array;
+  }
+
+  ctrl.nextPage = function(){
+    if(ctrl.indexNumber == ctrl.digestArray.length-1){
+      ctrl.digestList = ctrl.digestArray[ctrl.indexNumber];
+    }
+    else if(ctrl.indexNumber < ctrl.digestArray.length){
+      ctrl.digestList = ctrl.digestArray[ctrl.indexNumber+1];
+      ctrl.indexNumber++;
+    }
+  }
+
+  ctrl.prevPage = function(){
+    if(ctrl.indexNumber > 0){
+      ctrl.digestList = ctrl.digestArray[ctrl.indexNumber-1];
+      ctrl.indexNumber--;
+    }
+  }
+
   ctrl.getPlayerList = function(currentGame){
     GameService.getPlayerList(currentGame).then(function(res){
-      console.log(res);
+      console.log('This is the response from ctrl.getPlayerList: ' , res);
     });
   }
 
@@ -38,7 +58,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       ctrl.currentGame = {id:res.data[0].id, count:res.data[0].count};
       console.log(res.data);
     }).then(function(){
-      console.log(currentGame1);
+      console.log('This is currentGame1: ', currentGame1);
       ctrl.getPlayerList(currentGame1);
     });
   }

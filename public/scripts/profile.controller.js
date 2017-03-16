@@ -99,8 +99,18 @@ ctrl.updateProfile = function(playerInfo) {
   });
 };
 
-ctrl.cancelProfileChanges = function() {
-    $location.path('/home');
+
+  ctrl.cancelEdit = function(){
+    $location.path('/home')
+  }
+
+  ctrl.logout = function() {
+    $http.delete('/login').then(function(){
+      console.log('Successfully logged out!');
+      $location.path('/');
+    }).catch(function(err){
+      console.log('Error logging out');
+    });
   };
 
 // ctrl.register = function() {

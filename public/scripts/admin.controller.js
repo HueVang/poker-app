@@ -1,12 +1,15 @@
-angular.module('pokerApp').controller('AdminController', function(LeagueService, GameService, UserService, $http, $location){
+angular.module('pokerApp').controller('AdminController', function(MailService, LeagueService, GameService, UserService, $http, $location){
   var ctrl = this;
   var user;
 
-  ctrl.league = {'name' : '', 'start_date' : '', 'end_date' : ''};
   ctrl.leagues = [{},{},{}];
   ctrl.games = [{},{},{}];
   ctrl.leaderboard = [{},{},{}];
   ctrl.winners = [{},{},{}];
+  ctrl.autoCompleteArray = [];
+  ctrl.username;
+  ctrl.allPlayers = [];
+  ctrl.emailInput = false;
 
   console.log('AdminController loaded');
 
@@ -21,10 +24,24 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     LeagueService.getLeagues().then(function(res) {
       ctrl.leagues = res.data;
       console.log('This is the leagues array: ', ctrl.leagues);
+      console.log('This should be the last league\'s value: ', ctrl.leagues[ctrl.leagues.length - 1].id.toString());
+      ctrl.getGames(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.getLeaderboard(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.getWinners(ctrl.leagues[ctrl.leagues.length - 1].id);
+      ctrl.league = ctrl.leagues[ctrl.leagues.length - 1];
+      // ctrl.getGames(ctrl.leagues[0].id);
+      // ctrl.getLeaderboard(ctrl.leagues[0].id);
+      // ctrl.getWinners(ctrl.leagues[0].id);
+      // ctrl.league = ctrl.leagues[0];
+      console.log('This is the last league in the array: ', ctrl.league);
     });
+
   }; // end ctrl.getLeagues
 
   ctrl.getLeagues();
+
+
+
 
   ctrl.getGames = function(leagueId) {
     GameService.getGames(leagueId).then(function(res) {
@@ -59,6 +76,7 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.logout = function() {
     $http.delete('/login').then(function(){
       console.log('Successfully logged out!');
+      alertify.warning('You are now signed out.');
       $location.path('/');
     }).catch(function(err){
       console.log('Error logging out');
@@ -76,26 +94,28 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
     ctrl.playerRosterList =[];
     console.log('in getPlayerRosterData');
     UserService.getPlayerRoster().then(function (response) {
-      console.log('OK');
-      console.log('response', response);
+      response.forEach(function(person){
+        person.searchCriteria = person.first_name + ' ' + person.last_name + ' (' + person.username + ') '+person.email;
+      });
+      ctrl.allPlayers = response;
       ctrl.playerRosterList = response;
     });
   };
 
   ctrl.getPlayerRosterData();
 
-  ctrl.savePlayerRoster = function(){
-    ctrl.playerRosterObject = {
-      first_name:ctrl.first_name,
-      last_name:ctrl.last_name,
-      username:ctrl.username,
-      email:ctrl.email
-    };
-    console.log('in savePlayerRoster');
-    UserService.savePlayerRoster(ctrl.playerRosterObject).then(function(){
-      ctrl.getPlayerRosterData();
-    });
-  };
+  // ctrl.savePlayerRoster = function(){
+  //   ctrl.playerRosterObject = {
+  //     first_name:ctrl.first_name,
+  //     last_name:ctrl.last_name,
+  //     username:ctrl.username,
+  //     email:ctrl.email
+  //   };
+  //   console.log('in savePlayerRoster');
+  //   UserService.savePlayerRoster(ctrl.playerRosterObject).then(function(){
+  //     ctrl.getPlayerRosterData();
+  //   });
+  // };
 
   ctrl.checkAdminStatus = function() {
     UserService.getCurrentUser().then(function(res) {
@@ -120,5 +140,45 @@ angular.module('pokerApp').controller('AdminController', function(LeagueService,
   ctrl.showEditProfile = function(player){
     UserService.savePlayerProfile(player);
   };
+
+  ctrl.getautoCompleteArray = function() {
+    UserService.getUsers().then(function(res){
+      res.data.forEach(function(person){
+        var playerName = person.first_name + ' ' + person.last_name + ' (' + person.username + ')';
+        ctrl.autoCompleteArray.push(playerName);
+      });
+      console.log('This is the autoCompleteArray:', ctrl.autoCompleteArray);
+    });
+  }; // end ctrl.getautoCompleteArray
+
+  ctrl.getautoCompleteArray();
+
+  ctrl.jumpToUser = function(){
+    console.log("changing");
+    if(ctrl.username == null){
+      ctrl.playerRosterList = ctrl.allPlayers;
+    }else{
+      ctrl.playerRosterList = [];
+      ctrl.allPlayers.forEach(function(person){
+        var caseInsensitive = person.searchCriteria.toUpperCase();
+        if(caseInsensitive.includes(ctrl.username.toUpperCase())){
+          ctrl.playerRosterList.push(person);
+        }
+      });
+    }
+  }
+
+  ctrl.showEmailInput = function(){
+    ctrl.emailInput = true;
+  }
+
+  ctrl.inviteNewPlayer = function(newPlayerEmail){
+    console.log(typeof newPlayerEmail);
+    var invitedPlayer = {email : newPlayerEmail};
+    MailService.inviteNewPlayer(invitedPlayer).then(function(res){
+      console.log(res);
+    });
+  }
+
 
 });

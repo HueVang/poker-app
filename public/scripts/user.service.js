@@ -26,11 +26,11 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
       return response.data;
     });
   };
-  ctrl.savePlayerRoster= function(playerRoster){
-    return $http.post('/users/users', playerRoster).then(function(response){
-      return response;
-    });
-  };
+  // ctrl.savePlayerRoster= function(playerRoster){
+  //   return $http.post('/users/users', playerRoster).then(function(response){
+  //     return response;
+  //   });
+  // };
   ctrl.log = function() {
     console.log('This is the user service console log');
   }; // end ctrl.log
@@ -100,6 +100,12 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
     });
   }; // end ctrl.getUser
 
+  ctrl.getUserByUsername = function(username) {
+    return $http.get('/users/user/getUserByUsername/'+username).then(function(res){
+      return res;
+    });
+  }; // end ctrl.getUserByUsername
+
   ctrl.revertRegularStatus = function(username) {
     return $http.post('/users/user/revertStatus/'+username).then(function(res) {
       return res;
@@ -112,4 +118,19 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
     return res;
     });
   };
+
+  ctrl.getNewPlayer = function(hashId) {
+    return $http.get('/users/newPlayer/'+ hashId).then(function(res){
+      return res.data;
+    });
+  }
+
+  ctrl.saveNewPlayer = function(player) {
+    var data = player;
+    var id = player.id;
+    return $http.put('/users/'+ id, data).then(function(res){
+      return res.data;
+    });
+  }
+
 });

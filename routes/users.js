@@ -4,6 +4,7 @@ var config = {database: 'upsilon_aces'};
 var pool = new pg.Pool(config);
 var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
+const nodemailer = require('nodemailer');
 //adding this from register.js
 var multer = require('multer');
 var username = "";
@@ -192,6 +193,7 @@ router.get('/userhash', function(req, res){
 });
 
 router.put('/:id', function(req, res){
+ var hashPassword = hashids.encode(req.body.password);
  pool.connect(function(err, client, done){
    if (err) {
      console.log('Error connecting to DB', err);
@@ -200,7 +202,7 @@ router.put('/:id', function(req, res){
    } else {
      client.query('UPDATE users SET first_name=$2, last_name=$3, email=$4, username=$5, password=$6, admin=$7,'+
                   'regular=$8, linkedin=$9, bio=$10, photourl=$11 WHERE id = $1 RETURNING *',
-                  [req.params.id, req.body.first_name, req.body.last_name, req.body.email, req.body.username, req.body.password,
+                  [req.params.id, req.body.first_name, req.body.last_name, req.body.email, req.body.username, hashPassword,
                   req.body.admin, req.body.regular, req.body.linkedin, req.body.bio, req.body.photourl],
                   function(err, result){
                     done();
@@ -381,25 +383,7 @@ router.post('/image', upload.any(), function(req, res, next) {
 
 
 });
-//trying
-// router.post('/image', upload.any(), function(req, res, next) {
-//   client.query('UPDATE users SET username=$2, first_name=$3, last_name=$4 , password =$5, linkedin =$6, bio= $7  WHERE id = $1 RETURNING *',
-//                [req.params.id, req.body.username, req.body.first_name, req.body.last_name, req.body.password, req.body.linkedin,req.body.bio],
-//                function(err, result){
-//                  done();
-//                  if (err) {
-//                    console.log('Error updating profile', err);
-//                    res.sendStatus(500);
-//                  } else {
-//                    res.send(result.rows);
-//                  }
-//                });
-//  console.log('This is username: ', typeof username);
-//   console.log('This is the req.file: ', req.file);
-//   console.log(req.body);
-//   res.redirect('back');
-//
-// });
+
 //added
 router.get('/image', function(req, res){
   console.log('user id?::', req.user.id);
@@ -425,6 +409,8 @@ router.get('/image', function(req, res){
     }
   });
 });
+
+
 router.get("/players", function(req, res) {
   pool.connect(function(err, client, done) {
     try {
@@ -497,6 +483,32 @@ router.get("/playerinfo", function(req, res) {
     }
   });
 });
+
+router.get('/user/getUserByUsername/:username', function(req, res){
+  console.log('in users get route');
+pool.connect(function(err, client, done){
+  if(err){
+    console.log('Error connecting to the DB', err);
+    res.sendStatus(500);
+    done();
+  } else {
+    client.query('SELECT * FROM users WHERE username=$1',
+    [req.params.username],
+     function(err, result){
+      done();
+      if (err){
+        console.log('Error getting user by username', err);
+        res.sendStatus(500);
+        }else{
+          console.log('Got info from DB', result.rows);
+          res.send(result.rows);
+        }
+      });
+  }
+});
+}); // end router.get getUserByUsername
+
+
 router.post("/users", function(req, res) {
   console.log('in users post route');
   pool.connect(function(err, client, done) {
@@ -522,49 +534,97 @@ router.post("/users", function(req, res) {
     }
   });
 });
-// router.get('/other.profile/:id', function(req, res){
-//   var id = hashids.decode(req.params.id);
-//   pool.connect(function(err, client, done){
-//     if(err){
-//       console.log('Error connecting to the DB', err);
-//       res.sendStatus(500);
-//       done();
-//     } else {
-//       client.query('SELECT * FROM users WHERE id = $1',
-//       [req.params.id], function(err, result){
-//         done();
-//         if (err){
-//           console.log('Error querying DB', err);
-//           res.sendStatus(500);
-//           }else{
-//             console.log('Got info from DB', result.rows);
-//             res.send(result.rows);
-//           }
-//         });
-//     }
-//   });
 
-  //adding
-//   router.put('/images/:id', function(req, res){
-//   pool.connect(function(err, client, done){
-//     if (err) {
-//       console.log('Error connecting to DB', err);
-//       res.sendStatus(500);
-//       done();
-//     } else {
-//       client.query('UPDATE users SET username=$2, first_name=$3, last_name=$4 , password =$5, linkedin =$6, bio= $7  WHERE id = $1 RETURNING *',
-//                    [req.params.id, req.body.username, req.body.first_name, req.body.last_name, req.body.password, req.body.linkedin,req.body.bio],
-//                    function(err, result){
-//                      done();
-//                      if (err) {
-//                        console.log('Error updating profile', err);
-//                        res.sendStatus(500);
-//                      } else {
-//                        res.send(result.rows);
-//                      }
-//                    });
-//     }
-//   });
-// });
-// });
+router.get('/newPlayer/:id', function(req, res){
+  var id = hashids.decode(req.params.id);
+  id = Number(id);
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log('Error connecting to the DB', err);
+      res.sendStatus(500);
+      done();
+    } else {
+      client.query('SELECT * FROM users WHERE id = $1',
+      [id], function(err, result){
+        done();
+        if (err){
+          console.log('Error querying DB', err);
+          res.sendStatus(500);
+          }else{
+            console.log('Got info from DB', result.rows);
+            res.send(result.rows);
+          }
+        });
+    }
+  });
+});
+
+router.post('/newPlayer', function(req, res) {
+  console.log('This is the req.user: ', req.user);
+  // console.log('This is the req.body:', req.body);
+  var useremail = req.body.email;
+  var email = req.user.email;
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+          user: email,
+          pass: 'PrimeDevsUpsilonAces'
+      }
+  });
+
+  console.log('these are the req.body ', useremail);
+    pool.connect(function(err, client, done){
+      if (err) {
+        console.log('Error connecting to DB', err);
+        res.sendStatus(500);
+        done();
+      } else {
+        client.query('INSERT INTO users (email) VALUES ($1) RETURNING *;',
+           [useremail],
+           function(err, result){
+             done();
+           if (err) {
+             console.log('Error posting to users: ', err);
+             res.sendStatus(500);
+           } else {
+             var newUserId = result.rows[0].id;
+             console.log('This is the userId: ', newUserId);
+             // console.log('These are the keys: ', key);
+             // console.log('These are the values: ', person[key]);
+             var reshashid = hashids.encode(newUserId);
+             console.log('This is hash id of user: ', reshashid);
+             console.log('This is hash id type of user: ', typeof reshashid);
+             var text = '<p>Hello!<br /> You have been added to Poker Registration Application!<br /> Click on the link to edit your profile!<br />'+'http://localhost:3000/users/?id='+ reshashid +'</p>'
+             // setup email data with unicode symbols
+             let mailOptions = {
+                 from: '"Prime Devs" <' + email + '>', // sender address
+                 to: useremail, // list of receivers
+                 subject: 'Test!', // Subject line
+                 text: 'This is the text text', // plain text body
+                 html: text // html body
+             };
+
+             // send mail with defined transport object
+             transporter.sendMail(mailOptions, (error, info) => {
+                 if (error) {
+                     return console.log(error);
+                 }
+                 console.log('Message %s sent: %s', info.messageId, info.response);
+             });
+           }
+         });
+      }
+    }); // end pool.connect
+
+  // res.send(req.user.email);
+  res.sendStatus(200);
+}); // end router.post
+
+router.get('/', function(req, res) {
+  var hashId = req.query.id;
+  console.log('this is the hashId ', hashId);
+  res.redirect('/newUser?hashId='+hashId);
+});
+
 module.exports = router;
