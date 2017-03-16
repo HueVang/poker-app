@@ -28,8 +28,11 @@ h2 {
 }
 
 img {
-  height: 150px;
-  /*width: 150px;*/
+  width: 15em;
+  margin-left: 1em;
+  box-shadow: 0.25em 0.25em lightgray;
+  border: 1px solid gray;
+  border-radius: 4px;
 }
 
 .pagination {
@@ -100,6 +103,15 @@ img {
   background-color: #f4b225;
 }
 
+#playerInfo {
+  float: left;
+  padding-left: 1em;
+}
+
+#profileImage {
+  float: right;
+}
+
 li a {
   font-size: 1.25em;
 }
@@ -107,4 +119,20 @@ li a {
 label span {
   font-size: 1.5em;
   font-weight: normal;
+}
+.removeButton {
+  background-color: #ff1d1a;
+  border-color: #cc0300;
+  float: right;
+}
+
+.removeButton:hover {
+  background-color: #e60400;
+}
+
+.noMarginPadding {
+  margin-bottom: 0;
+  margin-top: 0;
+  padding-bottom: 0;
+  padding-top: 0;
 }
