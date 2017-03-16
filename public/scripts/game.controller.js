@@ -84,6 +84,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
     GameService.editGameDigest(game).then(function(res){
       console.log('This is the updated digest: ', res.data[0]);
     });
+    $location.path('/adminLeague');
   }; // end ctrl.gameEditSave
 
 
