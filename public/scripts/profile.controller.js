@@ -102,10 +102,6 @@ ctrl.updateProfile = function() {
   playerInfo.linkedin = ctrl.linkedin;
   playerInfo.email = ctrl.email;
   return $http.put('/users/'+playerInfo.id, playerInfo).then(function(response) {
-<<<<<<< HEAD
-=======
-
->>>>>>> views
     console.log('in put request of updateProfile');
     $location.path('/playerRoster');
     // return response;
