@@ -73,6 +73,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
   ctrl.logout = function() {
     $http.delete('/login').then(function(){
       console.log('Successfully logged out!');
+      alertify.warning('You are now signed out.');
       $location.path('/');
     }).catch(function(err){
       console.log('Error logging out');

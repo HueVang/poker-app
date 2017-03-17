@@ -109,6 +109,7 @@ ctrl.updateProfile = function(playerInfo) {
       $location.path('/');
     }).catch(function(err){
       console.log('Error logging out');
+      alertify.warning('You are now signed out.');
     });
   };
 

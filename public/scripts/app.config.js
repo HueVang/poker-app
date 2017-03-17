@@ -49,11 +49,6 @@ angular
         controller: "ProfileController as profile",
         authRequired: true
       })
-      // .when("/other.profile" , {
-      //   templateUrl: "views/other.profile.html",
-      //   controller: "PlayerProfileController as player",
-      //   authRequired: true
-      // })
       .otherwise({
         templateUrl: "views/login.html",
         controller: "LoginController as login"

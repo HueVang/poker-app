@@ -1,7 +1,12 @@
+html {
+  /*background-image: url("playing-cards-1.jpg");*/
+}
+
 body {
   background-color: #fffffa;
   font-family: Helvetica, 'Trebuchet MS', sans-serif;
   margin: 2em auto 2em auto;
+  width: 85%;
 }
 
 table, th, td {
@@ -33,6 +38,20 @@ img {
   box-shadow: 0.25em 0.25em lightgray;
   border: 1px solid gray;
   border-radius: 4px;
+}
+
+#cardsImage {
+  box-shadow: 0.25em 0.25em lightgray;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  width: 100%;
+  margin: auto;
+}
+
+#loginBody {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .pagination {
@@ -120,6 +139,11 @@ label span {
   font-size: 1.5em;
   font-weight: normal;
 }
+
+label {
+  text-align: left;
+}
+
 .removeButton {
   background-color: #ff1d1a;
   border-color: #cc0300;

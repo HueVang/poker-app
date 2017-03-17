@@ -1,4 +1,4 @@
-angular.module('pokerApp').controller('GameController', function(GameService, MailService, ReservationService, UserService, DigestService, $location){
+angular.module('pokerApp').controller('GameController', function(GameService, MailService, ReservationService, UserService, DigestService, $location, $http){
   var ctrl = this;
   ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'count' : '', 'digest' : '', 'leagues_id' : ''};
   var gamehash = 'this isn\'t right...';
@@ -242,6 +242,19 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       console.log('Error logging out');
     });
   };
+
+  ctrl.checkAdminStatus = function() {
+    UserService.getCurrentUser().then(function(res) {
+     user=res.data.user;
+     if(user.admin == true){
+       ctrl.admin = true;
+     }else{
+       ctrl.admin = false;
+     }
+    });
+  };
+
+  ctrl.checkAdminStatus();
 
   ctrl.cancel = function() {
     ctrl.revertRegularStatus();

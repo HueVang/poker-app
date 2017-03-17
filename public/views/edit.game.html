@@ -1,6 +1,17 @@
 <h1>Edit Game</h1>
 
 <!-- navbar -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li><a href="/home"> Player Home </a></li>
+      <li ng-if="game.admin"><a href="/adminLeague"> Admin Home </a></li>
+      <li><a href="/playerRoster"> Player Roster </a></li>
+      <!-- <li><a href="/createLeague"> Create League </a></li> -->
+      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="game.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
+    </ul>
+  </div>
+</nav>
 
 <form class="form-horizontal col-xs-12 col-md-6 col-md-offset-3 well" >
   <div class="form-group row">

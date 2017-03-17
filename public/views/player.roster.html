@@ -16,7 +16,7 @@
 <div class="adminSection col-xs-12">
   <h2>Players</h2>
   <div class="col-sm-12">
-    <button class="btn btn-primary" ng-click="admin.showEmailInput()">Invite New Player</button>
+    <div ng-if="admin.admin"><button class="btn btn-primary" ng-click="admin.showEmailInput()">Invite New Player</button></div>
     <form ng-show="admin.emailInput">
       <input type="text" placeholder="New Player Email" ng-model="admin.newPlayerEmail"/><button ng-click="admin.inviteNewPlayer(admin.newPlayerEmail)" class="btn btn-primary">Send Invite Email</button>
     </form>

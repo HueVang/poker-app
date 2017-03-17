@@ -15,6 +15,7 @@ function LoginController($http, $location) {
       $location.path('/home');
     }, function(error) {
       console.log('error logging in', error);
+      alertify.error('There was an error signing in. The username and password combination you have entered is not correct.');
     });
   };
 }
