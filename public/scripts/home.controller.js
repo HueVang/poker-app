@@ -1,15 +1,20 @@
-angular.module('pokerApp').controller('HomeController', function(ReservationService, UserService, DigestService, GameService, $http, $location, $scope){
+angular.module('pokerApp').controller('HomeController', function(ReservationService, LeagueService, UserService, DigestService, GameService, $http, $location, $scope){
 
   var ctrl = this;
   var currentGame1;
   var currentGame2;
+  var currentLeague1;
+  var currentLeague2;
   ctrl.currentGame;
+  ctrl.currentLeague;
   var user;
   ctrl.showPlayers = true;
   ctrl.showAlternates = false;
+  ctrl.showLeaderboard = false;
   ctrl.hideInput = true;
   ctrl.digestArray;
   ctrl.indexNumber = 0;
+  ctrl.showGames = true;
 
   var socket = io.connect();
 
@@ -50,9 +55,47 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
     });
   }
 
+  ctrl.getLeaderboard = function(currentLeague){
+    LeagueService.getLeaderboard(currentLeague).then(function(res) {
+      ctrl.leaderboard = res.data;
+      ctrl.showLeaderboard = true;
+      ctrl.showPlayers = false;
+      ctrl.showAlternates = false;
+      ctrl.showGames = false;
+    });
+  }; // end ctrl.getLeaderboard
+
+
+  ctrl.getLeagueList = function(){
+    LeagueService.getLeagueList().then(function(res){
+      currentLeague1 = res.data[0].id;
+      currentLeague2 = res.data[1].id;
+      ctrl.currentLeague = res.data[0].id;
+      console.log('This is the getLeagueList data: ', res.data);
+    }).then(function(){
+      console.log('This is currentLeague1: ', currentLeague1);
+      // ctrl.getLeaderboard(currentLeague1);
+    });
+  }
+
+  ctrl.showLeaderboard1 = function(){
+    ctrl.currentLeague = currentLeague1;
+    ctrl.getLeaderboard(currentLeague1);
+  }; // end ctrl.showLeaderboard2
+
+  ctrl.showLeaderboard2 = function(){
+    ctrl.currentLeague = currentLeague2;
+    ctrl.getLeaderboard(currentLeague2);
+  }; // end ctrl.showLeaderboard2
+
+  ctrl.getLeagueList();
+
+
   ctrl.getGameList = function(){
     GameService.getGameList().then(function(res){
-
+      ctrl.showLeaderboard = false;
+      ctrl.showGames = true;
+      ctrl.showPlayers = true;
       currentGame1 = {id:res.data[0].id, count:res.data[0].count};
       currentGame2 = {id:res.data[1].id, count:res.data[1].count};
       ctrl.currentGame = {id:res.data[0].id, count:res.data[0].count};
@@ -64,6 +107,9 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
   }
 
   ctrl.getGame2List = function(){
+    ctrl.showLeaderboard = false;
+    ctrl.showGames = true;
+    ctrl.showPlayers = true;
     ctrl.currentGame = currentGame2;
     ctrl.getPlayerList(currentGame2);
   }
@@ -110,10 +156,12 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
     ctrl.showAlternateList = function(){
       ctrl.showAlternates = true;
       ctrl.showPlayers = false;
+      ctrl.showLeaderboard = false;
     }
     ctrl.showPlayerList = function(){
       ctrl.showAlternates = false;
       ctrl.showPlayers = true;
+      ctrl.showLeaderboard = false;
     }
 
     ctrl.checkAdminStatus = function() {

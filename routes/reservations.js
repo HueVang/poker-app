@@ -131,9 +131,9 @@ var returnRouter=function(io){
         res.sendStatus(500);
         done();
       } else {
-        client.query('SELECT reservations.name, games.date FROM reservations JOIN games ' +
+        client.query('SELECT reservations.name, games.name as game_name, games.date FROM reservations JOIN games ' +
         'ON reservations.games_id=games.id WHERE (points=10 OR points=20) AND games.leagues_id=$1 ' +
-        'ORDER BY games.date ASC;',
+        'ORDER BY games.date DESC;',
             [leagueId],
            function(err, result){
              done();
