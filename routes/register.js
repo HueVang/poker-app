@@ -5,7 +5,7 @@ var pg = require('pg');
 var pool = new pg.Pool({ database: "upsilon_aces" });
 
 router.post('/', function(req, res){
-  User.findByUsername(req.body.username).then(function(user){
+  User.findByEmail(req.body.email).then(function(user){
     if (user) {
       // update user
       return User.update(req.body.id,req.body.username, req.body.password, req.body.first_name,
@@ -14,7 +14,7 @@ router.post('/', function(req, res){
         console.log('Updating new user');
         req.login(user, function(err){
           if (err) {
-            console.log('Error updating user', err);
+            console.log('Error registering user', err);
             return res.sendStatus(500);
           }
         });
@@ -38,9 +38,10 @@ router.post('/', function(req, res){
       });
     } // new user
   }).catch(function(err){
-    console.log('Error creating user');
+    console.log('Error creating user, ', err);
     res.sendStatus(500);
   });
 });
+
 
 module.exports = router;

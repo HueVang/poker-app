@@ -23,6 +23,15 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   MailService.log();
   UserService.log();
 
+  ctrl.getLeagueId = function() {
+    GameService.getLeagueId().then(function(res){
+      ctrl.newGame.leagues_id = res.data[0].id;
+      console.log('This is the leagues_id for newGame: ', ctrl.newGame.leagues_id);
+    });
+  }; // end ctrl.getLeagueId
+
+  ctrl.getLeagueId();
+
   ctrl.removePoints = function(reservation) {
     ReservationService.removePoints(reservation.id).then(function(res){
       console.log('Removed points on: ', res.data[0]);
@@ -75,6 +84,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
     GameService.editGameDigest(game).then(function(res){
       console.log('This is the updated digest: ', res.data[0]);
     });
+    $location.path('/adminLeague');
   }; // end ctrl.gameEditSave
 
 
@@ -223,6 +233,15 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       });
     });
   }; // end ctrl.revertRegularStatus
+
+  // ctrl.keepRegularStatus = function(){
+  //   console.log('This is regularList in keepRegularStatus: ', regularList);
+  //   regularList.forEach(function(user){
+  //     UserService.addUserToGame(user.username).then(function(res){
+  //       console.log('Kept regular status for: ', res.data[0]);
+  //     });
+  //   });
+  // }; // end ctrl.keepRegularStatus
 
   ctrl.removeFromGame = function(userObject){
     var index = ctrl.userList.indexOf(userObject);

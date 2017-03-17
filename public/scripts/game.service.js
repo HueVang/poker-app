@@ -1,6 +1,19 @@
 angular.module('pokerApp').service('GameService', function($http, $location) {
   var ctrl = this;
   var gameId = [{}];
+  var leagues_id = 0;
+
+  ctrl.saveLeagueId = function(leagueId) {
+    leagues_id = leagueId;
+    console.log('Saved leagueId as: ', leagues_id);
+  }
+
+  ctrl.getLeagueId = function() {
+    console.log('This is the leagues_id: ', leagues_id);
+    return $http.get('/leagues/'+leagues_id).then(function(res){
+      return res;
+    });
+  }; // end ctrl.getLeagueId
 
   ctrl.createGame = function(game) {
     return $http.post('/games/creategame', game).then(function(res) {
