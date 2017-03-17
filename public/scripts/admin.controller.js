@@ -46,6 +46,9 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
   ctrl.getGames = function(leagueId) {
     GameService.getGames(leagueId).then(function(res) {
       ctrl.games = res.data;
+      ctrl.games.forEach(function(game) {
+        game.date = new Date(game.date).toDateString();
+      });
       console.log('This is the games array: ', ctrl.games);
     });
   }; // end ctrl.getGames
@@ -60,6 +63,7 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
   ctrl.getWinners = function(leagueId) {
     LeagueService.getWinners(leagueId).then(function(res) {
       ctrl.winners = res.data;
+      console.log('This is the ctrl.winners: ', res.data);
       ctrl.winners.forEach(function(winner) {
         winner.date = new Date(winner.date).toDateString();
         console.log('This is the new date: ', winner.date);
