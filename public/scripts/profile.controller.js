@@ -2,7 +2,7 @@ angular.module('pokerApp').controller('ProfileController', function($http, UserS
   console.log('ProfileController loaded');
 
   var ctrl = this;
-  ctrl.thisPlayer = false;
+  // ctrl.thisPlayer = false;
 
 
 ctrl.showEditProfile = function() {
@@ -128,7 +128,7 @@ ctrl.updateProfile = function() {
 
   ctrl.checkAdminStatus = function() {
     UserService.getCurrentUser().then(function(res) {
-      console.log(res.data);
+      console.log('this is the res.data, ', res.data);
       user = res.data.user;
       if(user.admin == true){
         ctrl.admin = true;
@@ -137,6 +137,10 @@ ctrl.updateProfile = function() {
       }
       if(ctrl.id == user.id || user.admin == true){
         ctrl.thisPlayer = true;
+        console.log('this player is, ', ctrl.thisPlayer);
+      }else{
+        console.log('this player is, ', ctrl.thisPlayer);
+        ctrl.thisPlayer = false;
       }
     });
   };

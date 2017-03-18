@@ -26,21 +26,25 @@
     <input type="text" class="form-control" ng-change="admin.jumpToUser()" ng-model="admin.username" data="admin.autoCompleteArray" placeholder="Search for a player"></input>
 
   </div>
-  <table id="">
-    <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Username</th>
-      <th>Email Address</th>
-      <th ng-if="admin.admin">Edit?</th>
-    </tr>
-      <tr ng-repeat="onePlayer in admin.playerRosterList">
-      <td>{{onePlayer.first_name}}</td>
-      <td>{{onePlayer.last_name}}</td>
-      <td><button class = "btn btn-link" ng-click="admin.showPlayerProfile(onePlayer.id)">{{onePlayer.username}}</button></td>
-      <td>{{onePlayer.email}}</td>
-      <td ng-if="admin.admin"><button ng-click="admin.showEditProfile(onePlayer.id)" type ="submit" class="btn btn-default">Edit</button></td>
-    </tr>
-  </table>
+  <div class="col-sm-8 overflow largeTable">
+    <table id="">
+      <tbody>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+          <th>Email Address</th>
+          <th ng-if="admin.admin">Edit?</th>
+        </tr>
+          <tr ng-repeat="onePlayer in admin.playerRosterList">
+          <td>{{onePlayer.first_name}}</td>
+          <td>{{onePlayer.last_name}}</td>
+          <td><button class = "btn btn-link" ng-click="admin.showPlayerProfile(onePlayer.id)">{{onePlayer.username}}</button></td>
+          <td>{{onePlayer.email}}</td>
+          <td ng-if="admin.admin"><button ng-click="admin.showEditProfile(onePlayer.id)" type ="submit" class="btn btn-default">Edit</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <!-- <a href = "/edit.profile">Edit</a> -->

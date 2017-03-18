@@ -371,7 +371,7 @@ router.get('/currentUser', function(req, res){
   }else{
     adminstatus = true;
   }
-  var toSend = {user: currentUser,admin: adminstatus}
+  var toSend = {user: currentUser,admin: adminstatus};
   res.send(toSend);
 });
 
