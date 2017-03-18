@@ -96,6 +96,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       ctrl.showLeaderboard = false;
       ctrl.showGames = true;
       ctrl.showPlayers = true;
+      ctrl.showAlternates = false;
       currentGame1 = {id:res.data[0].id, count:res.data[0].count};
       currentGame2 = {id:res.data[1].id, count:res.data[1].count};
       ctrl.currentGame = {id:res.data[0].id, count:res.data[0].count};
@@ -110,6 +111,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
     ctrl.showLeaderboard = false;
     ctrl.showGames = true;
     ctrl.showPlayers = true;
+    ctrl.showAlternates = false;
     ctrl.currentGame = currentGame2;
     ctrl.getPlayerList(currentGame2);
   }
@@ -133,24 +135,23 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       ctrl.alternates = alternates;
       ctrl.playerList.forEach(function(x){
         if(x.users_id == user.id){
+          console.log('Triggered in if playerList forEach');
           ctrl.notAdmin = true;
           if(ctrl.admin == true){
             ctrl.notAdmin = false;
           }
-        }else{
-          ctrl.notAdmin = false;
         }
       });
       ctrl.alternates.forEach(function(x){
         if(x.users_id == user.id){
+          console.log('Triggered in if alternates forEach');
           ctrl.notAdmin = true;
           if(ctrl.admin == true){
             ctrl.notAdmin = false;
           }
-        }else{
-          ctrl.notAdmin = false;
         }
       });
+
       $scope.$apply();
     });
 

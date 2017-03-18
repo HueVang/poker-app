@@ -52,7 +52,11 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   }; // end ctrl.getPlayerPoints
 
   ctrl.addPlayer = function() {
-    ctrl.addPlayerInput = true;
+    if (ctrl.addPlayerInput == false){
+      ctrl.addPlayerInput = true;
+    }else{
+      ctrl.addPlayerInput = false;
+    }
   }
 
   ctrl.loadGameEdit = function() {

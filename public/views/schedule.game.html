@@ -72,8 +72,10 @@
   </table>
 </div>
 <div class="col-xs-offset-3 col-xs-10">
-  <button class="btn btn-primary" ng-click="game.addPlayer()">Add Player</button>
-  <div ng-show="game.addPlayerInput">
+  <div class="col-sm-12">
+    <button class="btn btn-primary" ng-click="game.addPlayer()">Add Player</button>
+  </div>
+  <div ng-show="game.addPlayerInput" class="col-sm-7">
     <autocomplete ng-model="game.username" data="game.autoCompleteArray"></autocomplete>
     <button class="btn btn-primary" ng-click="game.addToPlayersList(game.username)" >Add</button>
   </div>
