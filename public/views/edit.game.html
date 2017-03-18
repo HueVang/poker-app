@@ -26,7 +26,6 @@
       <input class="form-control" type="number" ng-model="game.gameToEdit.count">
     </div>
   </div>
-
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">Time</label>
     <div class="col-xs-8">
@@ -51,18 +50,22 @@
   </div>
 </form>
 
-<table id="">
-  <tr>
-    <th>Player Name</th>
-    <th>Points</th>
-    <th>Delete</th>
-  </tr>
-  <tr ng-repeat="user in game.userPointsArray">
-    <td>{{user.name}}</td>
-    <td>{{user.points}}</td>
-    <td><button class="btn btn-default" ng-click="game.removePoints(user)">Delete</button></td>
-  </tr>
-</table>
+<div class="overflow smallTable">
+  <table>
+    <tbody>
+      <tr>
+        <th>Player Name</th>
+        <th>Points</th>
+        <th>Delete</th>
+      </tr>
+      <tr ng-repeat="user in game.userPointsArray">
+        <td>{{user.name}}</td>
+        <td>{{user.points}}</td>
+        <td><button class="btn btn-default" ng-click="game.removePoints(user)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 <div class="col-xs-offset-3 col-xs-10">
   <button type="submit" class="btn btn-primary" >Print Player List</button>
   <button class="btn btn-primary" ng-click="game.addPlayer()">Add Player</button>

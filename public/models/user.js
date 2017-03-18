@@ -13,6 +13,17 @@ exports.findByUsername = function(username) {
     });
 };
 
+//find by email
+exports.findByEmail = function(email) {
+  return query("SELECT * FROM users WHERE email = $1", [ email ])
+    .then(function(users) {
+      return users[0];
+    })
+    .catch(function(err) {
+      console.log("Error finding user by username", err);
+    });
+};
+
 // find by id
 exports.findById = function(id) {
   return query("SELECT * FROM users WHERE id = $1", [ id ])
@@ -64,7 +75,7 @@ exports.update = function(id,username, password , first_name, last_name, email, 
       console.log('in exports.update user:', id);
       return query(
         "UPDATE users set username = $2, password =$3, first_name=$4, last_name=$5, email=$6, linkedin=$7, bio=$8, photourl=$9 where id=$1 RETURNING *",
-        [ id, username, hash, first_name, last_name, email, linkedin, bio, photourl ]
+        [ id, username, hash, first_name, last_name, email, linkedin, bio, photourl]
       ).then(function(users) {
         return users[0];
       });
@@ -73,6 +84,7 @@ exports.update = function(id,username, password , first_name, last_name, email, 
       console.log("Error updating user", err);
     });
 };
+
 
 function query(sqlString, data) {
   return new Promise(function(resolve, reject) {

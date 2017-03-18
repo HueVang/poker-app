@@ -5,6 +5,7 @@ var pool = new pg.Pool(config);
 var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
 const nodemailer = require('nodemailer');
+
 //adding this from register.js
 var multer = require('multer');
 var username = "";
@@ -14,7 +15,7 @@ cb(null,  __dirname +'/../public/uploads/'+username);
 },
 
   filename: function (req, file, cb) {
-    cb(req.file, file.fieldname+'.jpg' , username+'.jpg');
+    cb(req.file, file.fieldname.trim()+'.jpg' , username.trim()+'.jpg');
     // cb(null, file.fieldname+'.jpg');
   }
 });
@@ -193,16 +194,16 @@ router.get('/userhash', function(req, res){
 });
 
 router.put('/:id', function(req, res){
- var hashPassword = hashids.encode(req.body.password);
+
  pool.connect(function(err, client, done){
    if (err) {
      console.log('Error connecting to DB', err);
      res.sendStatus(500);
      done();
    } else {
-     client.query('UPDATE users SET first_name=$2, last_name=$3, email=$4, username=$5, password=$6, admin=$7,'+
-                  'regular=$8, linkedin=$9, bio=$10, photourl=$11 WHERE id = $1 RETURNING *',
-                  [req.params.id, req.body.first_name, req.body.last_name, req.body.email, req.body.username, hashPassword,
+     client.query('UPDATE users SET first_name=$2, last_name=$3, email=$4, username=$5, admin=$6,'+
+                  'regular=$7, linkedin=$8, bio=$9, photourl=$10 WHERE id = $1 RETURNING *',
+                  [req.params.id, req.body.first_name, req.body.last_name, req.body.email, req.body.username,
                   req.body.admin, req.body.regular, req.body.linkedin, req.body.bio, req.body.photourl],
                   function(err, result){
                     done();
@@ -370,7 +371,7 @@ router.get('/currentUser', function(req, res){
   }else{
     adminstatus = true;
   }
-  var toSend = {user: currentUser,admin: adminstatus}
+  var toSend = {user: currentUser,admin: adminstatus};
   res.send(toSend);
 });
 
@@ -378,9 +379,7 @@ router.post('/image', upload.any(), function(req, res, next) {
   console.log('This is username: ', typeof username);
   console.log('req.files: ', req.files);
   console.log(req.body);
-  res.redirect('/edit.profile');
-  // res.end();
-
+  res.redirect('back');
 });
 
 //added
@@ -562,7 +561,7 @@ router.post('/newPlayer', function(req, res) {
   console.log('This is the req.user: ', req.user);
   // console.log('This is the req.body:', req.body);
   var useremail = req.body.email;
-  var email = req.user.email;
+  var email = 'upsilonaces@gmail.com';
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       service: 'gmail',

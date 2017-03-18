@@ -7,6 +7,12 @@ angular.module('pokerApp').service('LeagueService', function($http, $location) {
     });
   };// end ctrl.createLeague
 
+  ctrl.getLeagueList = function(){
+    return $http.get('/leagues/getCurrent/leagues').then(function(res){
+      return res;
+    });
+  }
+
   ctrl.getLeagues = function() {
     return $http.get('/leagues').then(function(res) {
       return res;

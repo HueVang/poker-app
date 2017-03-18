@@ -5,7 +5,7 @@
   <div class="container-fluid">
     <ul class="nav navbar-nav">
       <li><a href="/home"> Player Home </a></li>
-      <li ng-if="player.admin"><a href="/adminLeague"> Admin Home </a></li>
+      <li ng-if="profile.admin"><a href="/adminLeague"> Admin Home </a></li>
       <li><a href="/playerRoster"> Player Roster </a></li>
       <!-- <li><a href="/createLeague"> Create League </a></li> -->
       <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="player.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
@@ -15,12 +15,12 @@
 
 <div class="adminSection col-xs-8 col-xs-offset-2">
   <div id="playerInfo" class="form-group row">
-    <p>First Name: {{ player.first_name }}</p>
-    <p>Last Name: {{ player.last_name }}</p>
-    <p>Username: {{ player.username }}</p>
-    <p>LinkedIn URL: {{ player.linkedin }}</p>
-    <p>Personal Bio: {{ player.bio }}</p>
-    <div class="">
+    <p>First Name: {{ profile.first_name }}</p>
+    <p>Last Name: {{ profile.last_name }}</p>
+    <p>Username: {{ profile.username }}</p>
+    <p>LinkedIn URL: {{ profile.linkedin }}</p>
+    <p>Personal Bio: {{ profile.bio }}</p>
+    <div ng-if="profile.thisPlayer">
       <a href="/edit.profile">Edit Profile...</a>
     </div>
   </div>

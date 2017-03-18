@@ -50,7 +50,13 @@ angular.module('pokerApp').service('UserService', function($http, $location) {
   ctrl.savePlayerProfile = function(playerId){
     viewPlayer = playerId;
     console.log('viewPlayer:', viewPlayer);
-    // $location.path('other.profile');
+    $location.path('other.profile');
+  };
+
+  ctrl.saveEditProfile = function(playerId){
+    viewPlayer = playerId;
+    console.log('viewPlayer:', viewPlayer);
+    $location.path('edit.profile');
   };
 //working on taking out getPlayerToShow this is the original:
   ctrl.getPlayerToShow = function(){

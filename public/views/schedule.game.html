@@ -38,12 +38,12 @@
       <input class="form-control" type="date" ng-model="game.newGame.date">
     </div>
   </div>
-  <div class="form-group row">
+  <!-- <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">League</label>
     <div class="col-xs-8">
       <input class="form-control" type="number" ng-model="game.newGame.leagues_id">
     </div>
-  </div>
+  </div> -->
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-2">Blog Update</label>
     <div class="col-xs-8">
@@ -56,23 +56,25 @@
   </div>
 </form>
 
-<div id="">
+<div class="overflow smallTable">
   <table id="">
-    <tr>
-      <th>Player Name</th>
-      <th>Delete</th>
-    </tr>
-    <tr ng-repeat="user in game.userList">
-      <!-- add functionality to populate table -->
-      <td>{{user.first_name}} {{user.last_name}}</td>
-      <td><button class="btn btn-default" ng-click="game.removeFromGame(user)">Delete</button></td>
-    </tr>
+    <tbody>
+      <tr>
+        <th>Player Name</th>
+        <th>Delete</th>
+      </tr>
+      <tr ng-repeat="user in game.userList">
+        <!-- add functionality to populate table -->
+        <td>{{user.first_name}} {{user.last_name}}</td>
+        <td><button class="btn btn-default" ng-click="game.removeFromGame(user)">Delete</button></td>
+      </tr>
+    </tbody>
   </table>
-  <div class="col-xs-offset-3 col-xs-10">
-    <button class="btn btn-primary" ng-click="game.addPlayer()">Add Player</button>
-    <div ng-show="game.addPlayerInput">
-      <autocomplete ng-model="game.username" data="game.autoCompleteArray"></autocomplete>
-      <button class="btn btn-primary" ng-click="game.addToPlayersList(game.username)" >Add</button>
-    </div>
+</div>
+<div class="col-xs-offset-3 col-xs-10">
+  <button class="btn btn-primary" ng-click="game.addPlayer()">Add Player</button>
+  <div ng-show="game.addPlayerInput">
+    <autocomplete ng-model="game.username" data="game.autoCompleteArray"></autocomplete>
+    <button class="btn btn-primary" ng-click="game.addToPlayersList(game.username)" >Add</button>
   </div>
 </div>

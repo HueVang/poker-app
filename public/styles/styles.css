@@ -15,6 +15,18 @@ table, th, td {
   padding: 1em;
 }
 
+.largeTable {
+  height: 680px;
+}
+
+.smallTable {
+  height: 425px;
+}
+
+.overflow {
+  overflow-y: scroll;
+}
+
 .form-horizontal {
   background-color: #f1f1f1;
   border-color: #e1e1e1;

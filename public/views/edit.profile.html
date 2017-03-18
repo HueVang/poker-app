@@ -22,19 +22,19 @@
       <!-- {{profile.username}} -->
     </div>
   </div>
-  <div class="form-group row">
+  <!-- <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Enter Password:</label>
     <div class="col-xs-8">
       <input class="form-control" type="password" ng-model="profile.password">
-      <!-- {{profile.player_info[0].password}} -->
+      {{profile.player_info[0].password}}
     </div>
-  </div>
-  <div class="form-group row">
+  </div> -->
+  <!-- <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Confirm Password:</label>
     <div class="col-xs-8">
       <input class="form-control" type="password" ng-model="profile.password">
     </div>
-  </div>
+  </div> -->
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Email:</label>
     <div class="col-xs-8">
@@ -63,6 +63,18 @@
       <!-- {{profile.player_info[0].linkedin}} -->
     </div>
   </div>
+  <div ng-if="profile.admin" class="form-group row">
+    <label class="control-label col-xs-offset-1 col-xs-3">Regular</label>
+    <div class="col-xs-8">
+      <input class="form-control" type="checkbox"  ng-model="profile.regular">
+    </div>
+  </div>
+  <div ng-if="profile.admin" class="form-group row">
+    <label class="control-label col-xs-offset-1 col-xs-3">Admin</label>
+    <div class="col-xs-8">
+      <input class="form-control" type="checkbox"  ng-model="profile.administrator">
+    </div>
+  </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">Personal Bio:</label>
     <div class="col-xs-8">
@@ -72,7 +84,7 @@
   </div>
   <div class="col-xs-offset-4 col-xs-8">
     <!-- <button type="submit" class="btn btn-primary"ng-click= "profile.saveProfileChanges(profile)">Save Changes</button> -->
-    <button type="submit" class="btn btn-primary"ng-click= "profile.updateProfile(profile)">Update Changes</button>
+    <button type="submit" class="btn btn-primary"ng-click= "profile.updateProfile()">Update Changes</button>
 
     <!-- <button class="btn btn-primary"><a href="/home">Cancel</a></button> -->
     <button ng-click = "profile.cancelEdit()" class="btn btn-primary">Cancel</button>
@@ -80,15 +92,17 @@
 </form>
 
 
-
-<form id="upload" action="/users/image" method="post" enctype="multipart/form-data">
+  <form action="/users/image" enctype="multipart/form-data" method="post" id="upload" target="uploader_iframe">
 
   <div class="form-group row">
-      <img class="" ng-src="/uploads/{{profile.username}}.jpg" alt=""/>
-  <label class="btn btn-primary" for="profilePicture">Change Profile </label>
-   <!-- <input id="profilePicture" type="file" name="{{ profile.player_info[0].username }}"/ -->
-   <input id="profilePicture" type="file" name="{{profile.username}} "/>
-</div>
+<!-- <div class="button" ngf-select="upload($file)">Upload on file select</div> -->
 
+      <img class="" ng-src="/uploads/{{profile.username}}.jpg" alt=""/>
+  <!-- <label class="btn btn-primary" for="profilePicture">Change Profile </label> -->
+   <!-- <input id="profilePicture" type="file" name="{{ profile.player_info[0].username }}"/ -->
+   <input id="profilePicture" type="file" name="{{profile.username}} " type="submit"/>
+</div>
+<!-- </div> -->
 </form>
+<iframe id="uploader_iframe" name="uploader_iframe" style="display: none;"></iframe>
 <!-- <button type="button" class="btn btn-primary">Change Photo...</button> -->

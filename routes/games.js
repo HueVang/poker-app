@@ -110,7 +110,7 @@ router.get('/:leagueId', function(req, res){
       res.sendStatus(500);
       done();
     } else {
-      client.query('SELECT * FROM games WHERE leagues_id = $1',
+      client.query('SELECT * FROM games WHERE leagues_id = $1 ORDER BY date DESC;',
       [leagueId], function(err, result){
         done();
         if (err){
