@@ -4,14 +4,17 @@ html {
 
 body {
   background-color: #fffffa;
+  /*background-color: #f9f5e5;*/
+  /*background-color: goldenrod;*/
+  /*background:rgba(255,255,255,0.5);*/
   font-family: Helvetica, 'Trebuchet MS', sans-serif;
   margin: 2em auto 2em auto;
   width: 85%;
 }
 
 table, th, td {
-  border: 1px solid gray;
-  background-color: #fffffa;
+  /*border: 1px solid gray;
+  background-color: #fffffa;*/
   padding: 1em;
 }
 
@@ -21,6 +24,11 @@ table, th, td {
 
 .mediumTable {
   max-height: 553px;
+}
+
+.mediumTable table tbody tr td, th {
+  border-left: 0 !important;
+  border-right: 0 !important;
 }
 
 .smallTable {
@@ -105,7 +113,9 @@ img {
 }
 
 .adminSection {
-  background-color: #f1f1f1;
+  /*background-color: #f1f1f1;*/
+  background:rgba(255,255,255,0.5);
+  /*background-color: #f9f9f9;*/
   border: 1px solid #e1e1e1;
   border-radius: 5px;
   margin-bottom: 1em;

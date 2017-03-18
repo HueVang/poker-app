@@ -51,13 +51,15 @@
 </form>
 
 <div class="overflow smallTable">
-  <table>
-    <tbody>
+  <table class="table table-striped">
+    <thead>
       <tr>
         <th>Player Name</th>
         <th>Points</th>
         <th>Delete</th>
       </tr>
+    </thead>
+    <tbody>
       <tr ng-repeat="user in game.userPointsArray">
         <td>{{user.name}}</td>
         <td>{{user.points}}</td>

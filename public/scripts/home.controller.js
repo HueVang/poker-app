@@ -133,6 +133,8 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       var alternates = data.description.alternates;
       ctrl.playerList = playerList;
       ctrl.alternates = alternates;
+
+      console.log('Sockets broadcast loaded');
       ctrl.playerList.forEach(function(x){
         if(x.users_id == user.id){
           console.log('Triggered in if playerList forEach');
@@ -152,6 +154,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
         }
       });
 
+      console.log('ctrl.notAdmin is: ', ctrl.notAdmin);
       $scope.$apply();
     });
 
@@ -169,10 +172,13 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
     ctrl.checkAdminStatus = function() {
       UserService.getCurrentUser().then(function(res) {
        user=res.data.user;
+       console.log('checkAdminStatus loads first');
        if(user.admin == true){
          ctrl.admin = true;
+         console.log('User admin status is: ', ctrl.admin);
        }else{
          ctrl.admin = false;
+         console.log('User admin status is: ', ctrl.admin);
        }
       });
     };
