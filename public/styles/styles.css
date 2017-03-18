@@ -16,11 +16,15 @@ table, th, td {
 }
 
 .largeTable {
-  height: 680px;
+  max-height: 680px;
+}
+
+.mediumTable {
+  max-height: 553px;
 }
 
 .smallTable {
-  height: 425px;
+  max-height: 425px;
 }
 
 .overflow {

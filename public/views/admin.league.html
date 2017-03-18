@@ -31,57 +31,69 @@
 <div class="adminSection col-xs-12">
   <h2>Games</h2>
   <button ng-click="admin.newGame(admin.league.id)" id="scheduleGame" class="btn btn-primary" >Schedule Game</button>
-  <table id="" class="col-xs-12">
-    <tr>
-      <th class="col-xs-4">Game Name</th>
-      <th class="col-xs-2">Date</th>
-      <th class="col-xs-2">Player Count</th>
-      <th class="col-xs-2">Alternate Count</th>
-      <th class="col-xs-2">Edit?</th>
-    </tr>
-    <tr ng-repeat="game in admin.games">
-      <!-- add functionality to populate table -->
-      <td class="col-xs-4">{{game.name}}</td>
-      <td class="col-xs-2">{{game.date}}</td>
-      <td class="col-xs-2">{{game.count}}</td>
-      <td class="col-xs-2">0</td>
-      <td class="col-xs-2"><button ng-click="admin.editGame(game)" id="editBtn" class="btn btn-default" >Edit Game...</button></td>
-    </tr>
-  </table>
+  <div class="overflow mediumTable">
+    <table id="" class="col-xs-12">
+      <tbody>
+        <tr>
+          <th class="col-xs-4">Game Name</th>
+          <th class="col-xs-2">Date</th>
+          <th class="col-xs-2">Player Count</th>
+          <th class="col-xs-2">Alternate Count</th>
+          <th class="col-xs-2">Edit?</th>
+        </tr>
+        <tr ng-repeat="game in admin.games">
+          <!-- add functionality to populate table -->
+          <td class="col-xs-4">{{game.name}}</td>
+          <td class="col-xs-2">{{game.date}}</td>
+          <td class="col-xs-2">{{game.count}}</td>
+          <td class="col-xs-2">0</td>
+          <td class="col-xs-2"><button ng-click="admin.editGame(game)" id="editBtn" class="btn btn-default" >Edit Game...</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="adminSection col-xs-12">
   <h2>Leaderboard</h2>
-  <table id="" class="col-xs-12">
-    <tr>
-      <th class="col-xs-6">Player</th>
-      <th class="col-xs-2">Place</th>
-      <th class="col-xs-2">Points</th>
-      <th class="col-xs-2">Final Tables</th>
-    </tr>
-    <tr ng-repeat="person in admin.leaderboard">
-      <!-- add functionality to populate table -->
-      <td class="col-xs-6">{{ person.name }}</td>
-      <td class="col-xs-2">{{ person.place }}</td>
-      <td class="col-xs-2">{{ person.points }}</td>
-      <td class="col-xs-2">{{ person.count }}</td>
-    </tr>
-  </table>
+  <div class="overflow mediumTable">
+    <table id="" class="col-xs-12">
+      <tbody>
+        <tr>
+          <th class="col-xs-6">Player</th>
+          <th class="col-xs-2">Place</th>
+          <th class="col-xs-2">Points</th>
+          <th class="col-xs-2">Final Tables</th>
+        </tr>
+        <tr ng-repeat="person in admin.leaderboard">
+          <!-- add functionality to populate table -->
+          <td class="col-xs-6">{{ person.name }}</td>
+          <td class="col-xs-2">{{ person.place }}</td>
+          <td class="col-xs-2">{{ person.points }}</td>
+          <td class="col-xs-2">{{ person.count }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div class="adminSection col-xs-6">
   <h2>Winners</h2>
-  <table id="" class="col-xs-12">
-    <tr>
-      <th>Winner</th>
-      <th>Game</th>
-      <th>Date</th>
-    </tr>
-    <tr ng-repeat="winner in admin.winners">
-      <!-- add functionality to populate table -->
-      <td class="col-xs-4">{{ winner.name }}</td>
-      <td class="col-xs-4">{{ winner.game_name }}</td>
-      <td class="col-xs-4">{{ winner.date }}</td>
-    </tr>
-  </table>
+  <div class="overflow mediumTable">
+    <table id="" class="col-xs-12">
+      <tbody>
+        <tr>
+          <th>Winner</th>
+          <th>Game</th>
+          <th>Date</th>
+        </tr>
+        <tr ng-repeat="winner in admin.winners">
+          <!-- add functionality to populate table -->
+          <td class="col-xs-4">{{ winner.name }}</td>
+          <td class="col-xs-4">{{ winner.game_name }}</td>
+          <td class="col-xs-4">{{ winner.date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
