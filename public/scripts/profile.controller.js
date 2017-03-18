@@ -2,8 +2,27 @@ angular.module('pokerApp').controller('ProfileController', function($http, UserS
   console.log('ProfileController loaded');
 
   var ctrl = this;
-  // ctrl.thisPlayer = false;
-
+  // ctrl.thisPlayer = true;
+  ctrl.checkAdminStatus = function() {
+    UserService.getCurrentUser().then(function(res) {
+      console.log('this is the res.data, ', res.data);
+      var thisUser = res.data.user;
+      if(thisUser.admin == true){
+        ctrl.admin = true;
+      }else{
+        ctrl.admin = false;
+      }
+      if(ctrl.id == thisUser.id || thisUser.admin == true){
+        ctrl.thisPlayer = true;
+        console.log('this player is, ', ctrl.thisPlayer);
+      }else{
+        console.log('this ctrl.id is, ', ctrl.id);
+        console.log('this player is, ', thisUser.id);
+        console.log('this adminstatus is, ', thisUser.admin);
+        ctrl.thisPlayer = false;
+      }
+    });
+  };
 
 ctrl.showEditProfile = function() {
   UserService.getPlayerToShow().then(function(res){
@@ -19,10 +38,11 @@ ctrl.showEditProfile = function() {
     ctrl.administrator = user.admin;
     ctrl.regular = user.regular;
   console.log('loaded the user clicked on:',ctrl.first_name);
-
+    ctrl.checkAdminStatus();
   });
   };
   ctrl.showEditProfile();
+
 
   if (document.getElementById("profilePicture") !== null) {
     document.getElementById("profilePicture").onchange = function() { document.getElementById("upload").submit(); };
@@ -38,16 +58,16 @@ ctrl.showEditProfile = function() {
 //
 
 
-  ctrl.getProfiles = function() {
-     $http.get('/users/players').then(function(response) {
-      ctrl.profiles = response.data;
-      console.log('This is the profile data: ',response.data);
-    }).catch(function(err) {
-      console.log('error getting response from the profile :', err);
-    });
-  }; // end getProfiles function
-
-  ctrl.getProfiles();
+  // ctrl.getProfiles = function() {
+  //    $http.get('/users/players').then(function(response) {
+  //     ctrl.profiles = response.data;
+  //     console.log('This is the profile data: ',response.data);
+  //   }).catch(function(err) {
+  //     console.log('error getting response from the profile :', err);
+  //   });
+  // }; // end getProfiles function
+  //
+  // ctrl.getProfiles();
 
   ctrl.getPlayerProfileInfo = function() {
     $http.get('/users/playerinfo').then(function(response) {
@@ -60,14 +80,14 @@ ctrl.showEditProfile = function() {
 
   ctrl.getPlayerProfileInfo();
 //changing to
-ctrl.getLinkedIn = function() {
-  if (ctrl.linkedin == null) {
-    console.log('No linkedin link');
-    $location.path('/edit.profile');
-  } else {
-    window.location.href = (ctrl.linkedin);
-  }
-};
+// ctrl.getLinkedIn = function() {
+//   if (ctrl.linkedin == null) {
+//     console.log('No linkedin link');
+//     $location.path('/edit.profile');
+//   } else {
+//     window.location.href = (ctrl.linkedin);
+//   }
+// };
 
   ctrl.profilePage = function() {
     $location.path('/edit.profile');
@@ -126,26 +146,26 @@ ctrl.updateProfile = function() {
     });
   };
 
-  ctrl.checkAdminStatus = function() {
-    UserService.getCurrentUser().then(function(res) {
-      console.log('this is the res.data, ', res.data);
-      user = res.data.user;
-      if(user.admin == true){
-        ctrl.admin = true;
-      }else{
-        ctrl.admin = false;
-      }
-      if(ctrl.id == user.id || user.admin == true){
-        ctrl.thisPlayer = true;
-        console.log('this player is, ', ctrl.thisPlayer);
-      }else{
-        console.log('this player is, ', ctrl.thisPlayer);
-        ctrl.thisPlayer = false;
-      }
-    });
-  };
-
-  ctrl.checkAdminStatus();
+  // ctrl.checkAdminStatus = function() {
+  //   UserService.getCurrentUser().then(function(res) {
+  //     console.log('this is the res.data, ', res.data);
+  //     user = res.data.user;
+  //     if(user.admin == true){
+  //       ctrl.admin = true;
+  //     }else{
+  //       ctrl.admin = false;
+  //     }
+  //     if(ctrl.id == user.id || user.admin == true){
+  //       ctrl.thisPlayer = true;
+  //       console.log('this player is, ', ctrl.thisPlayer);
+  //     }else{
+  //       console.log('this player is, ', ctrl.thisPlayer);
+  //       ctrl.thisPlayer = false;
+  //     }
+  //   });
+  // };
+  //
+  // ctrl.checkAdminStatus();
 
 // ctrl.register = function() {
 //   console.log('creating a new user');
