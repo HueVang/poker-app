@@ -9,10 +9,14 @@ angular.module('pokerApp').service('DigestService', function($http, $location) {
       digests.forEach(function(digest, index){
         // console.log('this is the length, ', arrayToPush.length, digest);
         if(index == digests.length-1){
+          digest.date = new Date(digest.date).toDateString();
+          arrayToPush.push(digest);
           arrayOfArrays.push(arrayToPush);
+          console.log('this is in if: ', arrayToPush);
         }else if(arrayToPush.length < 5){
           digest.date = new Date(digest.date).toDateString();
           arrayToPush.push(digest);
+          console.log('this is in else if: ', arrayToPush);
         }else{
           arrayOfArrays.push(arrayToPush);
           arrayToPush = [];
