@@ -32,8 +32,8 @@
   <h2>Games</h2>
   <button ng-click="admin.newGame(admin.league.id)" id="scheduleGame" class="btn btn-primary" >Schedule Game</button>
   <div class="overflow mediumTable">
-    <table id="" class="col-xs-12">
-      <tbody>
+    <table class=" table table-striped col-xs-12">
+      <thead>
         <tr>
           <th class="col-xs-4">Game Name</th>
           <th class="col-xs-2">Date</th>
@@ -41,6 +41,8 @@
           <th class="col-xs-2">Alternate Count</th>
           <th class="col-xs-2">Edit?</th>
         </tr>
+      </thead>
+        <tbody>
         <tr ng-repeat="game in admin.games">
           <!-- add functionality to populate table -->
           <td class="col-xs-4">{{game.name}}</td>
@@ -57,14 +59,16 @@
 <div class="adminSection col-xs-12">
   <h2>Leaderboard</h2>
   <div class="overflow mediumTable">
-    <table id="" class="col-xs-12">
-      <tbody>
-        <tr>
-          <th class="col-xs-6">Player</th>
-          <th class="col-xs-2">Place</th>
-          <th class="col-xs-2">Points</th>
-          <th class="col-xs-2">Final Tables</th>
-        </tr>
+    <table class="table table-striped col-xs-12">
+        <thead>
+          <tr>
+            <th class="col-xs-6">Player</th>
+            <th class="col-xs-2">Place</th>
+            <th class="col-xs-2">Points</th>
+            <th class="col-xs-2">Final Tables</th>
+          </tr>
+        </thead>
+        <tbody>
         <tr ng-repeat="person in admin.leaderboard">
           <!-- add functionality to populate table -->
           <td class="col-xs-6">{{ person.name }}</td>
@@ -80,13 +84,15 @@
 <div class="adminSection col-xs-6">
   <h2>Winners</h2>
   <div class="overflow mediumTable">
-    <table id="" class="col-xs-12">
-      <tbody>
+    <table id="" class="table table-striped col-xs-12">
+      <thead>
         <tr>
           <th>Winner</th>
           <th>Game</th>
           <th>Date</th>
         </tr>
+      </thead>
+      <tbody>
         <tr ng-repeat="winner in admin.winners">
           <!-- add functionality to populate table -->
           <td class="col-xs-4">{{ winner.name }}</td>

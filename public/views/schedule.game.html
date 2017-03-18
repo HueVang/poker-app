@@ -57,12 +57,14 @@
 </form>
 
 <div class="overflow smallTable">
-  <table id="">
-    <tbody>
+  <table id="" class="table table-striped">
+    <thead>
       <tr>
         <th>Player Name</th>
         <th>Delete</th>
       </tr>
+    </thead>
+      <tbody>
       <tr ng-repeat="user in game.userList">
         <!-- add functionality to populate table -->
         <td>{{user.first_name}} {{user.last_name}}</td>
