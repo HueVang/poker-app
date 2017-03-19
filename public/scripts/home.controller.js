@@ -185,6 +185,36 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
 
     ctrl.checkAdminStatus();
 
+    ctrl.adminRemoveAlert = function(player) {
+      var player_id = player;
+      alertify.confirm(
+        'Remove player from game?',
+       'Are you sure you want to remove this player from the game?',
+       function(){
+         console.log('This is the argument: ', player_id);
+         ctrl.adminRemoveFromGame(player_id);
+         alertify.success('Removed player from game');
+       },
+       function(){
+         alertify.error('Cancelled player removal');
+       });
+    }; // end ctrl.adminRemoveAlert
+
+    ctrl.userRemoveAlert = function() {
+      alertify.confirm(
+        'Leave this game?',
+       'Are you sure you want to leave this game?',
+       function(){
+         ctrl.removeFromGame();
+         alertify.success('Left game');
+       },
+       function(){
+         alertify.error('Cancelled');
+       });
+    }; // end ctrl.userRemoveAlert
+
+
+
     ctrl.removeFromGame = function(){
       console.log(ctrl.currentGame);
       ReservationService.removeFromGame(user.id, ctrl.currentGame).then(function(res){
