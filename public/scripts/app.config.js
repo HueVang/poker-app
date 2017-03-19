@@ -44,7 +44,7 @@ angular
         controller: "ProfileController as profile",
         authRequired: true
       })
-      .when("/other.profile" , {
+      .when("/other.profile", {
         templateUrl: "views/other.profile.html",
         controller: "ProfileController as profile",
         authRequired: true

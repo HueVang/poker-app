@@ -598,7 +598,7 @@ router.post('/newPlayer', function(req, res) {
              let mailOptions = {
                  from: '"Prime Devs" <' + email + '>', // sender address
                  to: useremail, // list of receivers
-                 subject: 'Test!', // Subject line
+                 subject: 'Welcome to D12!', // Subject line
                  text: 'This is the text text', // plain text body
                  html: text // html body
              };

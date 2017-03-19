@@ -18,11 +18,29 @@
         </ul>
       </div>
     </nav>
-    <div class="col-md-7">
+    <div class="col-md-7 adminSection" id="blogDigest">
+      <h2>League Updates</h2>
       <div ng-repeat="digest in home.digestList">
-        <h4>{{digest.date}}</h4>
-        <p>{{digest.entry}}</p>
+        <div class="">
+          <h4>{{digest.date}}</h4>
+          <p>{{digest.entry}}</p>
+        </div>
       </div>
+      <nav aria-label="Page navigation" class="col-sm-10 text-center pageNav">
+        <ul class="pagination">
+          <li ng-click="home.prevPage()">
+            <a href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li ng-repeat="array in home.digestArray" ng-click="home.jumpToPage(array, home.digestArray.indexOf(array))"><a href="#">{{home.digestArray.indexOf(array)+1}}</a></li>
+          <li ng-click="home.nextPage()">
+            <a href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
 
     <div class="col-md-5" id="playerList">
@@ -37,14 +55,16 @@
         </div>
       </nav>
       <div>
-        <nav>
-          <ul  class="pagination">
-            <li ng-if="home.showGames" ng-click="home.showPlayerList()"><a href="/home"> Registered Players </a></li>
-            <li ng-if="home.showGames" ng-click="home.showAlternateList()"><a href="/home"> Alternates </a></li>
-            <li ng-if="home.showLeaderboard" ng-click="home.showLeaderboard1()"><a href="/home"> League 1 </a></li>
-            <li ng-if="home.showLeaderboard" ng-click="home.showLeaderboard2()"><a href="/home"> League 2 </a></li>
-            <li><button ng-if="home.notAdmin" class="btn btn-danger removeButton" ng-click="home.removeFromGame()">Leave Game</button></li>
-          </ul>
+        <nav class="navbar navbar-default gameNavbar">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li ng-if="home.showGames" ng-click="home.showPlayerList()"><a href="/home"> Registered Players </a></li>
+              <li ng-if="home.showGames" ng-click="home.showAlternateList()"><a href="/home"> Alternates </a></li>
+              <li ng-if="home.showLeaderboard" ng-click="home.showLeaderboard1()"><a href="/home"> League 1 </a></li>
+              <li ng-if="home.showLeaderboard" ng-click="home.showLeaderboard2()"><a href="/home"> League 2 </a></li>
+              <li><button ng-if="home.notAdmin" class="btn btn-danger removeButton" ng-click="home.removeFromGame()">Leave Game</button></li>
+            </ul>
+          </div>
         </nav>
       </div>
       <ol  ng-if="home.showPlayers">
@@ -58,21 +78,7 @@
       </ol>
     </div>
 
-    <nav aria-label="Page navigation" class="col-sm-10">
-      <ul class="pagination">
-        <li ng-click="home.prevPage()">
-          <a href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li ng-repeat="array in home.digestArray" ng-click="home.jumpToPage(array, home.digestArray.indexOf(array))"><a href="#">{{home.digestArray.indexOf(array)+1}}</a></li>
-        <li ng-click="home.nextPage()">
-          <a href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+
   </body>
 </html>
 
