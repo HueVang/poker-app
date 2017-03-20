@@ -88,6 +88,10 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
     });
   };
 
+  ctrl.createLeaguePage = function() {
+    $location.path('createLeague');
+  }; // end ctrl.createLeaguePage
+
   ctrl.editGame = function(game) {
     GameService.getGameEdit(game);
     $location.path('editGame');

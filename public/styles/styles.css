@@ -4,12 +4,15 @@ html {
 
 body {
   background-color: #fffffa;
-  /*background-color: #f9f5e5;*/
-  /*background-color: goldenrod;*/
-  /*background:rgba(255,255,255,0.5);*/
+  /*background-color: rgba(0, 0, 0, 0.45);*/
   font-family: Helvetica, 'Trebuchet MS', sans-serif;
   margin: 2em auto 2em auto;
   width: 85%;
+}
+
+p, h1, h2, li, ul, ol, th, td, tr {
+  text-shadow: 0.25px 0.25px 0.5px #474747;
+  color: #505154;
 }
 
 table, th, td {
@@ -47,7 +50,18 @@ table, th, td {
 .headCtr {
   text-align: center;
 }
+
+.updateDiv {
+  /*background-color: rgba(255,255,255, 0.5);*/
+  /*border: 1px solid black;*/
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+
+}
+
 #blogDigest {
+  background-color: rgba(255,255,255,0.7);
+  /*background-color: #798b96;*/
   min-height: 553px;
   max-height: 553px;
 }
@@ -99,6 +113,7 @@ img {
   background-color: #f4b225;
   border-color: #c2880a;
 }
+
 
 .btn-primary:hover {
   background-color: #da990b;

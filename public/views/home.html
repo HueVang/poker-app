@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +7,7 @@
 
   </head>
   <body>
-    <h1>Home</h1>
+    <!-- <h1>Home</h1> -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <ul class="nav navbar-nav">
@@ -20,7 +21,7 @@
     </nav>
     <div class="col-md-7 adminSection" id="blogDigest">
       <h2>League Updates</h2>
-      <div ng-repeat="digest in home.digestList">
+      <div class="updateDiv" ng-repeat="digest in home.digestList">
         <div class="">
           <h4>{{digest.date}}</h4>
           <p>{{digest.entry}}</p>
@@ -62,7 +63,7 @@
               <li ng-if="home.showGames" ng-click="home.showAlternateList()"><a href="/home"> Alternates </a></li>
               <li ng-if="home.showLeaderboard" ng-click="home.showLeaderboard1()"><a href="/home"> League 1 </a></li>
               <li ng-if="home.showLeaderboard" ng-click="home.showLeaderboard2()"><a href="/home"> League 2 </a></li>
-              <li><button ng-if="home.notAdmin" class="btn btn-danger removeButton" ng-click="home.userRemoveAlert()">Leave Game</button></li>
+              <li><button ng-if="home.notAdmin" class="btn btn-danger removeButton navbar-btn" ng-click="home.userRemoveAlert()">Leave Game</button></li>
             </ul>
           </div>
         </nav>
