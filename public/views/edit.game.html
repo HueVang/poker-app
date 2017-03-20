@@ -69,9 +69,11 @@
   </table>
 </div>
 <div class="col-xs-offset-3 col-xs-10">
-  <button type="submit" class="btn btn-primary" >Print Player List</button>
-  <button class="btn btn-primary" ng-click="game.addPlayer()">Add Player</button>
-  <div ng-show="game.addPlayerInput">
+  <!-- <button type="submit" class="btn btn-primary" >Print Player List</button> -->
+  <div class="col-sm-12">
+    <button class="btn btn-primary" ng-click="game.addPlayer()">Add Points</button>
+  </div>
+  <div ng-show="game.addPlayerInput" class="col-sm-7">
     <autocomplete ng-model="game.person.username" data="game.autoCompleteArrayForPoints"></autocomplete>
     <div class="form-group row">
       <label class="control-label col-xs-offset-1 col-xs-2">Points</label>

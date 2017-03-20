@@ -93,6 +93,9 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
     $location.path('editGame');
   }; // end ctrl.endGame
 
+  ctrl.cancel = function() {
+    $location.path('adminLeague');
+  }; // end ctrl.cancel
   //added
   //
   ctrl.getPlayerRosterData = function(){

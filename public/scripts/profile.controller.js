@@ -136,13 +136,17 @@ ctrl.updateProfile = function() {
     $location.path('/playerRoster')
   }
 
-  ctrl.logout = function() {
+  ctrl.clicked = function(){
+    console.log('You clicked Sign Out!');
+  }
+
+  ctrl.logout = function(){
     $http.delete('/login').then(function(){
       console.log('Successfully logged out!');
+      alertify.warning('You are now signed out.');
       $location.path('/');
     }).catch(function(err){
       console.log('Error logging out');
-      alertify.warning('You are now signed out.');
     });
   };
 

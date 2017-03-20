@@ -326,7 +326,7 @@ router.post('/regulars', function(req, res) {
     let mailOptions = {
         from: '"Prime Devs" <' + email + '>', // sender address
         to: useremail, // list of receivers
-        subject: 'Test!', // Subject line
+        subject: 'You have been registered for '+ gamename +'!', // Subject line
         text: 'This is the text text', // plain text body
         html: text // html body
     };
@@ -411,7 +411,7 @@ router.post('/players', function(req, res) {
              let mailOptions = {
                  from: '"Prime Devs" <' + email + '>', // sender address
                  to: useremail, // list of receivers
-                 subject: 'Test!', // Subject line
+                 subject: 'Reserve your spot for ' + gamename + '!', // Subject line
                  text: 'This is the text text', // plain text body
                  html: text // html body
              };

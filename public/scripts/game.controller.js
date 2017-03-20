@@ -1,4 +1,4 @@
-angular.module('pokerApp').controller('GameController', function(GameService, MailService, ReservationService, UserService, DigestService, $location, $http){
+angular.module('pokerApp').controller('GameController', function(GameService, MailService, ReservationService, UserService, DigestService, $window, $location, $http){
   var ctrl = this;
   ctrl.newGame = {'name' : '', 'date' : '', 'time' : '', 'count' : '', 'digest' : '', 'leagues_id' : ''};
   var gamehash = 'this isn\'t right...';
@@ -158,7 +158,8 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
     });
 
 
-    $location.path('adminLeague');
+    $location.path('/adminLeague');
+    // $window.location.href = '/adminLeague';
 
   }; // end ctrl.create
 

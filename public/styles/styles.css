@@ -47,6 +47,15 @@ table, th, td {
 .headCtr {
   text-align: center;
 }
+#blogDigest {
+  min-height: 553px;
+  max-height: 553px;
+}
+
+.pageNav {
+  position: absolute;
+  bottom: 0;
+}
 
 h1 {
   font-size: 3em;
@@ -81,6 +90,7 @@ img {
 .pagination {
   margin-top: 0px;
 }
+
 .gameNavbar {
   margin-bottom: 0px;
 }
