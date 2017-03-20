@@ -95,6 +95,7 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
 
   ctrl.cancel = function() {
     $location.path('adminLeague');
+    alertify.error('League creation cancelled');
   }; // end ctrl.cancel
   //added
   //
@@ -189,6 +190,8 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
     var invitedPlayer = {email : newPlayerEmail};
     MailService.inviteNewPlayer(invitedPlayer).then(function(res){
       console.log(res);
+    ctrl.newPlayerEmail = '';
+    alertify.success('Invite sent to new player!');
     });
   }
 

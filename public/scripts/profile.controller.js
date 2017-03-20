@@ -124,6 +124,7 @@ ctrl.updateProfile = function() {
   return $http.put('/users/'+playerInfo.id, playerInfo).then(function(response) {
     console.log('in put request of updateProfile');
     $location.path('/playerRoster');
+    alertify.success('Profile edited');
     // return response;
   }).catch(function(err) {
     console.log('error getting response: ', err);
@@ -134,6 +135,7 @@ ctrl.updateProfile = function() {
 
   ctrl.cancelEdit = function(){
     $location.path('/playerRoster')
+    alertify.error('Profile not edited');
   }
 
   ctrl.clicked = function(){

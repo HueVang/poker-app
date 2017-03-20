@@ -159,6 +159,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
 
     $location.path('/adminLeague');
+    alertify.success('Game created successfully!');
     // $window.location.href = '/adminLeague';
 
   }; // end ctrl.create
@@ -203,6 +204,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       ctrl.addedToGame.push(newUsername);
       console.log('This is the user to be added: ', res.data[0]);
     });
+    ctrl.username = '';
   } // end ctrl.addToPlayersList
 
   ctrl.addToUserPointsArray = function(person){
@@ -262,6 +264,7 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
         console.log('This is the autoCompleteArrayForPoints:', ctrl.autoCompleteArrayForPoints);
       }); // end ReservationService.givePlayerPoints
     }); // end UserService.getUserByUsername
+    ctrl.person = {};
   }; // end ctrl.addToUserPointsArray
 
   ctrl.revertRegularStatus = function(){
@@ -316,6 +319,15 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   ctrl.cancel = function() {
     ctrl.revertRegularStatus();
     $location.path('adminLeague');
+    alertify.error('Game creation cancelled');
+
   }; // end ctrl.cancel
+
+  ctrl.cancelEdit = function() {
+    ctrl.revertRegularStatus();
+    $location.path('adminLeague');
+    alertify.error('Game editing cancelled');
+
+  }; // end ctrl.cancelEdit
 
 }); // end angular.module
