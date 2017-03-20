@@ -21,12 +21,15 @@
     </nav>
     <div class="col-md-7 adminSection" id="blogDigest">
       <h2>League Updates</h2>
-      <div class="updateDiv" ng-repeat="digest in home.digestList">
-        <div class="">
-          <h4>{{digest.date}}</h4>
-          <p>{{digest.entry}}</p>
+      <div id="blogs">
+        <div class="updateDiv" ng-repeat="digest in home.digestList">
+          <div class="">
+            <h4>{{digest.date}}</h4>
+            <p>{{digest.entry}}</p>
+          </div>
         </div>
       </div>
+
       <nav aria-label="Page navigation" class="col-sm-10 text-center pageNav">
         <ul class="pagination">
           <li ng-click="home.prevPage()">
@@ -42,6 +45,7 @@
           </li>
         </ul>
       </nav>
+
     </div>
 
     <div class="col-md-5" id="playerList">

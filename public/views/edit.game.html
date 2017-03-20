@@ -76,9 +76,9 @@
   <div ng-show="game.addPlayerInput" class="col-sm-7">
     <autocomplete ng-model="game.person.username" data="game.autoCompleteArrayForPoints"></autocomplete>
     <div class="form-group row">
-      <label class="control-label col-xs-offset-1 col-xs-2">Points</label>
-      <div class="col-xs-8">
-        <input class="form-control" type="number" ng-model="game.person.points">
+      <!-- <label class="control-label col-xs-offset-1 col-xs-2">Points</label> -->
+      <div class="col-sm-7">
+        <input class="form-control col-sm-7" placeholder="Points" type="number" ng-model="game.person.points">
       </div>
     </div>
     <button class="btn btn-primary" ng-click="game.addToUserPointsArray(game.person)" >Add</button>
