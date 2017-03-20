@@ -8,7 +8,7 @@
       <li ng-if="profile.admin"><a href="/adminLeague"> Admin Home </a></li>
       <li><a href="/playerRoster"> Player Roster </a></li>
       <!-- <li><a href="/createLeague"> Create League </a></li> -->
-      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="player.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
+      <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="profile.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
     </ul>
   </div>
 </nav>
@@ -25,6 +25,6 @@
     </div>
   </div>
   <div id="profileImage">
-    <img class="" ng-src="/../uploads/{{player.username}}.jpg" alt=""/>
+    <img class="" ng-src="/../uploads/{{profile.username}}.jpg" alt=""/>
   </div>
 </div>
