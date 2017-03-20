@@ -68,15 +68,31 @@
           </div>
         </nav>
       </div>
-      <ol  ng-if="home.showPlayers">
-        <li ng-repeat="player in home.playerList">{{player.name}}<button ng-if="home.admin" class="btn btn-danger btn-xs noMarginPadding removeButton" ng-click="home.adminRemoveAlert(player.users_id)">Remove from Game</button></li>
-      </ol>
-      <ol ng-if="home.showAlternates">
-        <li ng-repeat="alternate in home.alternates">{{alternate.name}}<button ng-if="home.admin" class="btn btn-danger btn-xs noMarginPadding removeButton" ng-click="home.adminRemoveAlert(alternate.users_id)">Remove from Game</button></li>
-      </ol>
-      <ol  ng-if="home.showLeaderboard">
-        <li ng-repeat="player in home.leaderboard">{{player.name}} {{player.points}}</li>
-      </ol>
+      <div class="playerSection">
+        <ol  ng-if="home.showPlayers">
+          <li ng-repeat="player in home.playerList">{{player.name}}<button ng-if="home.admin" class="btn btn-danger btn-xs noMarginPadding removeButton" ng-click="home.adminRemoveAlert(player.users_id)">Remove from Game</button></li>
+        </ol>
+        <ol ng-if="home.showAlternates">
+          <li ng-repeat="alternate in home.alternates">{{alternate.name}}<button ng-if="home.admin" class="btn btn-danger btn-xs noMarginPadding removeButton" ng-click="home.adminRemoveAlert(alternate.users_id)">Remove from Game</button></li>
+        </ol>
+        <ol  ng-if="home.showLeaderboard">
+          <table class="table table-striped col-xs-12" id="playerTable">
+            <thead>
+              <tr>
+                <th class="col-xs-2">Name</th>
+                <th class="col-xs-2">Points</th>
+              </tr>
+            </thead>
+              <tbody>
+              <tr ng-repeat="player in home.leaderboard">
+                <td class="col-xs-2">{{player.name}}</td>
+                <td class="col-xs-2">{{player.points}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <li ng-repeat="player in home.leaderboard">{{player.name}}           {{player.points}}</li> -->
+        </ol>
+      </div>
     </div>
 
   </body>

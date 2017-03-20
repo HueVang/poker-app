@@ -36,20 +36,20 @@
     <table class=" table table-striped col-xs-12">
       <thead>
         <tr>
-          <th class="col-xs-4">Game Name</th>
+          <th class="col-xs-3">Game Name</th>
           <th class="col-xs-2">Date</th>
           <th class="col-xs-2">Player Count</th>
-          <th class="col-xs-2">Alternate Count</th>
+          <!-- <th class="col-xs-2">Alternate Count</th> -->
           <th class="col-xs-2">Edit?</th>
         </tr>
       </thead>
         <tbody>
         <tr ng-repeat="game in admin.games">
           <!-- add functionality to populate table -->
-          <td class="col-xs-4">{{game.name}}</td>
+          <td class="col-xs-3">{{game.name}}</td>
           <td class="col-xs-2">{{game.date}}</td>
           <td class="col-xs-2">{{game.count}}</td>
-          <td class="col-xs-2">0</td>
+          <!-- <td class="col-xs-2">0</td> -->
           <td class="col-xs-2"><button ng-click="admin.editGame(game)" id="editBtn" class="btn btn-default" >Edit Game...</button></td>
         </tr>
       </tbody>
@@ -63,7 +63,7 @@
     <table class="table table-striped col-xs-12">
         <thead>
           <tr>
-            <th class="col-xs-6">Player</th>
+            <th class="col-xs-5">Player</th>
             <th class="col-xs-2">Place</th>
             <th class="col-xs-2">Points</th>
             <th class="col-xs-2">Final Tables</th>
@@ -72,7 +72,7 @@
         <tbody>
         <tr ng-repeat="person in admin.leaderboard">
           <!-- add functionality to populate table -->
-          <td class="col-xs-6">{{ person.name }}</td>
+          <td class="col-xs-5">{{ person.name }}</td>
           <td class="col-xs-2">{{ person.place }}</td>
           <td class="col-xs-2">{{ person.points }}</td>
           <td class="col-xs-2">{{ person.count }}</td>
