@@ -129,6 +129,19 @@ img {
   background-color: #da990b;
 }
 
+#selected {
+  color: #da990b;
+}
+
+#selected2 {
+  color: #da990b;
+}
+
+#selected3 {
+  color: #da990b;
+}
+
+
 .btn-primary:focus {
   background-color: #da990b;
 }

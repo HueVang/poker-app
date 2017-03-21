@@ -62,6 +62,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       ctrl.showPlayers = false;
       ctrl.showAlternates = false;
       ctrl.showGames = false;
+      // ctrl.addActive3();
     });
   }; // end ctrl.getLeaderboard
 
@@ -71,6 +72,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       currentLeague1 = res.data[0].id;
       currentLeague2 = res.data[1].id;
       ctrl.currentLeague = res.data[0].id;
+      // ctrl.addActive3();
       console.log('This is the getLeagueList data: ', res.data);
     }).then(function(){
       console.log('This is currentLeague1: ', currentLeague1);
@@ -81,11 +83,16 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
   ctrl.showLeaderboard1 = function(){
     ctrl.currentLeague = currentLeague1;
     ctrl.getLeaderboard(currentLeague1);
+    console.log('This is the currentLeague: ', ctrl.currentLeague);
+
+    // setTimeout(ctrl.addActive3(), 2000);
   }; // end ctrl.showLeaderboard2
 
   ctrl.showLeaderboard2 = function(){
     ctrl.currentLeague = currentLeague2;
     ctrl.getLeaderboard(currentLeague2);
+    console.log('This is the currentLeague: ', ctrl.currentLeague);
+    // setTimeout(ctrl.addActive3(), 2000);
   }; // end ctrl.showLeaderboard2
 
   ctrl.getLeagueList();
@@ -213,6 +220,35 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
        });
     }; // end ctrl.userRemoveAlert
 
+
+    ctrl.addActive = function() {
+      document.getElementById('selected').removeAttribute('id');
+      console.log('Selected ID removed', document.getElementsByClassName('alternates')[0]);
+      event.target.setAttribute('id', 'selected');
+      console.log('Selected ID added');
+      document.getElementsByClassName('alternates')[0].removeAttribute('id');
+      document.getElementsByClassName('regulars')[0].setAttribute('id', 'selected2');
+    }; // end ctrl.addActive
+
+    ctrl.addActive2 = function() {
+      document.getElementById('selected2').removeAttribute('id');
+      console.log('Selected2 ID removed');
+      event.target.setAttribute('id', 'selected2');
+      console.log('Selected2 ID added');
+    }; // end ctrl.addActive
+
+    ctrl.addActive3 = function() {
+      console.log('This is the currentLeague: ', ctrl.currentLeague);
+      if (ctrl.currentLeague == currentLeague1) {
+        document.getElementsByClassName('league2')[0].removeAttribute('id');
+        document.getElementsByClassName('league1')[0].setAttribute('id', 'selected3');
+        // console.log('This is league1: ', document.getElementsByClassName('league1')[0]);
+      } else {
+        console.log('currentLeague == currentLeague2');
+        document.getElementsByClassName('league1')[0].removeAttribute('id');
+        document.getElementsByClassName('league2')[0].setAttribute('id', 'selected3');
+      }
+    }; // end ctrl.addActive
 
 
     ctrl.removeFromGame = function(){

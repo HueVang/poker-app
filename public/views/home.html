@@ -52,9 +52,9 @@
       <nav class="navbar navbar-default gameNavbar">
         <div class="container-fluid">
           <ul class="nav navbar-nav">
-            <li class="active" ng-click="home.getGameList()"><a href="/home"> Game 1 </a></li>
-            <li ng-click="home.getGame2List()"><a href="/home"> Game 2 </a></li>
-            <li ng-click="home.getLeaderboard(home.currentLeague)"><a href="/home"> Leaderboard </a></li>
+            <li ng-click="home.getGameList(); home.addActive()"><a id="selected"  href="/home"> Game 1 </a></li>
+            <li ng-click="home.getGame2List(); home.addActive()"><a href="/home"> Game 2 </a></li>
+            <li ng-click="home.getLeaderboard(home.currentLeague); home.addActive(); home.addActive3()"><a href="/home"> Leaderboard </a></li>
 
           </ul>
         </div>
@@ -63,10 +63,10 @@
         <nav class="navbar navbar-default gameNavbar">
           <div class="container-fluid">
             <ul class="nav navbar-nav">
-              <li ng-if="home.showGames" ng-click="home.showPlayerList()"><a href="/home"> Registered Players </a></li>
-              <li ng-if="home.showGames" ng-click="home.showAlternateList()"><a href="/home"> Alternates </a></li>
-              <li ng-if="home.showLeaderboard" ng-click="home.showLeaderboard1()"><a href="/home"> League 1 </a></li>
-              <li ng-if="home.showLeaderboard" ng-click="home.showLeaderboard2()"><a href="/home"> League 2 </a></li>
+              <li ng-if="home.showGames" ng-click="home.showPlayerList(); home.addActive2()"><a id="selected2" class="regulars" href="/home"> Registered Players </a></li>
+              <li ng-if="home.showGames" ng-click="home.showAlternateList(); home.addActive2()"><a href="/home" class="alternates"> Alternates </a></li>
+              <li ng-show="home.showLeaderboard" ng-click="home.showLeaderboard1(); home.addActive3()"><a class="league1" href="/home"> League 1 </a></li>
+              <li ng-show="home.showLeaderboard" ng-click="home.showLeaderboard2(); home.addActive3()"><a class="league2" href="/home"> League 2 </a></li>
               <li><button ng-if="home.notAdmin" class="btn btn-danger removeButton navbar-btn" ng-click="home.userRemoveAlert()">Leave Game</button></li>
             </ul>
           </div>
