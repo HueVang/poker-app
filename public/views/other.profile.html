@@ -21,7 +21,8 @@
     <p>LinkedIn URL: {{ profile.linkedin }}</p>
     <p>Personal Bio: {{ profile.bio }}</p>
     <div ng-if="profile.thisPlayer">
-      <a href="/edit.profile">Edit Profile...</a>
+      <button class="btn btn-primary"><a id="otherProfile" href="/edit.profile">Edit Profile...</a></button>
+
     </div>
   </div>
   <div id="profileImage">
