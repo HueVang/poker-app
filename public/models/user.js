@@ -49,13 +49,13 @@ exports.findAndComparePassword = function(username, password) {
   });
 };
 
-exports.create = function(username, password , first_name, last_name, email, linkedin, bio, photourl) {
+exports.create = function(username, password , first_name, last_name, email, linkedin, bio, emailcred) {
   return bcrypt
     .hash(password, SALT_ROUNDS)
     .then(function(hash) {
       return query(
-        "INSERT INTO users (username, password, first_name, last_name, email, linkedin, bio, photourl) VALUES ($1, $2 , $3, $4, $5, $6, $7, $8) RETURNING *",
-        [ username, hash, first_name, last_name, email, linkedin, bio, photourl ]
+        "INSERT INTO users (username, password, first_name, last_name, email, linkedin, bio, emailcred) VALUES ($1, $2 , $3, $4, $5, $6, $7, $8) RETURNING *",
+        [ username, hash, first_name, last_name, email, linkedin, bio, emailcred ]
       ).then(function(users) {
         return users[0];
       });
@@ -65,14 +65,14 @@ exports.create = function(username, password , first_name, last_name, email, lin
     });
 };
 
-exports.update = function(id,username, password , first_name, last_name, email, linkedin, bio, photourl) {
+exports.update = function(id,username, password , first_name, last_name, email, linkedin, bio, emailcred) {
   return bcrypt
     .hash(password, SALT_ROUNDS)
     .then(function(hash) {
       console.log('in exports.update user:', id);
       return query(
-        "UPDATE users set username = $2, password =$3, first_name=$4, last_name=$5, email=$6, linkedin=$7, bio=$8, photourl=$9 where id=$1 RETURNING *",
-        [ id, username, hash, first_name, last_name, email, linkedin, bio, photourl]
+        "UPDATE users set username = $2, password =$3, first_name=$4, last_name=$5, email=$6, linkedin=$7, bio=$8, emailcred=$9 where id=$1 RETURNING *",
+        [ id, username, hash, first_name, last_name, email, linkedin, bio, emailcred]
       ).then(function(users) {
         return users[0];
       });

@@ -86,6 +86,10 @@ img {
   border-radius: 4px;
 }
 
+#personalBio {
+  max-width: 25em;
+}
+
 #cardsImage {
   box-shadow: 0.25em 0.25em lightgray;
   border: 1px solid lightgray;
