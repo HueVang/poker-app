@@ -29,10 +29,6 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
       ctrl.getLeaderboard(ctrl.leagues[ctrl.leagues.length - 1].id);
       ctrl.getWinners(ctrl.leagues[ctrl.leagues.length - 1].id);
       ctrl.league = ctrl.leagues[ctrl.leagues.length - 1];
-      // ctrl.getGames(ctrl.leagues[0].id);
-      // ctrl.getLeaderboard(ctrl.leagues[0].id);
-      // ctrl.getWinners(ctrl.leagues[0].id);
-      // ctrl.league = ctrl.leagues[0];
       console.log('This is the last league in the array: ', ctrl.league);
     });
 
@@ -101,8 +97,7 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
     $location.path('adminLeague');
     alertify.error('League creation cancelled');
   }; // end ctrl.cancel
-  //added
-  //
+
   ctrl.getPlayerRosterData = function(){
     ctrl.playerRosterList =[];
     console.log('in getPlayerRosterData');
@@ -116,19 +111,6 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
   };
 
   ctrl.getPlayerRosterData();
-
-  // ctrl.savePlayerRoster = function(){
-  //   ctrl.playerRosterObject = {
-  //     first_name:ctrl.first_name,
-  //     last_name:ctrl.last_name,
-  //     username:ctrl.username,
-  //     email:ctrl.email
-  //   };
-  //   console.log('in savePlayerRoster');
-  //   UserService.savePlayerRoster(ctrl.playerRosterObject).then(function(){
-  //     ctrl.getPlayerRosterData();
-  //   });
-  // };
 
   ctrl.checkAdminStatus = function() {
     UserService.getCurrentUser().then(function(res) {
@@ -149,7 +131,6 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
   };
 
 
-  //added
   ctrl.showEditProfile = function(player){
     UserService.saveEditProfile(player);
   };

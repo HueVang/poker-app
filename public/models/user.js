@@ -35,10 +35,7 @@ exports.findById = function(id) {
     });
 };
 
-// compare password
-// takes a username and a password, looks up the user by the given username
-// and returns promise which resolves to a boolean indicating whether the
-// passwords matched
+
 exports.findAndComparePassword = function(username, password) {
   return exports.findByUsername(username).then(function(user) {
     return bcrypt

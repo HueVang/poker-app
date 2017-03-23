@@ -7,7 +7,6 @@ angular.module('pokerApp').service('DigestService', function($http, $location) {
       var digests = res.data.reverse();
       var arrayToPush = [];
       digests.forEach(function(digest, index){
-        // console.log('this is the length, ', arrayToPush.length, digest);
         if(index == digests.length-1){
           digest.date = new Date(digest.date).toDateString();
           arrayToPush.push(digest);

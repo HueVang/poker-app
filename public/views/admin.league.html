@@ -1,13 +1,10 @@
-<!-- <h1>Administrator League Manager</h1> -->
 
-<!-- navbar -->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
       <li><a href="/home"> Player Home </a></li>
       <li class="active"><a href="/adminLeague"> Admin Home </a></li>
       <li><a href="/playerRoster"> Player Roster </a></li>
-      <!-- <li><a href="/createLeague"> Create League </a></li> -->
       <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn" ng-click="admin.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
     </ul>
   </div>
@@ -15,15 +12,10 @@
 
 <div class="adminSection col-xs-8">
   <h2>Leagues</h2>
-  <!-- <a href="/createLeague">Create New League...</a><br><br> -->
   <button ng-click="admin.createLeaguePage()" id="scheduleGame" class="btn btn-primary" >Create League</button>
   <div class="form-group row">
     <label class="col-xs-1 pull-left">Select League</label>
     <div class="col-xs-11 pull-left">
-      <!-- <select class="form-control dropdown-toggle col-md-4" ng-model="leagueId" ng-change="admin.getGames(leagueId); admin.getLeaderboard(leagueId); admin.getWinners(leagueId)">
-        <option ng-repeat="league in admin.leagues" value="{{league.id}}" ng-if="league.id == admin.leagues[admin.leagues.length - 1].id">{{league.name}}</option>
-        <option value="{{admin.leagues[admin.leagues.length - 1].id}}" selected>{{admin.leagues[admin.leagues.length - 1].name}}</option>
-      </select><br> -->
       <select class="form-control dropdown-toggle col-md-4" ng-options="league.name for league in admin.leagues" ng-model="admin.league" ng-change="admin.getGames(admin.league.id); admin.getLeaderboard(admin.league.id); admin.getWinners(admin.league.id)"></select>
     </div>
   </div>
@@ -39,17 +31,14 @@
           <th class="col-xs-3">Game Name</th>
           <th class="col-xs-2">Date</th>
           <th class="col-xs-2">Player Count</th>
-          <!-- <th class="col-xs-2">Alternate Count</th> -->
           <th class="col-xs-2">Edit?</th>
         </tr>
       </thead>
         <tbody>
         <tr ng-repeat="game in admin.games">
-          <!-- add functionality to populate table -->
           <td class="col-xs-3">{{game.name}}</td>
           <td class="col-xs-2">{{game.date}}</td>
           <td class="col-xs-2">{{game.count}}</td>
-          <!-- <td class="col-xs-2">0</td> -->
           <td class="col-xs-2"><button ng-click="admin.editGame(game)" id="editBtn" class="btn btn-default" >Edit Game...</button></td>
         </tr>
       </tbody>
@@ -71,7 +60,6 @@
         </thead>
         <tbody>
         <tr ng-repeat="person in admin.leaderboard">
-          <!-- add functionality to populate table -->
           <td class="col-xs-5">{{ person.name }}</td>
           <td class="col-xs-2">{{ person.place }}</td>
           <td class="col-xs-2">{{ person.points }}</td>
@@ -95,7 +83,6 @@
       </thead>
       <tbody>
         <tr ng-repeat="winner in admin.winners">
-          <!-- add functionality to populate table -->
           <td class="col-xs-4">{{ winner.name }}</td>
           <td class="col-xs-4">{{ winner.game_name }}</td>
           <td class="col-xs-4">{{ winner.date }}</td>

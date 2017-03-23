@@ -7,7 +7,6 @@ var pool = new pg.Pool({ database: "upsilon_aces" });
 router.post('/', function(req, res){
   User.findByEmail(req.body.email).then(function(user){
     if (user) {
-      // update user
       return User.update(req.body.id,req.body.username, req.body.password, req.body.first_name,
         req.body.last_name, req.body.email, req.body.linkedin, req.body.bio,
         req.body.photourl).then(function(user){
@@ -21,7 +20,7 @@ router.post('/', function(req, res){
 
         res.sendStatus(201);
       });
-    } //
+    } 
     else{
       return User.create(req.body.username, req.body.password, req.body.first_name,
         req.body.last_name, req.body.email, req.body.linkedin, req.body.bio,
@@ -36,7 +35,7 @@ router.post('/', function(req, res){
 
         res.sendStatus(201);
       });
-    } // new user
+    }
   }).catch(function(err){
     console.log('Error creating user, ', err);
     res.sendStatus(500);

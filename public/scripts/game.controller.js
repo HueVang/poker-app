@@ -15,7 +15,6 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
   ctrl.autoCompleteArrayForPoints = [];
   ctrl.username;
   ctrl.userPointsArray;
-  // ctrl.points = 0;
   ctrl.person;
 
 
@@ -160,7 +159,6 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
 
     $location.path('/adminLeague');
     alertify.success('Game created successfully!');
-    // $window.location.href = '/adminLeague';
 
   }; // end ctrl.create
 
@@ -169,8 +167,6 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       res.data.forEach(function(person){
         var playerName = person.first_name + ' ' + person.last_name + ' (' + person.username + ')';
         ctrl.autoCompleteArray.push(playerName);
-        // console.log('This is the autoCompleteArray: ', ctrl.autoCompleteArray);
-        // console.log('This is the length of autoCompleteArray: ', ctrl.autoCompleteArray.length);
       });
       console.log('This is the autoCompleteArray:', ctrl.autoCompleteArray);
     });
@@ -183,8 +179,6 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       res.data.forEach(function(person){
         var playerName = person.first_name + ' ' + person.last_name + ' (' + person.username + ')';
         ctrl.autoCompleteArrayForPoints.push(playerName);
-        // console.log('This is the autoCompleteArray: ', ctrl.autoCompleteArray);
-        // console.log('This is the length of autoCompleteArray: ', ctrl.autoCompleteArray.length);
       });
       console.log('This is the autoCompleteArrayForPoints:', ctrl.autoCompleteArrayForPoints);
     });
@@ -195,10 +189,6 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
     var newUsername = usernameArray[1].substr(0, usernameArray[1].length-1)
     console.log('Add to players list username: ', newUsername);
     UserService.addUserToGame(newUsername).then(function(res){
-      // var firstAndLastNameArray = usernameArray[0].split(' ')
-      // var obj = {}
-      // obj['first_name'] = firstAndLastNameArray[0];
-      // obj['last_name'] = firstAndLastNameArray[1];
       ctrl.userList.push(res.data[0]);
       console.log('This is the thing pushed to the userList: ', res.data[0]);
       ctrl.addedToGame.push(newUsername);
@@ -216,25 +206,6 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       person.games_id = ctrl.gameToEdit.id;
       console.log('This is the userPointsArray length: ', ctrl.userPointsArray.length);
       ReservationService.givePlayerPoints(person).then(function(res){
-        // if (ctrl.userPointsArray.length > 0) {
-        //   for (var i=0; ctrl.userPointsArray.length > i; i++){
-        //     console.log('This is the user\'s name: ', res.data[0].name);
-        //     if(res.data[0].points >= ctrl.userPointsArray[i].points) {
-        //       ctrl.userPointsArray.splice(i, 0, res.data[0]);
-        //       console.log('This pushed in if statement: ', ctrl.userPointsArray);
-        //       break;
-        //     } else if (res.data[0].points < ctrl.userPointsArray[i].points) {
-        //       console.log('Not yet...');
-        //     } else {
-        //       ctrl.userPointsArray.push(res.data[0]);
-        //       console.log('This pushed in else statement inside for loop: ', ctrl.userPointsArray);
-        //       break;
-        //     }
-        //   }; // end for loop
-        // } else {
-        //   ctrl.userPointsArray.push(res.data[0]);
-        //   console.log('This pushed in else statement: ', ctrl.userPointsArray);
-        // }
         if (ctrl.userPointsArray.length > 0) {
           for (var i=0; i < ctrl.userPointsArray.length; i++){
             console.log('This is the user\'s name: ', res.data[0].name);
@@ -274,15 +245,6 @@ angular.module('pokerApp').controller('GameController', function(GameService, Ma
       });
     });
   }; // end ctrl.revertRegularStatus
-
-  // ctrl.keepRegularStatus = function(){
-  //   console.log('This is regularList in keepRegularStatus: ', regularList);
-  //   regularList.forEach(function(user){
-  //     UserService.addUserToGame(user.username).then(function(res){
-  //       console.log('Kept regular status for: ', res.data[0]);
-  //     });
-  //   });
-  // }; // end ctrl.keepRegularStatus
 
   ctrl.removeFromGame = function(userObject){
     var index = ctrl.userList.indexOf(userObject);
