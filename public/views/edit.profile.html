@@ -42,6 +42,13 @@
       <!-- {{profile.player_info[0].email}} -->
     </div>
   </div>
+  <div ng-if="profile.admin" class="form-group row">
+    <label class="control-label col-xs-offset-1 col-xs-3">Email Pass:</label>
+    <div class="col-xs-8">
+      <input class="form-control" type="password" ng-model="profile.emailcred">
+      <!-- {{profile.player_info[0].email}} -->
+    </div>
+  </div>
   <div class="form-group row">
     <label class="control-label col-xs-offset-1 col-xs-3">First Name:</label>
     <div class="col-xs-8">
