@@ -254,9 +254,9 @@ ctrl.updateProfile = function() {
 //   ctrl.getPlayers();
 //
 //
-//   ctrl.profileView = function() {
-//     $location.path('/other.profile');
-//   };
+  ctrl.profileView = function() {
+    $location.path('/other.profile');
+  };
 
   // ctrl.logout = function() {
   //   $http.delete('/login').then(function(){

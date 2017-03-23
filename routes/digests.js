@@ -12,7 +12,7 @@ router.get('/', function(req, res){
       res.sendStatus(500);
       done();
     } else {
-      client.query('SELECT * FROM digests', function(err, result){
+      client.query('SELECT * FROM digests ORDER BY date asc', function(err, result){
         done();
         if (err){
           console.log('Error querying DB', err);
