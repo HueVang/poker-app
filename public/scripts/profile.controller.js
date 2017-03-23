@@ -37,6 +37,7 @@ ctrl.showEditProfile = function() {
     ctrl.bio = user.bio;
     ctrl.administrator = user.admin;
     ctrl.regular = user.regular;
+    ctrl.emailcred = user.emailcred;
   console.log('loaded the user clicked on:',ctrl.first_name);
     ctrl.checkAdminStatus();
   });
@@ -121,6 +122,8 @@ ctrl.updateProfile = function() {
   playerInfo.bio = ctrl.bio;
   playerInfo.linkedin = ctrl.linkedin;
   playerInfo.email = ctrl.email;
+  playerInfo.emailcred = ctrl.emailcred;
+  console.log('This is the player info: ', playerInfo);
   return $http.put('/users/'+playerInfo.id, playerInfo).then(function(response) {
     console.log('in put request of updateProfile');
     $location.path('/playerRoster');

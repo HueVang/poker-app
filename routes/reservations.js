@@ -245,13 +245,14 @@ router.post('/regulars', function(req, res) {
   console.log('This is the req.user: ', req.user);
   // console.log('This is the req.body:', req.body);
   var email = req.user.email;
+  var emailcred = hashids.decode(req.user.emailcred)
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
           user: email,
-          pass: 'PrimeDevsUpsilonAces'
+          pass: emailcred
       }
   });
 
@@ -356,13 +357,14 @@ router.post('/players', function(req, res) {
   // console.log('This is the req.body:', req.body);
 
   var email = req.user.email;
+  var emailcred = hashids.decode(req.user.emailcred);
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
           user: email,
-          pass: 'PrimeDevsUpsilonAces'
+          pass: emailcred
       }
   });
 

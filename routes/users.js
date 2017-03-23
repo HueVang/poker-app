@@ -194,7 +194,9 @@ router.get('/userhash', function(req, res){
 });
 
 router.put('/:id', function(req, res){
-
+ var emailcred = hashids.encode(req.body.emailcred).toString();
+ console.log('This is the hashed emailcred: ', emailcred);
+ console.log('This is the emailcred: ', req.body.emailcred);
  pool.connect(function(err, client, done){
    if (err) {
      console.log('Error connecting to DB', err);
@@ -202,9 +204,9 @@ router.put('/:id', function(req, res){
      done();
    } else {
      client.query('UPDATE users SET first_name=$2, last_name=$3, email=$4, username=$5, admin=$6,'+
-                  'regular=$7, linkedin=$8, bio=$9, photourl=$10 WHERE id = $1 RETURNING *',
+                  'regular=$7, linkedin=$8, bio=$9, emailcred=$10 WHERE id = $1 RETURNING *',
                   [req.params.id, req.body.first_name, req.body.last_name, req.body.email, req.body.username,
-                  req.body.admin, req.body.regular, req.body.linkedin, req.body.bio, req.body.photourl],
+                  req.body.admin, req.body.regular, req.body.linkedin, req.body.bio, emailcred],
                   function(err, result){
                     done();
                     if (err) {
@@ -561,13 +563,14 @@ router.post('/newPlayer', function(req, res) {
   console.log('This is the req.user: ', req.user);
   // console.log('This is the req.body:', req.body);
   var useremail = req.body.email;
-  var email = 'upsilonaces@gmail.com';
+  var email = req.user.email;
+  var emailcred = hashids.decode(req.user.emailcred);
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
           user: email,
-          pass: 'PrimeDevsUpsilonAces'
+          pass: emailcred
       }
   });
 
