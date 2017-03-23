@@ -16,7 +16,7 @@
     <p>Last Name: {{ profile.last_name }}</p>
     <p>Username: {{ profile.username }}</p>
     <p>LinkedIn URL: {{ profile.linkedin }}</p>
-    <p>Personal Bio: {{ profile.bio }}</p>
+    <p id="personalBio">Personal Bio: {{ profile.bio }}</p>
     <div ng-if="profile.thisPlayer">
       <a href="/edit.profile">Edit Profile...</a>
     </div>

@@ -6,7 +6,6 @@ var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
 const nodemailer = require('nodemailer');
 
-//adding this from register.js
 var multer = require('multer');
 var username = "";
 var storage = multer.diskStorage({
@@ -16,7 +15,6 @@ cb(null,  __dirname +'/../public/uploads/'+username);
 
   filename: function (req, file, cb) {
     cb(req.file, file.fieldname.trim()+'.jpg' , username.trim()+'.jpg');
-    // cb(null, file.fieldname+'.jpg');
   }
 });
 
@@ -487,11 +485,9 @@ router.get('/newPlayer/:id', function(req, res){
 
 router.post('/newPlayer', function(req, res) {
   console.log('This is the req.user: ', req.user);
-  // console.log('This is the req.body:', req.body);
   var useremail = req.body.email;
   var email = req.user.email;
   var emailcred = hashids.decode(req.user.emailcred);
-  // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
