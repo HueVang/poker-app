@@ -4,17 +4,14 @@
   <head>
     <meta charset="utf-8">
     <title>home</title>
-
   </head>
   <body>
-    <!-- <h1>Home</h1> -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <ul class="nav navbar-nav">
           <li class="active"><a href="/home"> Player Home </a></li>
           <li ng-if="home.admin"><a href="/adminLeague"> Admin Home </a></li>
           <li><a href="/playerRoster"> Player Roster </a></li>
-          <!-- <li><a href="/createLeague"> Create League </a></li> -->
           <li class=""><button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="home.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
         </ul>
       </div>
@@ -45,7 +42,6 @@
           </li>
         </ul>
       </nav>
-
     </div>
 
     <div class="col-md-5" id="playerList">
@@ -55,7 +51,6 @@
             <li ng-click="home.getGameList(); home.addActive()"><a id="selected"  href="/home"> Game 1 </a></li>
             <li ng-click="home.getGame2List(); home.addActive()"><a href="/home"> Game 2 </a></li>
             <li ng-click="home.getLeaderboard(home.currentLeague); home.addActive(); home.addActive3()"><a href="/home"> Leaderboard </a></li>
-
           </ul>
         </div>
       </nav>
@@ -94,16 +89,8 @@
               </tr>
             </tbody>
           </table>
-          <!-- <li ng-repeat="player in home.leaderboard">{{player.name}}           {{player.points}}</li> -->
         </ol>
       </div>
     </div>
-
   </body>
 </html>
-
-<!-- <label>Click me: <input type="checkbox" ng-model="checked" ng-init="checked=true" /></label><br/>
-Show when checked:
-<span ng-if="checked" class="animate-if">
-  This is removed when the checkbox is unchecked.
-</span> -->

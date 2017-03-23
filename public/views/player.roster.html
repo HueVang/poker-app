@@ -1,13 +1,10 @@
-<!-- <h1>Player Roster</h1> -->
 
-<!-- navbar -->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
       <li><a href="/home"> Player Home </a></li>
       <li ng-if="admin.admin"><a href="/adminLeague"> Admin Home </a></li>
       <li class="active"><a href="/playerRoster"> Player Roster </a></li>
-      <!-- <li><a href="/createLeague"> Create League </a></li> -->
       <li><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="admin.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
     </ul>
   </div>
@@ -22,7 +19,6 @@
     </form>
   </div>
   <div class="col-sm-4 col-sm-offset-8">
-    <!-- <autocomplete ng-change="admin.jumpToUser()" ng-model="admin.username" data="admin.autoCompleteArray"></autocomplete> -->
     <input type="text" class="form-control" ng-change="admin.jumpToUser()" ng-model="admin.username" data="admin.autoCompleteArray" placeholder="Search for a player"></input>
 
   </div>
@@ -49,4 +45,3 @@
     </table>
   </div>
 </div>
-<!-- <a href = "/edit.profile">Edit</a> -->

@@ -1,13 +1,10 @@
-<!-- <h1> Player Profile: {{ profile.first_name }} {{ profile.last_name }} </h1> -->
 
-<!-- navbar -->
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
       <li><a href="/home"> Player Home </a></li>
       <li ng-if="profile.admin"><a href="/adminLeague"> Admin Home </a></li>
       <li><a href="/playerRoster"> Player Roster </a></li>
-      <!-- <li><a href="/createLeague"> Create League </a></li> -->
       <li class=""><button button id="logoutBtn" class="navbar-btn btn-primary btn pull-right" ng-click="profile.logout()"><span class="glyphicon glyphicon-log-out"></span> Sign Out</button></li>
     </ul>
   </div>
@@ -22,7 +19,6 @@
     <p>Personal Bio: {{ profile.bio }}</p>
     <div ng-if="profile.thisPlayer">
       <a href="/edit.profile">Edit Profile...</a>
-      <!-- <button class="btn btn-primary"><a id="otherProfile" href="/edit.profile">Edit Profile...</a></button> -->
     </div>
   </div>
   <div id="profileImage">

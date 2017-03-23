@@ -62,7 +62,6 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       ctrl.showPlayers = false;
       ctrl.showAlternates = false;
       ctrl.showGames = false;
-      // ctrl.addActive3();
     });
   }; // end ctrl.getLeaderboard
 
@@ -72,11 +71,9 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       currentLeague1 = res.data[0].id;
       currentLeague2 = res.data[1].id;
       ctrl.currentLeague = res.data[0].id;
-      // ctrl.addActive3();
       console.log('This is the getLeagueList data: ', res.data);
     }).then(function(){
       console.log('This is currentLeague1: ', currentLeague1);
-      // ctrl.getLeaderboard(currentLeague1);
     });
   }
 
@@ -84,15 +81,12 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
     ctrl.currentLeague = currentLeague1;
     ctrl.getLeaderboard(currentLeague1);
     console.log('This is the currentLeague: ', ctrl.currentLeague);
-
-    // setTimeout(ctrl.addActive3(), 2000);
-  }; // end ctrl.showLeaderboard2
+  }; // end ctrl.showLeaderboard1
 
   ctrl.showLeaderboard2 = function(){
     ctrl.currentLeague = currentLeague2;
     ctrl.getLeaderboard(currentLeague2);
     console.log('This is the currentLeague: ', ctrl.currentLeague);
-    // setTimeout(ctrl.addActive3(), 2000);
   }; // end ctrl.showLeaderboard2
 
   ctrl.getLeagueList();
@@ -112,7 +106,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       console.log('This is currentGame1: ', currentGame1);
       ctrl.getPlayerList(currentGame1);
     });
-  }
+  };
 
   ctrl.getGame2List = function(){
     ctrl.showLeaderboard = false;
@@ -121,7 +115,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
     ctrl.showAlternates = false;
     ctrl.currentGame = currentGame2;
     ctrl.getPlayerList(currentGame2);
-  }
+  };
 
   ctrl.getGameList();
 
@@ -151,6 +145,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
           }
         }
       });
+
       ctrl.alternates.forEach(function(x){
         if(x.users_id == user.id){
           console.log('Triggered in if alternates forEach');
@@ -160,7 +155,6 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
           }
         }
       });
-
       console.log('ctrl.notAdmin is: ', ctrl.notAdmin);
       $scope.$apply();
     });
@@ -170,6 +164,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       ctrl.showPlayers = false;
       ctrl.showLeaderboard = false;
     }
+
     ctrl.showPlayerList = function(){
       ctrl.showAlternates = false;
       ctrl.showPlayers = true;
@@ -235,20 +230,19 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       console.log('Selected2 ID removed');
       event.target.setAttribute('id', 'selected2');
       console.log('Selected2 ID added');
-    }; // end ctrl.addActive
+    }; // end ctrl.addActive2
 
     ctrl.addActive3 = function() {
       console.log('This is the currentLeague: ', ctrl.currentLeague);
       if (ctrl.currentLeague == currentLeague1) {
         document.getElementsByClassName('league2')[0].removeAttribute('id');
         document.getElementsByClassName('league1')[0].setAttribute('id', 'selected3');
-        // console.log('This is league1: ', document.getElementsByClassName('league1')[0]);
       } else {
         console.log('currentLeague == currentLeague2');
         document.getElementsByClassName('league1')[0].removeAttribute('id');
         document.getElementsByClassName('league2')[0].setAttribute('id', 'selected3');
       }
-    }; // end ctrl.addActive
+    }; // end ctrl.addActive3
 
 
     ctrl.removeFromGame = function(){
@@ -257,7 +251,7 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
         console.log(res);
         ctrl.getPlayerList(ctrl.currentGame);
       });
-    }
+    };
 
     ctrl.adminRemoveFromGame = function(player){
       console.log(player, ctrl.currentGame);

@@ -242,33 +242,7 @@ router.post('/newuser', function(req, res){
     }
   });
 });
-//adding from the other.player.js
-// router.get('/otherplayer',function(req,res){
-//   console.log('user id?::',req.user.id);
-//   username = req.user.username;
-//   pool.connect(function(err,client,done){
-//     if(err){
-//       console.log('error connecting to DB',err);
-//       res.sendStatus(500);
-//       done();
-//     } else {
-//      client.query(
-//        'SELECT * from users;',
-//       function(err,result){
-//         done();
-//         if(err){
-//           console.log('error querying db',err);
-//           res.sendStatus(500);
-//         } else {
-//           console.log('get info from db',result.rows);
-//           res.send(result.rows);
-//         }
-//       });
-//     }
-//   });
-// });//end of get otherplayer
 
-//commenting this out from what was
 router.get('/playerToShow/:id',function(req,res){
   pool.connect(function(err,client,done){
     if(err){
@@ -290,56 +264,9 @@ router.get('/playerToShow/:id',function(req,res){
       });
     }
   });
-});//end of get otherplayer
+});//end of get playerToShow
 
-//trying this
-// router.get('/playerToShow/:id',function(req,res){
-//   pool.connect(function(err,client,done){
-//     if(err){
-//       console.log('error connecting to DB',err);
-//       res.sendStatus(500);
-//       done();
-//     } else{
-//      client.query(
-//        'SELECT * from users WHERE id=$1 SET username =$2;',
-//        [req.params.id, req.body.username],
-//       function(err,result){
-//         done();
-//         if(err){
-//           console.log('error querying db',err);
-//           res.sendStatus(500);
-//         } else {
-//           console.log('get info from db',result.rows);
-//           res.send(result.rows);
-//         }
-//       });
-//     }
-//   });
-// });
 
-//adding
-// router.get('/editPlayerProfile/:id',function(req,res){
-//   pool.connect(function(err,client,done){
-//     if(err){
-//       console.log('error connecting to DB',err);
-//       res.sendStatus(500);
-//       done();
-//     } else {
-//      client.query(
-//        'SELECT * from users WHERE id=$1;',[req.params.id],
-//       function(err,result){
-//         done();
-//         if(err){
-//           console.log('error querying db',err);
-//           res.sendStatus(500);
-//         } else {
-//           console.log('get info from db',result.rows);
-//           res.send(result.rows);
-//         }
-//       });
-//     }
-//   });
-// });
 router.get('/players', function(req, res){
   console.log('username?::', req.user.username);
   pool.connect(function(err,client,done){
@@ -362,7 +289,7 @@ router.get('/players', function(req, res){
       });
     }
   });
-}); // end of get playerinfo
+}); // end of get players
 
 router.get('/currentUser', function(req, res){
   var adminstatus;
@@ -384,7 +311,6 @@ router.post('/image', upload.any(), function(req, res, next) {
   res.redirect('back');
 });
 
-//added
 router.get('/image', function(req, res){
   console.log('user id?::', req.user.id);
   pool.connect(function(err,client,done){
@@ -410,7 +336,6 @@ router.get('/image', function(req, res){
   });
 });
 
-
 router.get("/players", function(req, res) {
   pool.connect(function(err, client, done) {
     try {
@@ -432,6 +357,7 @@ router.get("/players", function(req, res) {
     }
   });
 });
+
 router.get("/playerinfo", function(req, res) {
   console.log('player id from user table', req.user.id);
     pool.connect(function(err,client,done){
@@ -591,22 +517,18 @@ router.post('/newPlayer', function(req, res) {
            } else {
              var newUserId = result.rows[0].id;
              console.log('This is the userId: ', newUserId);
-             // console.log('These are the keys: ', key);
-             // console.log('These are the values: ', person[key]);
              var reshashid = hashids.encode(newUserId);
              console.log('This is hash id of user: ', reshashid);
              console.log('This is hash id type of user: ', typeof reshashid);
              var text = '<p>Hello!<br /> You have been added to Poker Registration Application!<br /> Click on the link to edit your profile!<br />'+'http://localhost:3000/users/?id='+ reshashid +'</p>'
-             // setup email data with unicode symbols
              let mailOptions = {
-                 from: '"Prime Devs" <' + email + '>', // sender address
+                 from: '"D12 Poker League" <' + email + '>', // sender address
                  to: useremail, // list of receivers
                  subject: 'Welcome to D12!', // Subject line
                  text: 'This is the text text', // plain text body
                  html: text // html body
              };
 
-             // send mail with defined transport object
              transporter.sendMail(mailOptions, (error, info) => {
                  if (error) {
                      return console.log(error);
@@ -618,7 +540,6 @@ router.post('/newPlayer', function(req, res) {
       }
     }); // end pool.connect
 
-  // res.send(req.user.email);
   res.sendStatus(200);
 }); // end router.post
 
