@@ -92,6 +92,6 @@ io.on('connection', function(socket){
 
 });
 
-var server = http.listen(3000, function() {
-  console.log('Listening on port', 3000);
+var server = http.listen(process.env.PORT || 3000, function() {
+  console.log('Listening on port');
 });
