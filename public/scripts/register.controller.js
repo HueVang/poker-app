@@ -21,7 +21,7 @@ angular.module('pokerApp').controller('RegisterController', function($http, $rou
   ctrl.register = function() {
     console.log('creating a new user');
     $http.post('/register', {
-      id: 2,
+      id: 1,
       username: ctrl.username,
       password: ctrl.password,
       first_name: ctrl.first_name,
