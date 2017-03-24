@@ -11,6 +11,9 @@ VALUES ('D12_1', '2017-03-01', '2017-03-21');
 INSERT INTO users (first_name, last_name, email, username, admin, regular)
 VALUES ('Kevin', 'Webb', 'd12.pokerleague@gmail.com', 'Kevin', true, true);
 
+INSERT INTO users (email)
+VALUES ('d12.pokerleague@gmail.com');
+
 CREATE TABLE users(
 id SERIAL PRIMARY KEY,
 first_name VARCHAR (100),
