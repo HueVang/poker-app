@@ -2,7 +2,7 @@ var router = require('express').Router();
 var User = require('../public/models/user');
 
 var pg = require('pg');
-var pool = new pg.Pool({ database: "upsilon_aces" });
+var pool = new pg.Pool({ database: "d2rohuktrv2324" });
 
 router.post('/', function(req, res){
   User.findByEmail(req.body.email).then(function(user){
