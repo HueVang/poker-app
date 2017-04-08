@@ -12,7 +12,6 @@ var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
 
 
-var pg = require(
 router.get('/', function(req, res){
   pool.connect(function(err, client, done){
     if(err){
