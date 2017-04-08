@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var pg = require('pg');
-var config = {database: 'd2rohuktrv2324'};
+var config = {database: 'upsilonaces'};
 var pool = new pg.Pool(config);
 
 router.get('/', function(req, res){

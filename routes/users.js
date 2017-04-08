@@ -1,6 +1,6 @@
 var router = require('express').Router();
 var pg = require('pg');
-var config = {database: 'd2rohuktrv2324'};
+var config = {database: 'upsilonaces'};
 var pool = new pg.Pool(config);
 var Hashids = require('hashids');
 var hashids = new Hashids('', 10);
@@ -516,7 +516,7 @@ router.post('/newPlayer', function(req, res) {
              var reshashid = hashids.encode(newUserId);
              console.log('This is hash id of user: ', reshashid);
              console.log('This is hash id type of user: ', typeof reshashid);
-             var text = '<p>Hello!<br /> You have been added to Poker Registration Application!<br /> Click on the link to edit your profile!<br />'+'http://localhost:3000/users/?id='+ reshashid +'</p>'
+             var text = '<p>Hello!<br /> You have been added to the D12 League!<br /> Click on the link to edit your profile!<br />'+'http://localhost:3000/users/?id='+ reshashid +'</p>'
              let mailOptions = {
                  from: '"D12 Poker League" <' + email + '>', // sender address
                  to: useremail, // list of receivers
