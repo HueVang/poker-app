@@ -7,6 +7,9 @@ var config = {
   host: 'ec2-174-129-37-15.compute-1.amazonaws.com',
   port: 5432
 };
+// var config = {
+//   database: 'upsilonaces'
+// }
 var pool = new pg.Pool(config);
 var Hashids = require('hashids');
 var hashids = new Hashids('', 10);

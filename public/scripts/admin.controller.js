@@ -24,12 +24,12 @@ angular.module('pokerApp').controller('AdminController', function(MailService, L
     LeagueService.getLeagues().then(function(res) {
       ctrl.leagues = res.data;
       console.log('This is the leagues array: ', ctrl.leagues);
-      console.log('This should be the last league\'s value: ', ctrl.leagues[ctrl.leagues.length - 1].id.toString());
-      ctrl.getGames(ctrl.leagues[ctrl.leagues.length - 1].id);
-      ctrl.getLeaderboard(ctrl.leagues[ctrl.leagues.length - 1].id);
-      ctrl.getWinners(ctrl.leagues[ctrl.leagues.length - 1].id);
-      ctrl.league = ctrl.leagues[ctrl.leagues.length - 1];
-      console.log('This is the last league in the array: ', ctrl.league);
+      if (ctrl.leagues != '') {
+        ctrl.getGames(ctrl.leagues[ctrl.leagues.length - 1].id);
+        ctrl.getLeaderboard(ctrl.leagues[ctrl.leagues.length - 1].id);
+        ctrl.getWinners(ctrl.leagues[ctrl.leagues.length - 1].id);
+        ctrl.league = ctrl.leagues[ctrl.leagues.length - 1];
+      }
     });
 
   }; // end ctrl.getLeagues

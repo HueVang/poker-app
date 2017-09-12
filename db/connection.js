@@ -8,4 +8,8 @@ var pool = new pg.Pool({
   port: 5432
 });
 
+// var pool = new pg.Pool({
+//   database: 'upsilonaces'
+// });
+
 module.exports = pool;

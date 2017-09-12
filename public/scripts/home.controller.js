@@ -68,10 +68,12 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
 
   ctrl.getLeagueList = function(){
     LeagueService.getLeagueList().then(function(res){
-      currentLeague1 = res.data[0].id;
-      currentLeague2 = res.data[1].id;
-      ctrl.currentLeague = res.data[0].id;
       console.log('This is the getLeagueList data: ', res.data);
+      if (res.data != '') {
+        currentLeague1 = res.data[0].id;
+        currentLeague2 = res.data[1].id;
+        ctrl.currentLeague = res.data[0].id;
+      }
     }).then(function(){
       console.log('This is currentLeague1: ', currentLeague1);
     });
@@ -98,13 +100,18 @@ angular.module('pokerApp').controller('HomeController', function(ReservationServ
       ctrl.showGames = true;
       ctrl.showPlayers = true;
       ctrl.showAlternates = false;
-      currentGame1 = {id:res.data[0].id, count:res.data[0].count};
-      currentGame2 = {id:res.data[1].id, count:res.data[1].count};
-      ctrl.currentGame = {id:res.data[0].id, count:res.data[0].count};
+      ctrl.getGameListData = res.data;
+      if (res.data != '') {
+        currentGame1 = {id:res.data[0].id, count:res.data[0].count};
+        currentGame2 = {id:res.data[1].id, count:res.data[1].count};
+        ctrl.currentGame = {id:res.data[0].id, count:res.data[0].count};
+      }
       console.log(res.data);
     }).then(function(){
       console.log('This is currentGame1: ', currentGame1);
-      ctrl.getPlayerList(currentGame1);
+      if (ctrl.getGameListData != '') {
+        ctrl.getPlayerList(currentGame1);
+      }
     });
   };
 
